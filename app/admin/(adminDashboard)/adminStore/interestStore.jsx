@@ -3,7 +3,7 @@ import { saveAs } from "file-saver";
 
 import { create } from "zustand";
 
-const apiUrl = "http://127.0.0.1:8000/api/admin";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const token = "85|hlTToptbhLxzTJ7Yp3WbhmJaKZwnFzF6Nqpjb9rl1e405d32";
 const interestStore = create((set) => ({
   interests: [],

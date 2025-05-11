@@ -125,47 +125,47 @@ const loanStore = create((set) => ({
       set({ error: "Failed to fetch contribution", loading: false });
     }
   },
-  // getSingleLoan: async (id) => {
-  //   set({ loading: true, error: null });
-  //   try {
-  //     const res = await api.get(
-  //       `${apiUrl}/get_loan/${id}`,
+  getSingleLoan: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await api.get(
+        `${apiUrl}/get_loan/${id}`,
 
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-  //     if (res.data.status === true) {
-  //       set({
-  //         loading: false,
-  //         sucessMessage: res.data.message,
-  //         loan: res.data.loans,
-  //       });
-  //     }
-  //   } catch (err) {
-  //     let errorMsg = "";
-  //     errorMsg = err.response?.data?.message || err.message || "Login failed";
+      if (res.data.status === true) {
+        set({
+          loading: false,
+          sucessMessage: res.data.message,
+          loan: res.data.loans,
+        });
+      }
+    } catch (err) {
+      let errorMsg = "";
+      errorMsg = err.response?.data?.message || err.message || "Login failed";
 
-  //     if (err.response?.status === 422) {
-  //       const errors = err.response?.data;
+      if (err.response?.status === 422) {
+        const errors = err.response?.data;
 
-  //       Object.values(errors).forEach((messages) => {
-  //         messages.forEach((message) => {
-  //           errorMsg = message;
-  //           throw { msg: errorMsg };
-  //         });
-  //       });
-  //     }
+        Object.values(errors).forEach((messages) => {
+          messages.forEach((message) => {
+            errorMsg = message;
+            throw { msg: errorMsg };
+          });
+        });
+      }
 
-  //     set({ error: errorMsg, loading: false });
-  //     throw { msg: errorMsg };
-  //   } finally {
-  //     set({ error: null, loading: false });
-  //   }
-  // },
+      set({ error: errorMsg, loading: false });
+      throw { msg: errorMsg };
+    } finally {
+      set({ error: null, loading: false });
+    }
+  },
   exportToExcel: async () => {
     set({ exportLoading: true, error: null });
     try {

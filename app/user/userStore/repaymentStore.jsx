@@ -1,3 +1,4 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
@@ -30,8 +31,8 @@ const repaymentStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/loan_repayment?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
+      const res = await apiClient.get(
+        `/api/user/loan_repayment?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

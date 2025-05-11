@@ -3,7 +3,7 @@ import { saveAs } from "file-saver";
 
 import { create } from "zustand";
 
-const apiUrl = "http://127.0.0.1:8000/api/admin";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const token = "85|hlTToptbhLxzTJ7Yp3WbhmJaKZwnFzF6Nqpjb9rl1e405d32";
 const userStores = create((set) => ({
   users: [],
@@ -15,6 +15,7 @@ const userStores = create((set) => ({
   currentPage: 1,
   searchQuery: "",
   search: "",
+  singleUser: {},
 
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
@@ -56,6 +57,48 @@ const userStores = create((set) => ({
       set({ error: "Failed to fetch contribution", loading: false });
     }
   },
+  getSingleUser: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await api.get(
+        `${apiUrl}/get_single_user/${id}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.data.status === true) {
+        set({
+          loading: false,
+          sucessMessage: res.data.message,
+          singleUser: res.data.user,
+        });
+      }
+    } catch (err) {
+      let errorMsg = "";
+      errorMsg = err.response?.data?.message || err.message || "Login failed";
+
+      if (err.response?.status === 422) {
+        const errors = err.response?.data;
+
+        Object.values(errors).forEach((messages) => {
+          messages.forEach((message) => {
+            errorMsg = message;
+            throw { msg: errorMsg };
+          });
+        });
+      }
+
+      set({ error: errorMsg, loading: false });
+      throw { msg: errorMsg };
+    } finally {
+      set({ error: null, loading: false });
+    }
+  },
+
   exportToExcel: async () => {
     set({ exportLoading: true, error: null });
     try {

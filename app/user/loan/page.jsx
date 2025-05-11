@@ -17,6 +17,20 @@ import { Plus } from "lucide-react";
 import { loanColumns } from "./loanColumns/loanColumns";
 import loanStore from "../userStore/loanStore";
 import { DatePickerWithRange } from "@/components/date_pickers/datePickerWithRange";
+import ReusableDialog from "./modal/modal";
+import { Textarea } from "@/components/ui/textarea";
+import { Formik } from "formik";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import Loading from "@/components/loading_spinner/loading";
+import { toast } from "sonner";
 
 export default function DemoPage() {
   const {
@@ -31,6 +45,8 @@ export default function DemoPage() {
     exportToExcel,
     exportLoading,
     setDateRange,
+    applyForLoan,
+    loading,
   } = loanStore();
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
@@ -62,6 +78,15 @@ export default function DemoPage() {
   const downloadExport = () => {
     exportToExcel();
   };
+  //Apply For Loan
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const status = applyForLoan(values);
+    // if (status) {
+    //   setOpen(false);
+    // }
+  };
+  const [open, setOpen] = useState(false);
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
@@ -102,6 +127,9 @@ export default function DemoPage() {
             </SelectContent>
           </Select>
         </div>
+        <div className="">
+          <Button onClick={() => setOpen(true)}>Open Modal</Button>
+        </div>
       </div>
       <DataTables
         columns={loanColumns}
@@ -109,6 +137,86 @@ export default function DemoPage() {
         fetchPage={fetchLoans}
         meta={meta}
       />
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        {/* <DialogTrigger asChild>
+          <Button variant="outline">Edit Profile</Button>
+        </DialogTrigger> */}
+        <DialogContent>
+          <Formik
+            initialValues={{
+              amount: "",
+              purpose: "",
+            }}
+            //validationSchema={LoginSchema}
+            onSubmit={handleSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              setFieldValue,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <DialogHeader>
+                  <DialogTitle>Loan Application</DialogTitle>
+                  <DialogDescription>
+                    Please fill the form below to apply for a loan.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="mb-3">
+                  <label className="block text-gray-700 text-[14px] mb-2">
+                    Amount
+                  </label>
+                  <Input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    placeholder="Loan Amount"
+                    value={values.amount}
+                    onChange={handleChange}
+                    className="w-full  border rounded-lg focus:outline-none focus-visible:ring-[1px] "
+                    required
+                  />
+                </div>
+                <div className="mb-2">
+                  <label className="block text-gray-700 text-[14px] mb-2">
+                    Purpose
+                  </label>
+                  <Textarea
+                    id="purpose"
+                    name="purpose"
+                    value={values.purpose}
+                    onChange={handleChange}
+                    placeholder="Type your message here."
+                    className="w-full h-[100px] px-4 py-2 border rounded-lg focus-visible:ring-[1px] focus:outline-none focus:ring-1 focus-visible::text-[#206bc4]"
+                  />
+                </div>
+
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+
+                    // onClick={() => {
+                    //   setOpen(false);
+                    // }}
+                  >
+                    {loading ? "Processing" : "Proceed"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            )}
+          </Formik>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

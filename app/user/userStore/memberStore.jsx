@@ -1,3 +1,4 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
@@ -22,12 +23,13 @@ const memberStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/get_members?page=${page}&per_page=10&search=${search}&status=${status}`,
+      const res = await apiClient.get(
+        `/api/user/get_members?page=${page}&per_page=10&search=${search}&status=${status}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       const data = res.data.members.data;

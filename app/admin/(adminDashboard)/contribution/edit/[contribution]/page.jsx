@@ -44,6 +44,7 @@ import {
 import { toast } from "sonner";
 import Loading from "@/components/loading_spinner/loading";
 import contributionStore from "../../../adminStore/contributionStore";
+import { useRouter } from "next/router";
 // import toast from "react-hot-toast";
 
 // const LoginSchema = Yup.object().shape({
@@ -69,7 +70,9 @@ const EditContribution = ({ params }) => {
     loading,
     getSingleLoan,
     singleCon,
+    contributions,
   } = contributionStore();
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -85,6 +88,9 @@ const EditContribution = ({ params }) => {
       toast.error(err.msg);
     }
   };
+  // const getEachContribution = contributions.find((data) => {
+  //   console.log(data)
+  // });
 
   return (
     <div className="w-[100%] ">
@@ -185,44 +191,7 @@ const EditContribution = ({ params }) => {
                     className="py-5"
                   />
                 </div>
-                <div className="mb-3">
-                  <Label htmlFor="payment_method" className="text-[14px] mb-1">
-                    Deposit Date
-                  </Label>
 
-                  <Popover className="py-5">
-                    <PopoverTrigger asChild className="py-5">
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[100%] justify-start text-left font-normal",
-                          !date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon />
-                        {/* {date ? format(date, "PPP") : <span>Pick a date</span>} */}
-                        {values.contribution_date
-                          ? format(values.contribution_date, "PPP")
-                          : "Select date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 py-5" align="start">
-                      <Calendar
-                        // mode="single"
-                        // selected={date}
-                        // onSelect={setDate}
-                        // initialFocus
-                        mode="single"
-                        selected={values.contribution_date}
-                        onSelect={(date) =>
-                          setFieldValue("contribution_date", date)
-                        }
-                        disabled={{ before: new Date() }}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
                 <div className="mb-3">
                   <Label htmlFor="email" className="text-[14px] mb-1">
                     Contribution Type

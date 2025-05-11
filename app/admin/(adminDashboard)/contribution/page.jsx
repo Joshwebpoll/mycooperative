@@ -22,7 +22,7 @@ import contributionStore from "../adminStore/contributionStore";
 export default function DemoPage() {
   const {
     fetchcontributions,
-    contribution,
+    contributions,
     meta,
     currentPage,
     search,
@@ -105,7 +105,7 @@ export default function DemoPage() {
       </div>
       <DataTables
         columns={columns}
-        data={contribution}
+        data={contributions}
         fetchPage={fetchcontributions}
         meta={meta}
       />

@@ -72,12 +72,6 @@ export default function DemoPage() {
   };
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white ">
-      <div className="flex justify-end p-3">
-        <Button>
-          <Plus />
-          Create
-        </Button>
-      </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-2 p-3 ">
         <div className="w-[100%]">
           <Input

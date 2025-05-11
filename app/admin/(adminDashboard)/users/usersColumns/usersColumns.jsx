@@ -16,6 +16,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const usersColumns = [
   {
@@ -85,7 +86,7 @@ export const usersColumns = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const contribution = row.original;
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -102,7 +103,9 @@ export const usersColumns = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              Edit <Trash2 />
+              <Link href={`users/edit/${user.id}`}>
+                Edit <Trash2 />
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               Delete <Pencil />

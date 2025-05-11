@@ -1,5 +1,7 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 import { create } from "zustand";
 
@@ -30,8 +32,8 @@ const loanStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/get_loan?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
+      const res = await apiClient.get(
+        `/api/user/get_loan?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,6 +64,26 @@ const loanStore = create((set) => ({
       });
     } catch (err) {
       set({ error: "Failed to fetch contribution", loading: false });
+    }
+  },
+  applyForLoan: async (values) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await apiClient.post(`/api/user/request_loan`, {
+        amount: values.amount,
+        purpose: values.purpose,
+      });
+      const data = res.data;
+
+      if (data.status === true) {
+        set({ loading: false });
+        toast.success(res.data.message);
+      }
+      return true;
+    } catch (err) {
+      set({ loading: false, error: null });
+    } finally {
+      set({ loading: false, error: null });
     }
   },
   exportToExcel: async () => {

@@ -154,7 +154,7 @@ export function AppSidebar({ ...props }) {
           {items.main.map((item) => (
             <SidebarMenuItem
               key={item.title}
-              className={` p-[4px] ${
+              className={` py-[4px] ${
                 route.startsWith(item.url) ? "bg-[#206bc4] text-white " : ""
               }`}
             >

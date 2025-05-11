@@ -76,28 +76,7 @@ const CreateContribution = () => {
       toast.error(err.msg);
     }
   };
-  const frameworks = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
+
   return (
     <div className="w-[100%] ">
       <Formik
@@ -164,7 +143,7 @@ const CreateContribution = () => {
                     placeholder="Amount Contributed"
                     value={values.amount_contributed}
                     onChange={handleChange}
-                    className="py-5"
+                    className=""
                   />
                 </div>
                 <div className="mb-3">
@@ -179,7 +158,7 @@ const CreateContribution = () => {
                     placeholder="Member Account Number"
                     onChange={handleChange}
                     value={values.account_number}
-                    className="py-5"
+                    className=""
                   />
                 </div>
                 <div className="mb-3">
@@ -193,7 +172,7 @@ const CreateContribution = () => {
                     placeholder="Payment Method"
                     onChange={handleChange}
                     value={values.payment_method}
-                    className="py-5"
+                    className=""
                   />
                 </div>
                 <div className="mb-3">
@@ -201,8 +180,8 @@ const CreateContribution = () => {
                     Deposit Date
                   </Label>
 
-                  <Popover className="py-5">
-                    <PopoverTrigger asChild className="py-5">
+                  <Popover className="">
+                    <PopoverTrigger asChild className="">
                       <Button
                         variant={"outline"}
                         className={cn(
@@ -217,7 +196,7 @@ const CreateContribution = () => {
                           : "Select date"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 py-5" align="start">
+                    <PopoverContent className="w-auto p-0 " align="start">
                       <Calendar
                         // mode="single"
                         // selected={date}
@@ -245,7 +224,7 @@ const CreateContribution = () => {
                     }
                     name="contribution_deposit_type"
                   >
-                    <SelectTrigger className="w-[100%] py-5">
+                    <SelectTrigger className="w-[100%] ">
                       <SelectValue placeholder="Contribution" />
                     </SelectTrigger>
                     <SelectContent>
@@ -327,7 +306,7 @@ const CreateContribution = () => {
                       value={values.status}
                       onValueChange={(val) => setFieldValue("status", val)}
                     >
-                      <SelectTrigger className="w-[100%] py-5">
+                      <SelectTrigger className="w-[100%] ">
                         <SelectValue placeholder="Contribution" />
                       </SelectTrigger>
                       <SelectContent>

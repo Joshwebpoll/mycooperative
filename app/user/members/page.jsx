@@ -31,7 +31,7 @@ export default function DemoPage() {
     exportToExcel,
     exportLoading,
   } = memberStore();
-
+  console.log(members);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   // Debounce effect

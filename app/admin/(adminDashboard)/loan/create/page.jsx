@@ -172,7 +172,7 @@ const CreateContribution = () => {
                     placeholder="Amount"
                     onChange={handleChange}
                     value={values.amount}
-                    className="py-5"
+                    className=""
                   />
                 </div>
                 <div className="w-full max-w-2xl mx-auto mb-3 ">
@@ -245,7 +245,7 @@ const CreateContribution = () => {
                       value={values.status}
                       onValueChange={(val) => setFieldValue("status", val)}
                     >
-                      <SelectTrigger className="w-[100%] py-5">
+                      <SelectTrigger className="w-[100%] ">
                         <SelectValue placeholder="Choose Loan Status" />
                       </SelectTrigger>
                       <SelectContent>

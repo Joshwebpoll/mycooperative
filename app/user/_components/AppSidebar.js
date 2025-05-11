@@ -2,6 +2,7 @@
 import {
   BookCheck,
   Calendar,
+  ChevronRight,
   CreditCard,
   Home,
   Inbox,
@@ -13,7 +14,11 @@ import {
   Shield,
   Users,
 } from "lucide-react";
-
+import {
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Collapsible,
+} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -23,82 +28,214 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
+  SidebarMenuSub,
   SidebarMenuItem,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
-export function AppSidebar() {
+export function AppSidebar({ ...props }) {
   // Menu items.
-  const items = [
-    {
-      title: "Dashboard",
-      url: "/user/dashboard",
-      icon: Home,
-    },
-    {
-      title: "Member Contribution",
-      url: "/user/contribution",
-      icon: Save,
-    },
-    {
-      title: "Loan Application",
-      url: "/user/loan",
-      icon: BookCheck,
-    },
+  const items = {
+    main: [
+      {
+        title: "Dashboard",
+        url: "/user/dashboard",
+        icon: Home,
+      },
+      {
+        title: "Member Contribution",
+        url: "/user/contribution",
+        icon: Save,
+      },
+      {
+        title: "Loan Application",
+        url: "/user/loan",
+        icon: BookCheck,
+      },
 
-    {
-      title: "Loan Repayment",
-      url: "/user/repayment",
-      icon: CreditCard,
-    },
-    {
-      title: "Member",
-      url: "/user/members",
-      icon: Home,
-    },
-    {
-      title: "KYC Verification",
-      url: "/user/verification",
-      icon: Home,
-    },
-  ];
+      {
+        title: "Loan Repayment",
+        url: "/user/repayment",
+        icon: CreditCard,
+      },
+      {
+        title: "Member",
+        url: "/user/members",
+        icon: Home,
+      },
+    ],
+    veri: [
+      {
+        title: "KYC Verification",
+        url: "/user/verification",
+        icon: Home,
+        verification: [
+          {
+            title: "Nin Verification",
+            url: "#",
+            icon: Home,
+          },
+          {
+            title: "Bvn Verification",
+            url: "#",
+            icon: Home,
+          },
+        ],
+      },
+    ],
+    settings: [
+      {
+        title: "Settings",
+        url: "/user/settings",
+        icon: Home,
+        profile: [
+          {
+            title: "Profile",
+            url: "/user/profile",
+            icon: Home,
+          },
+          {
+            title: "Bank",
+            url: "#",
+            icon: Home,
+          },
+        ],
+      },
+    ],
+  };
   const route = usePathname();
   console.log(route);
   return (
-    <Sidebar>
-      <SidebarContent className="bg-[#2e3847]">
-        <SidebarHeader className="text-white text-center mt-5">
-          Araromi Cooperative
-        </SidebarHeader>
-        <SidebarGroup>
-          {/* <SidebarGroupLabel className="text-[16px] font-bold">
-            Our Cooperative
-          </SidebarGroupLabel> */}
-          <SidebarGroupContent>
-            <SidebarMenu className="">
-              {items.map((item) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className={` p-[4px] ${
-                    route == item.url ? "bg-[#206bc4] text-white rounded" : ""
-                  }`}
-                >
-                  <SidebarMenuButton
-                    asChild
-                    className="transition-all duration-500 tracking-normal hover:tracking-widest"
-                  >
-                    <a href={item.url}>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader className="text-white bg-[#2e3847] text-center  pt-5 ">
+        Araromi Cooperative
+      </SidebarHeader>
+      <SidebarContent className="bg-[#2e3847] pt-2">
+        <SidebarMenu className="">
+          {items.main.map((item) => (
+            <SidebarMenuItem
+              key={item.title}
+              className={` py-[5px] ${
+                route.startsWith(item.url) ? "bg-[#206bc4] text-white " : ""
+              }`}
+            >
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <a href={item.url}>
+                  <item.icon className="text-[13px] text-[#c1c4c8]" />
+                  <span className="text-[14px] text-[#c1c4c8]">
+                    {item.title}
+                  </span>
+                </a>
+              </SidebarMenuButton>
+              {/* <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip={item.title}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {item.items?.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubButton asChild>
+                            <a href={subItem.url}>
+                              <span>{subItem.title}</span>
+                            </a>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent> */}
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+        <SidebarMenu>
+          {items.veri?.map((item) => (
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={item.isActive}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && (
                       <item.icon className="text-[13px] text-[#c1c4c8]" />
-                      <span className="text-[14px] text-[#c1c4c8]">
-                        {item.title}
-                      </span>
-                    </a>
+                    )}
+                    <span className="text-[14px] text-[#c1c4c8]">
+                      {item.title}
+                    </span>
+                    <ChevronRight className="text-white cursor-pointer ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.verification?.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <a href={subItem.url}>
+                            <span className="text-[14px] text-[#c1c4c8]">
+                              {subItem.title}
+                            </span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          ))}
+        </SidebarMenu>
+
+        <SidebarMenu>
+          {items.settings?.map((item) => (
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={item.isActive}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && (
+                      <item.icon className="text-[13px] text-[#c1c4c8]" />
+                    )}
+                    <span className="text-[14px] text-[#c1c4c8]">
+                      {item.title}
+                    </span>
+                    <ChevronRight className="text-white cursor-pointer ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.profile?.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <a href={subItem.url}>
+                            <span className="text-[14px] text-[#c1c4c8]">
+                              {subItem.title}
+                            </span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          ))}
+        </SidebarMenu>
       </SidebarContent>
+      {/* <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter> */}
+      <SidebarRail />
     </Sidebar>
   );
 }

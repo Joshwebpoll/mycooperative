@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff, GalleryVerticalEnd } from "lucide-react";
 import { useAuthStore } from "../authStore/userAuthStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,9 +17,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
+
 import Loading from "@/components/loading_spinner/loading";
 import AlertError from "@/components/alertError/alerterror";
+import { toast } from "sonner";
+import apiClient from "@/lib/axios";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,6 +35,14 @@ export default function LoginPage() {
   const { login, loading, users, token } = useAuthStore();
   const [show, setShow] = useState(false);
 
+  // function getCookie(name) {
+  //   const match = document.cookie.match(
+  //     new RegExp("(^| )" + name + "=([^;]+)")
+  //   );
+  //   if (match) return decodeURIComponent(match[2]);
+  //   return null;
+  // }
+  // console.log(getCookie("XSRF-TOKEN"), "jhshshjs");
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -93,19 +104,10 @@ export default function LoginPage() {
                             name="email"
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={values.email}
                           />
-
-                          {/* <AlertError
-                            error={
-                              errors.email && touched.email && errors.email
-                            }
-                          /> */}
-                          <ErrorMessage
-                            name="email"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="email" />
                         </div>
                         <div className="grid gap-2 relative ">
                           <div className="flex items-center">
@@ -117,13 +119,7 @@ export default function LoginPage() {
                               Forgot your password?
                             </a>
                           </div>
-                          {/* <Field
-                            as={Input}
-                            name="password"
-                            id="password"
-                            type={show ? "text" : "password"}
-                            placeholder="••••••••"
-                          /> */}
+
                           <Input
                             type={show ? "text" : "password"}
                             name="password"
@@ -141,11 +137,7 @@ export default function LoginPage() {
                           >
                             {show ? <EyeOff size={16} /> : <Eye size={16} />}
                           </Button>
-                          <ErrorMessage
-                            name="password"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="password" />
                         </div>
                         <Button
                           type="submit"
