@@ -44,6 +44,7 @@ import { format } from "date-fns";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Profilexx = () => {
   const getAllBanks = profileStore((state) => state.getAllBanks);
@@ -63,6 +64,7 @@ const Profilexx = () => {
   const isUpdating = profileStore((state) => state.isUpdating);
   const isUpdatingPassword = profileStore((state) => state.isUpdatingPassword);
   const updateUserPassword = profileStore((state) => state.updateUserPassword);
+  const pageLoading = profileStore((state) => state.pageLoading);
   const [date, setDate] = useState();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -91,6 +93,28 @@ const Profilexx = () => {
   const filteredBanks = banks.filter((item) =>
     item.bank_name.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (pageLoading) {
+    return (
+      <div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+          <div>
+            <div>
+              <Skeleton className="h-[600px]   bg-[#e1e6f0]" />
+            </div>
+          </div>
+          <div className="mb-3">
+            <div className="  mb-5">
+              <Skeleton className="h-[250px]  bg-[#e1e6f0]" />
+            </div>
+            <div className=" ">
+              <Skeleton className="h-[205px]  bg-[#e1e6f0]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

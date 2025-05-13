@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell } from "lucide-react";
+import { Badge, Bell, BellIcon } from "lucide-react";
 export function SiteHeader() {
   const [position, setPosition] = React.useState("right");
   return (
@@ -24,13 +24,21 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <div className=" w-full flex justify-between">
+        <div className=" w-full flex justify-between items-center">
           <h1 className="text-base font-medium">Documents</h1>
 
           <div className="flex items-center gap-3 justify-center">
             <div className="relative">
-              <Bell className="flex" />
-              <h1>3</h1>
+              {/* Bell Icon wrapped in a button */}
+              <button className="p-2 hover:bg-gray-200 rounded-full focus:outline-none">
+                <BellIcon className="h-6 w-6 text-gray-700" />
+              </button>
+
+              {/* Badge for notification count */}
+
+              <Badge className="absolute top-0 right-0 bg-blue-700 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+                3
+              </Badge>
             </div>
 
             <DropdownMenu>

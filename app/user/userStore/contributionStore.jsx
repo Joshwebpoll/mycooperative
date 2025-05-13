@@ -8,7 +8,7 @@ const apiUrl = "http://127.0.0.1:8000/api/user";
 const token = "84|kofFvA74qP3vgXv0242yVZE2X5ZILbbESaMAzPEuab460a86";
 const contributionStore = create((set) => ({
   contribution: [],
-  loading: false,
+  loading: true,
   exportLoading: false,
   error: null,
   meta: {},
@@ -35,14 +35,12 @@ const contributionStore = create((set) => ({
       const res = await apiClient.get(
         `/api/user/get_contribution?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          // params
         }
       );
       const data = res.data.contributions.data;
       const pages = res.data.contributions.meta;
-
+      console.log(res.data);
       set({
         contribution: data,
         page: pages.current_page,

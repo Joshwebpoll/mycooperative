@@ -2,7 +2,6 @@
 
 import { DataTables } from "@/components/tables/data-table";
 
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +16,7 @@ import { Plus } from "lucide-react";
 
 import { membersColumns } from "./memberColumns/memberColumns";
 import memberStore from "../userStore/memberStore";
+import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
 
 export default function DemoPage() {
   const {
@@ -31,7 +31,7 @@ export default function DemoPage() {
     exportToExcel,
     exportLoading,
   } = memberStore();
-  console.log(members);
+  const loading = memberStore((state) => state.loading);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   // Debounce effect
@@ -61,6 +61,33 @@ export default function DemoPage() {
   const downloadExport = () => {
     exportToExcel();
   };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto py-5  rounded bg-white  overflow-auto">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+        </div>
+        <SkeletonTable columns={5} rows={5} />
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white ">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">

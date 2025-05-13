@@ -8,7 +8,7 @@ const apiUrl = "http://127.0.0.1:8000/api/user";
 const token = "84|kofFvA74qP3vgXv0242yVZE2X5ZILbbESaMAzPEuab460a86";
 const memberStore = create((set) => ({
   members: [],
-  loading: false,
+  loading: true,
   exportLoading: false,
   error: null,
   meta: {},

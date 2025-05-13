@@ -10,6 +10,7 @@ const token = "84|kofFvA74qP3vgXv0242yVZE2X5ZILbbESaMAzPEuab460a86";
 const loanStore = create((set) => ({
   loans: [],
   loading: false,
+  isLoading: true,
   exportLoading: false,
   error: null,
   meta: {},
@@ -29,20 +30,15 @@ const loanStore = create((set) => ({
     from = "",
     to = ""
   ) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const res = await apiClient.get(
-        `/api/user/get_loan?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `/api/user/get_loan?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`
       );
       const data = res.data.loans.data;
       const pages = res.data.loans.meta;
-      console.log("checkin.....", data);
+
       set({
         loans: data,
         page: pages.current_page,
@@ -59,11 +55,13 @@ const loanStore = create((set) => ({
           from: pages.from,
           to: pages.to,
         },
-        loading: false,
+        isLoading: false,
         currentPage: page,
       });
     } catch (err) {
-      set({ error: "Failed to fetch contribution", loading: false });
+      set({ error: "Failed to fetch contribution", isLoading: false });
+    } finally {
+      set({ error: "Failed to fetch contribution", isLoading: false });
     }
   },
   applyForLoan: async (values) => {

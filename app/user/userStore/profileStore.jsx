@@ -10,6 +10,7 @@ const profileStore = create((set) => ({
   personalUser: {},
   isUpdating: false,
   isUpdatingPassword: false,
+  pageLoading: true,
   getAllBanks: async () => {
     set({ loading: true });
     try {
@@ -66,7 +67,11 @@ const profileStore = create((set) => ({
       const res = await apiClient.get("/api/user/personal_user");
 
       if (res.data.status === true) {
-        set({ personalUser: res.data.user, isUserLoading: false });
+        set({
+          personalUser: res.data.user,
+          isUserLoading: false,
+          pageLoading: false,
+        });
       }
     } catch (error) {
       set({ isUserLoading: false });

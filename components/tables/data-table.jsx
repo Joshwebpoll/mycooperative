@@ -55,7 +55,7 @@ export function DataTables({ columns, data, fetchPage, meta }) {
 
     return range;
   }
-  console.log("meta", meta);
+
   return (
     <div className=" bg-white p-3 ">
       <Table>

@@ -31,6 +31,9 @@ import {
 import { Label } from "@/components/ui/label";
 import Loading from "@/components/loading_spinner/loading";
 import { toast } from "sonner";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
+import { loanValidationSchema } from "@/components/loanValidation/loanValidation";
+import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
 
 export default function DemoPage() {
   const {
@@ -48,6 +51,7 @@ export default function DemoPage() {
     applyForLoan,
     loading,
   } = loanStore();
+  const isLoading = loanStore((state) => state.isLoading);
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -80,15 +84,40 @@ export default function DemoPage() {
   };
   //Apply For Loan
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    const status = applyForLoan(values);
-    // if (status) {
-    //   setOpen(false);
-    // }
-  };
   const [open, setOpen] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+
+          <div className="w-[100%]">
+            {/* Input Skeleton */}
+            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+          </div>
+        </div>
+        <SkeletonTable columns={5} rows={5} />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
+      <div className="flex justify-end px-3">
+        <Button onClick={() => setOpen(true)}>Apply Loan</Button>
+      </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
           <Input
@@ -127,9 +156,6 @@ export default function DemoPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="">
-          <Button onClick={() => setOpen(true)}>Open Modal</Button>
-        </div>
       </div>
       <DataTables
         columns={loanColumns}
@@ -148,8 +174,18 @@ export default function DemoPage() {
               amount: "",
               purpose: "",
             }}
-            //validationSchema={LoginSchema}
-            onSubmit={handleSubmit}
+            validationSchema={loanValidationSchema}
+            onSubmit={async (values, { setSubmitting, resetform }) => {
+              try {
+                await applyForLoan(values);
+                resetform();
+              } catch (error) {
+                setSubmitting(false);
+              } finally {
+                setSubmitting(false);
+                setOpen(false);
+              }
+            }}
           >
             {({
               values,
@@ -181,8 +217,8 @@ export default function DemoPage() {
                     value={values.amount}
                     onChange={handleChange}
                     className="w-full  border rounded-lg focus:outline-none focus-visible:ring-[1px] "
-                    required
                   />
+                  <CustomErrorMessage name="amount" />
                 </div>
                 <div className="mb-2">
                   <label className="block text-gray-700 text-[14px] mb-2">
@@ -196,14 +232,20 @@ export default function DemoPage() {
                     placeholder="Type your message here."
                     className="w-full h-[100px] px-4 py-2 border rounded-lg focus-visible:ring-[1px] focus:outline-none focus:ring-1 focus-visible::text-[#206bc4]"
                   />
+                  <CustomErrorMessage name="purpose" />
                 </div>
 
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setOpen(false)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setOpen(false)}
+                  >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
 
                     // onClick={() => {
                     //   setOpen(false);

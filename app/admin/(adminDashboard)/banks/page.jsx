@@ -14,17 +14,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
-// import { loanColumns } from "./loanColumns/loanColumns";
-// import loanStore from "../adminStore/loanStore";
-import repaymentStore from "../userStore/repaymentStore";
-import { repaymentColumns } from "./repaymentColumns/repaymentColumns";
-import { DatePickerWithRange } from "@/components/date_pickers/datePickerWithRange";
-import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
+
+import loanStore from "../adminStore/loanStore";
+import bankStore from "../adminStore/bankStore";
+import { banksColumns } from "./banksColumns/banksColumns";
 
 export default function DemoPage() {
   const {
-    fetchRepayments,
-    repayments,
     meta,
     currentPage,
     search,
@@ -33,18 +29,18 @@ export default function DemoPage() {
     setSearch,
     exportToExcel,
     exportLoading,
-    setDateRange,
-    from,
-    to,
-  } = repaymentStore();
-  const loading = repaymentStore((state) => state.loading);
+  } = bankStore();
+  const fetchAllBanks = bankStore((state) => state.fetchAllBanks);
+  const allBanks = bankStore((state) => state.allBanks);
+  console.log(allBanks);
+
   const [debouncedSearch, setDebouncedSearch] = useState(search);
-  console.log(from, to);
+
   // Debounce effect
   useEffect(() => {
     const handler = setTimeout(() => {
       setSearch(debouncedSearch);
-      fetchRepayments(1, debouncedSearch, status);
+      fetchAllBanks(1, debouncedSearch, status);
     }, 500); // 500ms delay
 
     return () => clearTimeout(handler); // cleanup previous timer
@@ -57,49 +53,18 @@ export default function DemoPage() {
     setStatus(value == "all" ? "" : value);
   };
   useEffect(() => {
-    fetchRepayments(currentPage, search, status);
+    fetchAllBanks(currentPage, search, status);
   }, []);
   useEffect(() => {
-    fetchRepayments(1, debouncedSearch, status);
+    fetchAllBanks(1, debouncedSearch, status);
   }, [status]);
-  //exportToExcel();
-  //useEffect(() => {}, []);
+
   const downloadExport = () => {
     exportToExcel();
   };
-
-  const handleSearch = () => {
-    fetchRepayments(currentPage, search, status, to, from);
-  };
-  if (loading) {
-    return (
-      <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-        </div>
-        <SkeletonTable columns={7} rows={10} />
-      </div>
-    );
-  }
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white ">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-2 p-3 ">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
           <Input
             type="text"
@@ -109,9 +74,6 @@ export default function DemoPage() {
           />
         </div>
         <div className="w-[100%]">
-          <DatePickerWithRange setDateRange={setDateRange} />
-        </div>
-        <div className="">
           <Button
             variant="outline"
             className="w-[100%]"
@@ -129,21 +91,26 @@ export default function DemoPage() {
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="processing">Processing</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="rejected">Rejected</SelectItem>
+              <SelectItem value="disbursed">Disbursed</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="defaulted">Defaulted</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        {/* <div className="justify-self-end">
-          <Button size="lg">
-            <Plus className="text-bold" /> Create
+        <div className="w-[100%]">
+          <Button asChild className="w-full">
+            <Link href="/admin/loan/create">
+              <Plus className="text-bold" /> Create
+            </Link>
           </Button>
-        </div> */}
+        </div>
       </div>
       <DataTables
-        columns={repaymentColumns}
-        data={repayments}
-        fetchPage={fetchRepayments}
+        columns={banksColumns}
+        data={allBanks}
+        fetchPage={fetchAllBanks}
         meta={meta}
       />
     </div>

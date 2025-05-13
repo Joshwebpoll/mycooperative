@@ -54,6 +54,8 @@ const userStores = create((set) => ({
       });
     } catch (err) {
       set({ error: "Failed to fetch contribution", loading: false });
+    } finally {
+      set({ loading: false });
     }
   },
   exportToExcel: async () => {

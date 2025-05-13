@@ -40,7 +40,7 @@ export default function Breadcrumb() {
   return (
     <div>
       {/* <DynamicTitle /> */}
-      <nav className="text-sm text-gray-600 p-5">
+      <nav className="text-sm text-gray-600 px-5 py-2">
         <ol className="flex items-center space-x-1">
           {breadcrumbs.map((crumb, index) => {
             const isLast = index === breadcrumbs.length - 1;

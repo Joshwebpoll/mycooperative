@@ -4,8 +4,20 @@ import React, { useEffect } from "react";
 import memberStore from "../userStore/memberStore";
 import { createColumnHelper } from "@tanstack/react-table";
 import DataTable from "@/components/DataTable";
-import { DataTableDemo } from "../interest/page";
+
 import { DahboardCards } from "@/components/dashboardCard/dashboardCard";
+import dashboardStore from "../userStore/dashboardStore";
+import {
+  CreditCard,
+  Cylinder,
+  Download,
+  MonitorCheck,
+  PackageCheck,
+  TrendingUpDown,
+} from "lucide-react";
+import { DashboardTable } from "./dashboardTable";
+import { Skeleton } from "@/components/ui/skeleton";
+import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
 // const data = [
 //   {
 //     id: 1,
@@ -169,40 +181,115 @@ const columns = [
   },
 ];
 const Dashboard = () => {
+  const fetchDashboard = dashboardStore((state) => state.fetchDashboard);
+  const total_savings = dashboardStore((state) => state.total_savings);
+  const total_shares = dashboardStore((state) => state.total_shares);
+  const activeLoan = dashboardStore((state) => state.activeLoan);
+  const pendingLoan = dashboardStore((state) => state.pending_loans);
+  const completedLoans = dashboardStore((state) => state.completedLoans);
+  const totalRepayment = dashboardStore((state) => state.totalRepayment);
+  const fetchLatestContribution = dashboardStore(
+    (state) => state.fetchLatestContribution
+  );
+  const latestContribution = dashboardStore(
+    (state) => state.latestContribution
+  );
+  const loading = dashboardStore((state) => state.loading);
+  const isLoading = dashboardStore((state) => state.isLoading);
+
+  useEffect(() => {
+    fetchLatestContribution();
+  }, [fetchLatestContribution]);
+
+  useEffect(() => {
+    fetchDashboard();
+  }, [fetchDashboard]);
+  console.log(total_savings);
+
+  const formattedTotalSavings = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(total_savings);
+  const formattedTotalShares = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(total_shares);
+  const formattedTotalRepayment = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(totalRepayment);
+
+  if (loading) {
+    return (
+      <div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4 mb-10">
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+          <Skeleton className="h-[125px] rounded-xl bg-[#e1e6f0]" />
+        </div>
+        <SkeletonTable columns={5} rows={5} />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4">
-        <div className=" rounded ">
-          <DahboardCards />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4 mb-10">
+        <div>
+          <DahboardCards
+            title="Total Savings"
+            totalNumber={formattedTotalSavings ? formattedTotalSavings : "0.00"}
+            Icon={Download}
+          />
         </div>
         <div className=" rounded ">
-          <DahboardCards />
+          <DahboardCards
+            title="Total Shares"
+            totalNumber={formattedTotalShares ? formattedTotalShares : "0.00"}
+            Icon={Cylinder}
+          />
         </div>
         <div className=" rounded ">
-          <DahboardCards />
+          <DahboardCards
+            title="Total Reapyment"
+            totalNumber={
+              formattedTotalRepayment ? formattedTotalRepayment : "0.00"
+            }
+            Icon={CreditCard}
+          />
         </div>
         <div className=" rounded ">
-          <DahboardCards />
+          <DahboardCards
+            title="Pending Loan"
+            totalNumber={pendingLoan ? pendingLoan : "0"}
+            Icon={TrendingUpDown}
+          />
         </div>
         <div className=" rounded ">
-          <DahboardCards />
+          <DahboardCards
+            title="Active Loan"
+            totalNumber={activeLoan ? activeLoan : "0"}
+            Icon={MonitorCheck}
+          />
         </div>
+
         <div className=" rounded ">
-          <DahboardCards />
+          <DahboardCards
+            title="Completed Loan"
+            totalNumber={completedLoans ? completedLoans : "0"}
+            Icon={PackageCheck}
+          />
         </div>
       </div>
-      {/* <DahboardCards /> */}
-    </div>
 
-    // <div className="flex flex-1 flex-col">
-    //   <div className="@container/main flex flex-1 flex-col gap-2">
-    //     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-    //       <DahboardCards />
-    //       <div className="px-4 lg:px-6">{/* <ChartAreaInteractive /> */}</div>
-    //       {/* <DataTable data={data} /> */}
-    //     </div>
-    //   </div>
-    // </div>
+      <div>
+        {/* <h1>Resent Contribution</h1> */}
+        <DashboardTable data={latestContribution} />
+      </div>
+    </div>
   );
 };
 

@@ -35,6 +35,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 export function AppSidebar({ ...props }) {
   // Menu items.
   const items = {
@@ -74,12 +75,12 @@ export function AppSidebar({ ...props }) {
         verification: [
           {
             title: "Nin Verification",
-            url: "#",
+            url: "/user/nin",
             icon: Home,
           },
           {
             title: "Bvn Verification",
-            url: "#",
+            url: "/user/bvn",
             icon: Home,
           },
         ],
@@ -160,13 +161,13 @@ export function AppSidebar({ ...props }) {
               defaultOpen={item.isActive}
               className="group/collapsible"
             >
-              <SidebarMenuItem>
+              <SidebarMenuItem >
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && (
                       <item.icon className="text-[13px] text-[#c1c4c8]" />
                     )}
-                    <span className="text-[14px] text-[#c1c4c8]">
+                    <span className="text-[14px] text-[#c1c4c8] ">
                       {item.title}
                     </span>
                     <ChevronRight className="text-white cursor-pointer ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -177,11 +178,13 @@ export function AppSidebar({ ...props }) {
                     {item.verification?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
-                            <span className="text-[14px] text-[#c1c4c8]">
+                          <Link href={subItem.url}>
+                            <span
+                              className={`text-[14px] py-[5px] text-[#c1c4c8] `}
+                            >
                               {subItem.title}
                             </span>
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
