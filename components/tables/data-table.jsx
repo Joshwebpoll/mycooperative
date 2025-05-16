@@ -21,8 +21,11 @@ import { columns } from "./columns";
 import { Button } from "../ui/button";
 
 import { useState } from "react";
+import Loading from "../loading_spinner/loading";
+import { Spin } from "antd";
+import LoadingOverlay from "../loadingOvalay/loadingOverlay";
 
-export function DataTables({ columns, data, fetchPage, meta }) {
+export function DataTables({ columns, data, fetchPage, meta, loading }) {
   const [sorting, setSorting] = useState([]);
   const table = useReactTable({
     data,
@@ -57,7 +60,7 @@ export function DataTables({ columns, data, fetchPage, meta }) {
   }
 
   return (
-    <div className=" bg-white p-3 ">
+    <div className=" bg-white p-3 relative ">
       <Table>
         <TableHeader className="bg-[#f6f8fb] text-[14px]">
           {table.getHeaderGroups().map((headerGroup) => (

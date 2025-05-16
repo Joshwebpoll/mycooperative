@@ -11,7 +11,7 @@ import {
 
 export function DahboardCards({ totalNumber, title, Icon }) {
   return (
-    <Card className="@container/card rounded  h-[125px]">
+    <Card className="@container/card h-[125px] shadow-2xl">
       <CardHeader className="relative">
         <CardDescription>{title}</CardDescription>
         <CardTitle className="@[250px]/card:text-2xl text-2xl font-semibold tabular-nums">

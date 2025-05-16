@@ -19,6 +19,7 @@ import {
 import { Plus } from "lucide-react";
 import { DatePickerWithRange } from "@/components/date_pickers/datePickerWithRange";
 import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
+import LoadingOverlay from "@/components/loadingOvalay/loadingOverlay";
 
 export default function DemoPage() {
   const {
@@ -65,35 +66,35 @@ export default function DemoPage() {
   const downloadExport = () => {
     exportToExcel();
   };
-  if (loading) {
-    return (
-      <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
+  // if (loading) {
+  //   return (
+  //     <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
+  //       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
 
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-        </div>
-        <SkeletonTable columns={7} rows={10} />
-      </div>
-    );
-  }
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //       </div>
+  //       <SkeletonTable columns={7} rows={10} />
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className="container mx-auto py-5 shadow rounded bg-white ">
+    <div className="container mx-auto py-5 shadow rounded bg-white relative">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
           <Input
@@ -135,6 +136,7 @@ export default function DemoPage() {
         fetchPage={fetchcontributions}
         meta={meta}
       />
+      {loading ? <LoadingOverlay /> : ""}
     </div>
   );
 }

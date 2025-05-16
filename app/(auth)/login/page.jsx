@@ -23,6 +23,8 @@ import AlertError from "@/components/alertError/alerterror";
 import { toast } from "sonner";
 import apiClient from "@/lib/axios";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,20 +34,38 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function LoginPage() {
-  const { login, loading, users, token } = useAuthStore();
+  const fetcher = (url) => apiClient.get(url).then((res) => res.data.user);
+  const { login, loading, users, isUserLoading, fetchProfile } = useAuthStore();
   const [show, setShow] = useState(false);
+  const router = useRouter();
+  console.log(users);
+  // const { data, isLoading, mutate, error } = useSWR(
+  //   "/api/user/profile",
+  //   fetcher
+  // );
 
-  // function getCookie(name) {
-  //   const match = document.cookie.match(
-  //     new RegExp("(^| )" + name + "=([^;]+)")
-  //   );
-  //   if (match) return decodeURIComponent(match[2]);
-  //   return null;
+  // useEffect(() => {
+  //   fetchProfile();
+  // }, []);
+
+  // if (data.status === true) {
+  //   if (data?.user || data?.user?.role === "user") {
+  //     router.push("/user/dashboard");
+  //   }
   // }
-  // console.log(getCookie("XSRF-TOKEN"), "jhshshjs");
+  // useEffect(() => {
+  //   if (users && users.role === "user") {
+  //     router.replace("/user/dashboard");
+  //   }
+  // }, [users]);
+
+  // if (isUserLoading) {
+  //   return "Hello word";
+  // }
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
+      <div className="flex w-full max-w-md flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <GalleryVerticalEnd className="size-4" />
@@ -68,11 +88,12 @@ export default function LoginPage() {
                 onSubmit={async (values, { setSubmitting }) => {
                   try {
                     // console.log(token);
-                    await login(values.email, values.password);
+                    await login(values.email, values.password, router);
                     console.log(values);
-                    setTimeout(() => setSubmitting(false), 1000);
                   } catch (err) {
                     toast.error(err.msg);
+                  } finally {
+                    setSubmitting(false);
                   }
                 }}
               >
@@ -92,13 +113,7 @@ export default function LoginPage() {
                       <div className="grid gap-6">
                         <div className="grid gap-2">
                           <Label htmlFor="email">Email</Label>
-                          {/* <Field
-                            as={Input}
-                            name="email"
-                            id="email"
-                            type="email"
-                            placeholder="Email"
-                          /> */}
+
                           <Input
                             type="email"
                             name="email"
@@ -112,12 +127,12 @@ export default function LoginPage() {
                         <div className="grid gap-2 relative ">
                           <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
-                            <a
-                              href="#"
+                            <Link
+                              href="/forget_password"
                               className="ml-auto text-sm underline-offset-4 hover:underline"
                             >
                               Forgot your password?
-                            </a>
+                            </Link>
                           </div>
 
                           <Input

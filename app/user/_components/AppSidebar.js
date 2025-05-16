@@ -2,16 +2,21 @@
 import {
   BookCheck,
   Calendar,
+  CalendarPlus,
   ChevronRight,
+  CircleUser,
   CreditCard,
   Home,
   Inbox,
+  Landmark,
   Mail,
   MessageSquare,
   Save,
   Search,
   Settings,
   Shield,
+  ShieldCheck,
+  UserCheck,
   Users,
 } from "lucide-react";
 import {
@@ -48,12 +53,12 @@ export function AppSidebar({ ...props }) {
       {
         title: "Member Contribution",
         url: "/user/contribution",
-        icon: Save,
+        icon: CalendarPlus,
       },
       {
         title: "Loan Application",
         url: "/user/loan",
-        icon: BookCheck,
+        icon: Landmark,
       },
 
       {
@@ -64,14 +69,19 @@ export function AppSidebar({ ...props }) {
       {
         title: "Member",
         url: "/user/members",
-        icon: Home,
+        icon: UserCheck,
+      },
+      {
+        title: "Referrals",
+        url: "/user/referrals",
+        icon: CircleUser,
       },
     ],
     veri: [
       {
         title: "KYC Verification",
         url: "/user/verification",
-        icon: Home,
+        icon: ShieldCheck,
         verification: [
           {
             title: "Nin Verification",
@@ -90,7 +100,7 @@ export function AppSidebar({ ...props }) {
       {
         title: "Settings",
         url: "/user/settings",
-        icon: Home,
+        icon: Settings,
         profile: [
           {
             title: "Profile",
@@ -107,7 +117,8 @@ export function AppSidebar({ ...props }) {
     ],
   };
   const route = usePathname();
-  console.log(route);
+
+  const pageName = route.split("/").filter(Boolean).pop();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="text-white bg-[#2e3847] text-center  pt-5 ">
@@ -123,12 +134,12 @@ export function AppSidebar({ ...props }) {
               }`}
             >
               <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon className="text-[13px] text-[#c1c4c8]" />
+                <Link href={item.url}>
+                  <item.icon size={28} className="text-[13px] text-[#c1c4c8]" />
                   <span className="text-[14px] text-[#c1c4c8]">
                     {item.title}
                   </span>
-                </a>
+                </Link>
               </SidebarMenuButton>
               {/* <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
@@ -161,7 +172,7 @@ export function AppSidebar({ ...props }) {
               defaultOpen={item.isActive}
               className="group/collapsible"
             >
-              <SidebarMenuItem >
+              <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && (

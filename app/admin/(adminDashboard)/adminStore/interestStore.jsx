@@ -1,5 +1,7 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 import { create } from "zustand";
 
@@ -15,6 +17,8 @@ const interestStore = create((set) => ({
   currentPage: 1,
   searchQuery: "",
   search: "",
+  isCreateLoading: false,
+  isCreateRefLoading: false,
 
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
@@ -60,8 +64,8 @@ const interestStore = create((set) => ({
   createInterest: async (values) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.post(
-        `${apiUrl}/add_interest`,
+      const res = await apiClient.post(
+        `api/admin/add_interest`,
         {
           interest_rate: values.interest_rate,
           min_amount: values.min_amount,
@@ -96,6 +100,48 @@ const interestStore = create((set) => ({
       throw { msg: errorMsg };
     } finally {
       set({ loading: false, error: null });
+    }
+  },
+  updateReferral: async (values, reward) => {
+    set({ isCreateRefLoading: true });
+    try {
+      const res = await apiClient.put(
+        `api/admin/update_referral/${reward.id}`,
+        {
+          referral_reward_percent: values.reward_percent,
+          min_amount: values.min_amount,
+          max_amount: values.max_amount,
+        }
+      );
+      if (res.data.status === true) {
+        set({ isCreateRefLoading: false });
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      set({ isCreateRefLoading: false });
+    } finally {
+      set({ isCreateRefLoading: false });
+    }
+  },
+  updateInterest: async (values, interest) => {
+    set({ isCreateLoading: true });
+    try {
+      const res = await apiClient.put(
+        `api/admin/update_interest/${interest.id}`,
+        {
+          interest_rate: values.interest,
+          min_amount: values.min_amount,
+          max_amount: values.max_amount,
+        }
+      );
+      if (res.data.status === true) {
+        set({ isCreateLoading: false });
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      set({ error: errorMsg, loading: false });
+    } finally {
+      set({ isCreateLoading: false });
     }
   },
   exportToExcel: async () => {

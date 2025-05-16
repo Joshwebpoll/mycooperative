@@ -11,13 +11,14 @@ const dashboardStore = create((set) => ({
   total_shares: null,
   completedLoans: null,
   totalRepayment: null,
+  totalReferrals: null,
   latestContribution: [],
 
   fetchDashboard: async () => {
     set({ loading: true });
     try {
       const res = await apiClient.get("/api/user/summary");
-
+      console.log(res);
       if (res.data.status === true) {
         set({
           total_savings: res.data.total_savings,
@@ -26,6 +27,7 @@ const dashboardStore = create((set) => ({
           total_shares: res.data.total_shares,
           completedLoans: res.data.completedLoans,
           totalRepayment: res.data.total_repayment,
+          totalReferrals: res.data.totalReferrals,
           loading: false,
         });
       }

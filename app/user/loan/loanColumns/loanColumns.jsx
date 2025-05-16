@@ -16,6 +16,9 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CustomDetailsDialog } from "@/components/veiwdetailsmodal/dialogModal";
+import { useState } from "react";
+import { format } from "date-fns";
 
 export const loanColumns = [
   {
@@ -27,10 +30,10 @@ export const loanColumns = [
     accessorKey: "loan_number",
     header: "Loan Id",
   },
-  {
-    accessorKey: "interest_rate",
-    header: "Interest (%)",
-  },
+  // {
+  //   accessorKey: "interest_rate",
+  //   header: "Interest (%)",
+  // },
 
   {
     accessorKey: "duration_months",
@@ -38,7 +41,7 @@ export const loanColumns = [
     cell: ({ row }) => {
       const month = row.getValue("duration_months");
 
-      return <div className="text-right font-medium">{month} month</div>;
+      return <div className=" font-medium">{month} month</div>;
     },
   },
   {
@@ -53,7 +56,7 @@ export const loanColumns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
@@ -68,24 +71,24 @@ export const loanColumns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className=" font-medium">{formatted}</div>;
     },
   },
-  {
-    accessorKey: "remaining_balance",
-    header: "Remaining Balance",
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("remaining_balance"));
+  // {
+  //   accessorKey: "remaining_balance",
+  //   header: "Remaining Balance",
+  //   cell: ({ row }) => {
+  //     const amount = parseFloat(row.getValue("remaining_balance"));
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-NG", {
-        style: "currency",
-        currency: "NGN",
-      }).format(amount);
+  //     // Format the amount as a dollar amount
+  //     const formatted = new Intl.NumberFormat("en-NG", {
+  //       style: "currency",
+  //       currency: "NGN",
+  //     }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
+  //     return <div className=" font-medium">{formatted}</div>;
+  //   },
+  // },
 
   {
     accessorKey: "status",
@@ -134,30 +137,77 @@ export const loanColumns = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const contribution = row.original;
+      const loan = row.original;
+      console.log(loan);
+      const [open, setOpen] = useState(false);
+      console.log(open);
+      //  Format the amount as a dollar amount
+      const formattedRemaining = new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+      }).format(loan.remaining_balance);
+      //format balance
+      const formattedamount = new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+      }).format(loan.amount);
+      //format date
 
+      // const formattedDate = format(
+      //   new Date(row.getValue(loan?.created_at)),
+      //   "MMMM d, yyyy h:mm a"
+      // );
+      const form = format(
+        new Date(loan.created_at),
+        "MMMM do yyyy, hh:mm:ss a"
+      );
+      // console.log(
+      //   format(new Date(row.getValue(loan?.created_at)), "MMMM d, yyyy h:mm a")
+      // );
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => alert(contribution.id)}>
-              View contribution
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Edit <Trash2 />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Delete <Pencil />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div>
+          <Button
+            onClick={() => setOpen(true)}
+            variant="ghost"
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal />
+          </Button>
+          <CustomDetailsDialog
+            open={open}
+            onOpenChange={setOpen}
+            title="Loan Application"
+            // description="Basic information about the user."
+            footer={
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Close
+              </Button>
+            }
+          >
+            <div className="space-y-4 text-sm ">
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">Interest Rate</h1>
+                <p>{loan.interest_rate}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px]">Remaining Balance</h1>
+                <p>{formattedRemaining}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px]">Amount Requested</h1>
+                <p>{formattedamount}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px]">date/time</h1>
+                <p>{form}</p>
+              </div>
+            </div>
+          </CustomDetailsDialog>
+        </div>
       );
     },
   },

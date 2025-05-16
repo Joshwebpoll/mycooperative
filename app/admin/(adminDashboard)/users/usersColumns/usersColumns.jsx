@@ -72,14 +72,29 @@ export const usersColumns = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <Badge
-        variant={`${row.getValue("status") == "disable" ? "destructive" : ""}`}
-      >
-        {row.getValue("status").charAt(0).toUpperCase() +
-          row.getValue("status").slice(1)}
-      </Badge>
-    ),
+
+    cell: ({ row }) => {
+      let activeCol = "";
+      if (row.getValue("status") === "disable") {
+        activeCol = "bg-gray-300 text-gray-500 cursor-not-allowed";
+      } else if (row.getValue("status") === "enable") {
+        activeCol = "bg-green-100 text-green-800";
+      } else if (row.getValue("status") === "rejected") {
+        activeCol = "bg-rose-100 text-rose-800";
+      } else if (row.getValue("status") === "Approved") {
+        activeCol = "bg-emerald-100 text-emerald-800";
+      } else if (row.getValue("status") === "defaulted") {
+        activeCol = "bg-neutral-100 text-neutral-800";
+      } else if (row.getValue("status") === "paid") {
+        activeCol = "bg-indigo-100 text-indigo-800";
+      }
+      return (
+        <Badge className={`${activeCol}`}>
+          {row.getValue("status").charAt(0).toUpperCase() +
+            row.getValue("status").slice(1)}
+        </Badge>
+      );
+    },
   },
 
   {

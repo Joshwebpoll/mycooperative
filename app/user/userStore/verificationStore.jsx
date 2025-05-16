@@ -1,6 +1,7 @@
 import apiClient from "@/lib/axios";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { mutate } from "swr";
 import { create } from "zustand";
 const verificationStore = create((set) => ({
   dashboard: [],
@@ -24,6 +25,7 @@ const verificationStore = create((set) => ({
         set({
           isLoadingBvn: false,
         });
+
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -35,11 +37,8 @@ const verificationStore = create((set) => ({
   verifyingNin: async (values) => {
     set({ isLoadingNin: true });
     try {
-      const res = await apiClient.get("/api/user/nin", {
+      const res = await apiClient.post("/api/user/nin", {
         nin: values.nin,
-        nin_phone_number: values.nin_phone_number,
-        date_of_birth: format(new Date(values.date_of_birth), "dd-MMM-yyyy"),
-        gender: values.gender,
       });
 
       if (res.data.status === true) {
@@ -54,23 +53,24 @@ const verificationStore = create((set) => ({
       set({ isLoadingNin: false });
     }
   },
-  getSingleUser: async () => {
-    set({ isUserLoading: true });
-    try {
-      const res = await apiClient.get("/api/user/personal_user");
+  //SWR WAS USE TO TO FETCH DATA SO NO MORE AXIOS GET
+  // getSingleUser: async () => {
+  //   set({ isUserLoading: true });
+  //   try {
+  //     const res = await apiClient.get("/api/user/personal_user");
 
-      if (res.data.status === true) {
-        set({
-          personalUser: res.data.user,
-          isUserLoading: false,
-        });
-      }
-    } catch (error) {
-      set({ isUserLoading: false });
-    } finally {
-      set({ isUserLoading: false });
-    }
-  },
+  //     if (res.data.status === true) {
+  //       set({
+  //         personalUser: res.data.user,
+  //         isUserLoading: false,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     set({ isUserLoading: false });
+  //   } finally {
+  //     set({ isUserLoading: false });
+  //   }
+  // },
 }));
 
 export default verificationStore;

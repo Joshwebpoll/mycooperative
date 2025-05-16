@@ -38,9 +38,13 @@ export const ProfileValidationSchema = Yup.object().shape({
 });
 
 export const passwordSchema = Yup.object().shape({
-  current_password: Yup.string().required("Current password is required"),
+  current_password: Yup.string().required("Old password is required"),
 
   password: Yup.string()
+    .notOneOf(
+      [Yup.ref("current_password"), null],
+      "New password must not be the same with old password"
+    )
     .required("New password is required")
     .min(6, "Password must be at least 8 characters"),
 

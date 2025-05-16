@@ -120,7 +120,7 @@ const Profilexx = () => {
     <div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
         <div>
-          <div className=" rounded  shadow bg-white p-5">
+          <div className=" rounded  shadow-xl bg-white p-5">
             <Formik
               initialValues={{
                 name: personalUser.name || "",
@@ -407,7 +407,7 @@ const Profilexx = () => {
           </div>
         </div>
         <div className="mb-3">
-          <div className="rounded shadow bg-white p-5 mb-5">
+          <div className="rounded shadow-xl bg-white p-5 mb-5">
             <Formik
               initialValues={{
                 current_password: "",
@@ -549,7 +549,7 @@ const Profilexx = () => {
               )}
             </Formik>
           </div>
-          <div className="rounded shadow bg-white p-5">
+          <div className="rounded shadow-xl bg-white p-5">
             <Formik
               initialValues={{
                 bank_name: account?.bank_name || "",

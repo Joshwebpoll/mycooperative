@@ -1,3 +1,4 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
@@ -26,8 +27,8 @@ const contributionStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/contribution?page=${page}&per_page=10&search=${search}&status=${status}`,
+      const res = await apiClient.get(
+        `api/admin/contribution?page=${page}&per_page=10&search=${search}&status=${status}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,8 +65,8 @@ const contributionStore = create((set) => ({
   createContributions: async (values) => {
     set({ loading: true, error: null, sucessMessage: "" });
     try {
-      const res = await api.post(
-        `${apiUrl}/contribution`,
+      const res = await apiClient.post(
+        `api/admin/contribution`,
         {
           user_id: values.member_id,
           account_number: Number(values.account_number),
@@ -115,7 +116,7 @@ const contributionStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(`${apiUrl}/users_con`, {
+      const res = await apiClient.get(`/api/admin/users_con`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

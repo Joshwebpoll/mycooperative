@@ -3,7 +3,7 @@
 import apiClient from "@/lib/axios";
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function Joshmani() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

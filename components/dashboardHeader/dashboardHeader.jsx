@@ -8,13 +8,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge, Bell, BellIcon } from "lucide-react";
-export function SiteHeader() {
+import Link from "next/link";
+export function SiteHeader({ pageName }) {
   const [position, setPosition] = React.useState("right");
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
@@ -24,10 +26,10 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <div className=" w-full flex justify-between items-center">
-          <h1 className="text-base font-medium">Documents</h1>
+        <div className=" w-full flex justify-between items-center ">
+          <h1 className="text-base font-medium capitalize">{pageName}</h1>
 
-          <div className="flex items-center gap-3 justify-center">
+          <div className="flex items-center gap-3 justify-center mr-5">
             <div className="relative">
               {/* Bell Icon wrapped in a button */}
               <button className="p-2 hover:bg-gray-200 rounded-full focus:outline-none">
@@ -51,7 +53,16 @@ export function SiteHeader() {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Link href="/user/profile">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>
+
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+              </DropdownMenuContent>
+              {/* <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup
@@ -66,7 +77,7 @@ export function SiteHeader() {
                     Right
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
+              </DropdownMenuContent> */}
             </DropdownMenu>
           </div>
         </div>

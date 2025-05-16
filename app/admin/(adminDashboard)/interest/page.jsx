@@ -1,129 +1,247 @@
 "use client";
 
-import { DataTables } from "@/components/tables/data-table";
-
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
+import { Formik } from "formik";
+import React from "react";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Plus } from "lucide-react";
-
-import { DatePickerWithRange } from "@/components/date_pickers/datePickerWithRange";
-import { interestColumns } from "./interestColumns/interestColumns";
+  InterestValidationSchema,
+  ReferrslValidationSchema,
+} from "./schemaValidation/validation";
+import apiClient from "@/lib/axios";
+import useSWR from "swr";
+import { Skeleton } from "@/components/ui/skeleton";
 import interestStore from "../adminStore/interestStore";
+import Loading from "@/components/loading_spinner/loading";
+import { toast } from "sonner";
 
-export default function DemoPage() {
-  const {
-    fetchInterests,
-    interests,
-    meta,
-    currentPage,
-    search,
-    setStatus,
-    status,
-    setSearch,
-    exportToExcel,
-    exportLoading,
-    setDateRange,
-    from,
-    to,
-  } = interestStore();
+const Percentage = () => {
+  const isCreateLoading = interestStore((state) => state.isCreateLoading);
+  const isCreateRefLoading = interestStore((state) => state.isCreateRefLoading);
+  const updateInterest = interestStore((state) => state.updateInterest);
+  const updateReferral = interestStore((state) => state.updateReferral);
 
-  const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const fetcher = (url) => apiClient.get(url).then((res) => res.data.reward);
+  const fetchInterest = (url) =>
+    apiClient.get(url).then((res) => res.data.interest);
+  const { data, isLoading, mutate, error } = useSWR(
+    "/api/admin/reward",
+    fetcher
+  );
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setSearch(debouncedSearch);
-      fetchInterests(1, debouncedSearch, status);
-    }, 500); // 500ms delay
+  const { data: interest, isLoading: loading } = useSWR(
+    "/api/admin/get_interest",
+    fetchInterest
+  );
 
-    return () => clearTimeout(handler); // cleanup previous timer
-  }, [debouncedSearch]);
-
-  const handleSearchChange = (e) => {
-    setDebouncedSearch(e.target.value);
-  };
-  const handleStatusChange = (value) => {
-    setStatus(value == "all" ? "" : value);
-  };
-  useEffect(() => {
-    fetchInterests(currentPage, search, status);
-  }, []);
-  useEffect(() => {
-    fetchInterests(1, debouncedSearch, status);
-  }, [status]);
-  //exportToExcel();
-  //useEffect(() => {}, []);
-  const downloadExport = () => {
-    exportToExcel();
-  };
-
-  const handleSearch = () => {
-    fetchInterests(currentPage, search, status, to, from);
-  };
+  if (loading) {
+    return (
+      <div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+          <div>
+            <div>
+              <Skeleton className="h-[400px]   bg-[#e1e6f0]" />
+            </div>
+          </div>
+          <div>
+            <div>
+              <Skeleton className="h-[400px]   bg-[#e1e6f0]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="container mx-auto py-5 shadow rounded bg-white ">
-      <div className="flex justify-end p-3">
-        <Button asChild className="w-full">
-          <Link href="/admin/interest/create">
-            <Plus className="text-bold" /> Create
-          </Link>
-        </Button>
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-2 p-3 ">
-        <div className="w-[100%]">
-          <Input
-            type="text"
-            placeholder="Search contribution..."
-            value={debouncedSearch}
-            onChange={handleSearchChange}
-          />
-        </div>
-        <div className="w-[100%]">
-          <DatePickerWithRange setDateRange={setDateRange} />
-        </div>
-        <div className="">
-          <Button
-            variant="outline"
-            className="w-[100%]"
-            onClick={downloadExport}
-          >
-            {exportLoading ? "loading..." : "Export Contribution"}
-          </Button>
-        </div>
+    <div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+        <div>
+          <div className="rounded  bg-white p-5 mb-5 shadow-xl">
+            <Formik
+              initialValues={{
+                interest: interest?.interest_rate || "",
+                max_amount: interest?.max_amount || "",
+                min_amount: interest?.min_amount || "",
+              }}
+              validationSchema={InterestValidationSchema}
+              onSubmit={async (values, { setSubmitting }) => {
+                try {
+                  //resetForm();
+                  await updateInterest(values, interest);
+                } catch (error) {
+                  // toast.error(error);
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isSubmitting,
+                setFieldValue,
+              }) => (
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <h2>Interest Rate</h2>
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="interest" className="text-[14px] mb-1">
+                      Interest Percentage
+                    </Label>
+                    <Input
+                      type="number"
+                      id="interest"
+                      placeholder="Interest Percentage"
+                      value={values.interest}
+                      onChange={handleChange}
+                    />
 
-        <div className="w-[100%]">
-          <Select onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-[100%]">
-              <SelectValue placeholder="Select Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="processing">Processing</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-            </SelectContent>
-          </Select>
+                    <CustomErrorMessage name="interest" />
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="new_password" className="text-[14px] mb-1">
+                      Minimum Amount
+                    </Label>
+                    <Input
+                      type="number"
+                      id="min_amount"
+                      placeholder="Minimum Amount"
+                      value={values.min_amount}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="min_amount" />
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="interest" className="text-[14px] mb-1">
+                      Maximum Amount
+                    </Label>
+                    <Input
+                      type="number"
+                      id="max_amount"
+                      placeholder="Max Amount"
+                      value={values.max_amount}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="max_amount" />
+                  </div>
+
+                  <div className="mb-3">
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
+                      {isCreateLoading ? <Loading /> : "Update Interest"}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </Formik>
+          </div>
         </div>
-        {/* <div className="justify-self-end">
-          <Button size="lg">
-            <Plus className="text-bold" /> Create
-          </Button>
-        </div> */}
+        <div>
+          <div className="rounded  bg-white p-5 mb-5 shadow-xl">
+            <Formik
+              initialValues={{
+                reward_percent: data?.referral_reward_percent || "",
+                max_amount: data?.max_amount || "",
+                min_amount: data?.min_amount || "",
+              }}
+              validationSchema={ReferrslValidationSchema}
+              onSubmit={async (values, { setSubmitting }) => {
+                try {
+                  await updateReferral(values, data);
+                } catch (error) {
+                  console.log(error);
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
+              enableReinitialize={true}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isSubmitting,
+                setFieldValue,
+              }) => (
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <h2>Referral Reward</h2>
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="interest" className="text-[14px] mb-1">
+                      Reward Percentage
+                    </Label>
+                    <Input
+                      type="number"
+                      id="reward_percent"
+                      placeholder="Reward Percentage"
+                      value={values.reward_percent}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="reward_percent" />
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="min_amount" className="text-[14px] mb-1">
+                      Minimum Amount
+                    </Label>
+                    <Input
+                      type="number"
+                      id="min_amount"
+                      placeholder="Minimum Amount"
+                      value={values.min_amount}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="min_amount" />
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="max_amount" className="text-[14px] mb-1">
+                      Maximum Amount
+                    </Label>
+                    <Input
+                      type="number"
+                      id="max_amount"
+                      placeholder="Max Amount"
+                      value={values.max_amount}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="max_amount" />
+                  </div>
+
+                  <div className="mb-3">
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
+                      {isCreateRefLoading ? <Loading /> : "Update Reward"}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </Formik>
+          </div>
+        </div>
       </div>
-      <DataTables
-        columns={interestColumns}
-        data={interests}
-        fetchPage={fetchInterests}
-        meta={meta}
-      />
     </div>
   );
-}
+};
+
+export default Percentage;

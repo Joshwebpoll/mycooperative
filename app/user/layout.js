@@ -2,14 +2,33 @@
 import React, { useEffect, useState } from "react";
 
 import DashboardLayoutProvider from "./providers";
+import { useRouter } from "next/navigation";
+import useSWR from "swr";
+import apiClient from "@/lib/axios";
+import { useAuthStore } from "../(auth)/authStore/userAuthStore";
 
 const Layout = ({ children }) => {
+  // const { login, loading, users, isUserLoading, fetchProfile } = useAuthStore();
+  // // const [show, setShow] = useState(false);
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   fetchProfile();
+  // }, []);
+  // useEffect(() => {
+  //   if (!users && users.role !== "user") {
+  //     router.push("/login");
+  //   }
+  // }, [users]);
+
   return (
-    <div className="bg-[#f6f8fb] w-full">
+    <div className="bg-[#f9fbfd] w-full">
       <DashboardLayoutProvider>
         <div className="p-5">{children}</div>
       </DashboardLayoutProvider>
     </div>
+    // #f9fbfd
+    // #f6f8fb
   );
 };
 

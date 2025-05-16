@@ -28,17 +28,94 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { ninValidationSchema } from "@/components/verificationValidation/vaerificationValidation";
+import Loading from "@/components/loading_spinner/loading";
+import verificationStore from "../userStore/verificationStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import useSWR from "swr";
+import apiClient from "@/lib/axios";
 export default function NinVerification() {
   const verifyingNin = verificationStore((state) => state.verifyingNin);
-  const isLoadingBvn = verificationStore((state) => state.isLoadingBvn);
+  const isLoadingNin = verificationStore((state) => state.isLoadingNin);
+  const personalUser = verificationStore((state) => state.personalUser);
+  const getSingleUser = verificationStore((state) => state.getSingleUser);
+  const isUserLoading = verificationStore((state) => state.isUserLoading);
   const [date, setDate] = useState();
+  //SWR WAS USE TO REPLACE USEEFFECT
+  // useEffect(() => {
+  //   getSingleUser();
+  // }, []);
+  const fetcher = (url) => apiClient.get(url).then((res) => res.data.user);
+  const { data, isLoading, mutate, error } = useSWR(
+    "/api/user/personal_user",
+    fetcher
+  );
+  console.log(data, error, "swr");
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full justify-center py-5 md:p-5">
+        <div className="w-full max-w-md  ">
+          <Skeleton className="h-[400px]   bg-[#e1e6f0]" />
+        </div>
+      </div>
+    );
+  }
+
+  if (data?.nin !== null) {
+    return (
+      <div className="flex w-full justify-center py-5 md:p-5">
+        <div className="w-full max-w-md ">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between item-center">
+                <CardTitle className="text-[16px]"> Nin Details</CardTitle>
+                <Badge className="text-[13px] bg-green-100 text-green-800">
+                  Verified
+                </Badge>
+              </div>
+              <CardDescription>
+                Below is the details of Your Nin
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-between mb-3">
+                <h1 className="text-[15px]">Nin Number</h1>
+                <p className="uppercase text-[13.5px">{data?.nin_record.nin}</p>
+              </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
+              <div className="flex justify-between  mb-3">
+                <h1 className="text-[15px]">Full Name</h1>
+                <p className="capitalize text-[13.5px]">{`${data?.nin_record.last_name} ${data?.nin_record.middle_name} ${data?.nin_record.first_name}`}</p>
+              </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
+              <div className="flex justify-between mb-3">
+                <h1 className="text-[15px]">Phone Number</h1>
+                <p className=" text-[13.5px]">{`${data?.nin_record.mobile_number}`}</p>
+              </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
+              <div className="flex justify-between mb-3 ">
+                <h1 className="text-[15px]">Gender</h1>
+                <p className=" text-[13.5px]">{`${data?.nin_record.gender}`}</p>
+              </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
+              <div className="flex justify-between mb-3">
+                <h1 className="text-[15px]">Date of Birth</h1>
+                <p className=" text-[13.5px]">{`${data?.nin_record.date_of_birth}`}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex w-full justify-center py-5 md:p-5">
-      <div className="w-full max-w-sm  ">
+      <div className="w-full max-w-md   ">
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl">Nin Verification</CardTitle>
@@ -58,7 +135,7 @@ export default function NinVerification() {
               onSubmit={async (values, { setSubmitting }) => {
                 try {
                   await verifyingNin(values);
-                  console.log(values);
+                  await mutate();
                 } catch (error) {
                 } finally {
                   setSubmitting(false);
@@ -164,8 +241,12 @@ export default function NinVerification() {
                       <CustomErrorMessage name="date_of_birth" />
                     </div>
 
-                    <Button type="submit" className="w-full">
-                      Verify Bvn
+                    <Button
+                      disabled={isSubmitting}
+                      type="submit"
+                      className="w-full"
+                    >
+                      {isLoadingNin ? <Loading /> : "Verify Bvn"}
                     </Button>
                   </div>
                 </form>

@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { loanColumns } from "./loanColumns/loanColumns";
 import loanStore from "../userStore/loanStore";
 import { DatePickerWithRange } from "@/components/date_pickers/datePickerWithRange";
@@ -34,10 +34,10 @@ import { toast } from "sonner";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 import { loanValidationSchema } from "@/components/loanValidation/loanValidation";
 import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
+import LoadingOverlay from "@/components/loadingOvalay/loadingOverlay";
 
 export default function DemoPage() {
   const {
-    fetchLoans,
     loans,
     meta,
     currentPage,
@@ -52,6 +52,7 @@ export default function DemoPage() {
     loading,
   } = loanStore();
   const isLoading = loanStore((state) => state.isLoading);
+  const fetchLoans = loanStore((state) => state.fetchLoans);
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -86,35 +87,35 @@ export default function DemoPage() {
 
   const [open, setOpen] = useState(false);
 
-  if (isLoading) {
-    return (
-      <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
+  // if (isLoading) {
+  //   return (
+  //     <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
+  //       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className=" h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
 
-          <div className="w-[100%]">
-            {/* Input Skeleton */}
-            <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
-          </div>
-        </div>
-        <SkeletonTable columns={5} rows={5} />
-      </div>
-    );
-  }
+  //         <div className="w-[100%]">
+  //           {/* Input Skeleton */}
+  //           <div className="h-10 rounded-md bg-[#e1e6f0] animate-pulse" />
+  //         </div>
+  //       </div>
+  //       <SkeletonTable columns={5} rows={5} />
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto">
+    <div className="container mx-auto py-5 inset-shadow-sm shadow-xl rounded bg-white  overflow-auto relative">
       <div className="flex justify-end px-3">
         <Button onClick={() => setOpen(true)}>Apply Loan</Button>
       </div>
@@ -162,7 +163,10 @@ export default function DemoPage() {
         data={loans}
         fetchPage={fetchLoans}
         meta={meta}
+        loading={isLoading}
       />
+
+      {isLoading ? <LoadingOverlay /> : ""}
 
       <Dialog open={open} onOpenChange={setOpen}>
         {/* <DialogTrigger asChild>

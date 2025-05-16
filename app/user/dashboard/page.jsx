@@ -14,6 +14,7 @@ import {
   MonitorCheck,
   PackageCheck,
   TrendingUpDown,
+  Users,
 } from "lucide-react";
 import { DashboardTable } from "./dashboardTable";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -188,6 +189,7 @@ const Dashboard = () => {
   const pendingLoan = dashboardStore((state) => state.pending_loans);
   const completedLoans = dashboardStore((state) => state.completedLoans);
   const totalRepayment = dashboardStore((state) => state.totalRepayment);
+  const totalReferrals = dashboardStore((state) => state.totalReferrals);
   const fetchLatestContribution = dashboardStore(
     (state) => state.fetchLatestContribution
   );
@@ -245,14 +247,14 @@ const Dashboard = () => {
             Icon={Download}
           />
         </div>
-        <div className=" rounded ">
+        <div className="">
           <DahboardCards
             title="Total Shares"
             totalNumber={formattedTotalShares ? formattedTotalShares : "0.00"}
             Icon={Cylinder}
           />
         </div>
-        <div className=" rounded ">
+        <div className="">
           <DahboardCards
             title="Total Reapyment"
             totalNumber={
@@ -261,14 +263,14 @@ const Dashboard = () => {
             Icon={CreditCard}
           />
         </div>
-        <div className=" rounded ">
+        <div className="">
           <DahboardCards
             title="Pending Loan"
             totalNumber={pendingLoan ? pendingLoan : "0"}
             Icon={TrendingUpDown}
           />
         </div>
-        <div className=" rounded ">
+        <div className="">
           <DahboardCards
             title="Active Loan"
             totalNumber={activeLoan ? activeLoan : "0"}
@@ -276,11 +278,26 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className=" rounded ">
+        <div className="  ">
           <DahboardCards
             title="Completed Loan"
             totalNumber={completedLoans ? completedLoans : "0"}
             Icon={PackageCheck}
+          />
+        </div>
+
+        {/* <div className="  ">
+          <DahboardCards
+            title="Completed Loan"
+            totalNumber={completedLoans ? completedLoans : "0"}
+            Icon={PackageCheck}
+          />
+        </div> */}
+        <div className="  ">
+          <DahboardCards
+            title="Total Referrals"
+            totalNumber={totalReferrals}
+            Icon={Users}
           />
         </div>
       </div>

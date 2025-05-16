@@ -35,6 +35,8 @@ import verificationStore from "../userStore/verificationStore";
 import Loading from "@/components/loading_spinner/loading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import apiClient from "@/lib/axios";
+import useSWR, { mutate } from "swr";
 export default function bvnVerifcation() {
   const verifyingBvn = verificationStore((state) => state.verifyingBvn);
   const isLoadingBvn = verificationStore((state) => state.isLoadingBvn);
@@ -43,11 +45,17 @@ export default function bvnVerifcation() {
   const isUserLoading = verificationStore((state) => state.isUserLoading);
   console.log(personalUser);
   const [date, setDate] = useState();
-  useEffect(() => {
-    getSingleUser();
-  }, []);
-
-  if (isUserLoading) {
+  //CHANGED FROM USEFFECT TO SWR
+  // useEffect(() => {
+  //   getSingleUser();
+  // }, []);
+  const fetcher = (url) => apiClient.get(url).then((res) => res.data.user);
+  const { data, isLoading, mutate, error } = useSWR(
+    "/api/user/personal_user",
+    fetcher
+  );
+  console.log(data, error, "swr");
+  if (isLoading) {
     return (
       <div className="flex w-full justify-center py-5 md:p-5">
         <div className="w-full max-w-md  ">
@@ -57,7 +65,7 @@ export default function bvnVerifcation() {
     );
   }
 
-  if (personalUser.bvn !== null) {
+  if (data.bvn !== null) {
     return (
       <div className="flex w-full justify-center py-5 md:p-5">
         <div className="w-full max-w-md ">
@@ -76,19 +84,22 @@ export default function bvnVerifcation() {
             <CardContent>
               <div className="flex justify-between mb-3">
                 <h1 className="text-[15px]">Bvn Number</h1>
-                <p className="uppercase text-[13.5px">{personalUser.bvn}</p>
+                <p className="uppercase text-[13.5px">{data.bvn}</p>
               </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
               <div className="flex justify-between  mb-3">
                 <h1 className="text-[15px]">Full Name</h1>
-                <p className="uppercase text-[13.5px]">{`${personalUser.name} ${personalUser.surname} ${personalUser.lastname}`}</p>
+                <p className="uppercase text-[13.5px]">{`${data.name} ${data.surname} ${data.lastname}`}</p>
               </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
               <div className="flex justify-between mb-3">
                 <h1 className="text-[15px]">Phone Number</h1>
-                <p className="uppercase text-[13.5px]">{`${personalUser.phone_number}`}</p>
+                <p className="uppercase text-[13.5px]">{`${data.phone_number}`}</p>
               </div>
+              <hr className="mb-3 border-b border-[#f2f2f2]" />
               <div className="flex justify-between ">
                 <h1 className="text-[15px]">Gender</h1>
-                <p className="uppercase text-[13.5px]">{`${personalUser.gender}`}</p>
+                <p className="uppercase text-[13.5px]">{`${data.gender}`}</p>
               </div>
             </CardContent>
           </Card>
@@ -123,6 +134,7 @@ export default function bvnVerifcation() {
               onSubmit={async (values, { setSubmitting }) => {
                 try {
                   await verifyingBvn(values);
+                  await mutate();
                 } catch (error) {
                 } finally {
                   setSubmitting(false);

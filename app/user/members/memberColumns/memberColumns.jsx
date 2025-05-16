@@ -17,6 +17,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import { CustomDetailsDialog } from "@/components/veiwdetailsmodal/dialogModal";
+import { useState } from "react";
 
 export const membersColumns = [
   {
@@ -33,10 +35,10 @@ export const membersColumns = [
     header: "Full Name",
   },
 
-  {
-    accessorKey: "id_number",
-    header: "Id Number",
-  },
+  // {
+  //   accessorKey: "id_number",
+  //   header: "Id Number",
+  // },
 
   {
     accessorKey: "total_shares",
@@ -50,7 +52,7 @@ export const membersColumns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className=" font-medium">{formatted}</div>;
     },
   },
   {
@@ -65,7 +67,7 @@ export const membersColumns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className=" font-medium">{formatted}</div>;
     },
   },
 
@@ -105,47 +107,98 @@ export const membersColumns = [
       );
     },
   },
-  {
-    accessorKey: "created_at",
-    header: "Date Created",
-    cell: ({ row }) => {
-      const formatted = format(
-        new Date(row.getValue("created_at")),
-        "MMMM d, yyyy h:mm a"
-      );
+  // {
+  //   accessorKey: "created_at",
+  //   header: "Date Created",
+  //   cell: ({ row }) => {
+  //     const formatted = format(
+  //       new Date(row.getValue("created_at")),
+  //       "MMMM d, yyyy h:mm a"
+  //     );
 
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
+  //     return <div className="text-right font-medium">{formatted}</div>;
+  //   },
+  // },
 
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const contribution = row.original;
+      const member = row.original;
+      const [open, setOpen] = useState(false);
+      // const formattedRemainig = new Intl.NumberFormat("en-NG", {
+      //   style: "currency",
+      //   currency: "NGN",
+      // }).format(repayment.remaining_balance);
+      const form = format(
+        new Date(member.created_at),
+        "MMMM do yyyy, hh:mm:ss a"
+      );
+      const joiningDate = format(
+        new Date(member.joining_date),
+        "MMMM do yyyy, hh:mm:ss a"
+      );
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => alert(contribution.id)}>
-              View contribution
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Edit <Trash2 />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Delete <Pencil />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div>
+          <Button
+            onClick={() => setOpen(true)}
+            variant="ghost"
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal />
+          </Button>
+          <CustomDetailsDialog
+            open={open}
+            onOpenChange={setOpen}
+            title="Repayment"
+            // description="Basic information about the user."
+            footer={
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Close
+              </Button>
+            }
+          >
+            <div className="space-y-4 text-sm ">
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Id Number
+                </h1>
+                <p className="capitalize">{member.id_number}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Date Joined
+                </h1>
+                <p>{joiningDate}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Email
+                </h1>
+                <p>{member.email}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Phone
+                </h1>
+                <p>{member.phone}</p>
+              </div>
+              <hr />
+
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  date/time
+                </h1>
+                <p>{form}</p>
+              </div>
+            </div>
+          </CustomDetailsDialog>
+        </div>
       );
     },
   },

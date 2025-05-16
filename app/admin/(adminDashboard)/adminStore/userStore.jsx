@@ -1,3 +1,4 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
@@ -23,8 +24,8 @@ const userStores = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/users?page=${page}&per_page=10&search=${search}&status=${status}`,
+      const res = await apiClient.get(
+        `api/admin/users?page=${page}&per_page=10&search=${search}&status=${status}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,15 +61,7 @@ const userStores = create((set) => ({
   getSingleUser: async (id) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.get(
-        `${apiUrl}/get_single_user/${id}`,
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await apiClient.get(`/api/admin/get_single_user/${id}`);
 
       if (res.data.status === true) {
         set({

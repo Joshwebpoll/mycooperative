@@ -72,6 +72,11 @@ export function AppSidebar({ ...props }) {
         icon: Shield,
       },
       {
+        title: "Referrals",
+        url: "/admin/referrals",
+        icon: Shield,
+      },
+      {
         title: "Bulk Email",
         url: "/admin/bulkemail",
         icon: Mail,

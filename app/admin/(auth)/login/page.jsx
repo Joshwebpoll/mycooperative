@@ -5,7 +5,7 @@ import { GalleryVerticalEnd } from "lucide-react";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function () {
   const { login } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

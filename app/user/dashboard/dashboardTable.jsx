@@ -166,7 +166,7 @@ export function DashboardTable({ data }) {
   });
 
   return (
-    <div className="w-full bg-white shadow p-5 rounded">
+    <div className="w-full bg-white shadow-2xl p-5 rounded">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Contribution Type"

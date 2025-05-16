@@ -10,7 +10,7 @@ const token = "84|kofFvA74qP3vgXv0242yVZE2X5ZILbbESaMAzPEuab460a86";
 const loanStore = create((set) => ({
   loans: [],
   loading: false,
-  isLoading: true,
+  isLoading: false,
   exportLoading: false,
   error: null,
   meta: {},
@@ -30,8 +30,8 @@ const loanStore = create((set) => ({
     from = "",
     to = ""
   ) => {
-    set({ isLoading: true, error: null });
-
+    //set({ isLoading: true, error: null });
+    set((state) => ({ ...state, isLoading: true }));
     try {
       const res = await apiClient.get(
         `/api/user/get_loan?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`

@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { CustomDetailsDialog } from "../veiwdetailsmodal/dialogModal";
+import { useState } from "react";
+import { format } from "date-fns";
 
 export const columns = [
   {
@@ -25,10 +28,7 @@ export const columns = [
     accessorKey: "transaction_id",
     header: "Transaction Id",
   },
-  {
-    accessorKey: "contribution_type",
-    header: "Contribution",
-  },
+
   {
     accessorKey: "amount_contributed",
     header: "Amount",
@@ -41,41 +41,14 @@ export const columns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className=" font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "account_number",
     header: "Account Number",
   },
-  {
-    accessorKey: "contribution_date",
-    header: "Date",
-  },
-  // {
-  //   accessorKey: "status",
-  //   header: "Status",
-  //   ceil: ({ row }) => {
-  //     const statuss = row.getValue("status");
-  //     console.log(statuss);
-  //     const statusStyles = {
-  //       pending: "bg-yellow-100 text-yellow-800",
-  //       completed: "bg-red-100 text-red-800",
-  //     };
 
-  //     return (
-  //       <Badge
-  //         className={`${
-  //           row.getValue("status") == "completed"
-  //             ? "bg-amber-300"
-  //             : "bg-amber-950"
-  //         }`}
-  //       >
-  //         {row.getValue("status")}
-  //       </Badge>
-  //     );
-  //   },
-  // },
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -109,53 +82,68 @@ export const columns = [
   },
 
   {
-    accessorKey: "contribution_deposit_type",
-    header: "Deposit Type",
-  },
-  // {
-  //   accessorKey: "Action",
-  //   header: "Action",
-  //   cell: ({ row }) => (
-  //     <div className="flex  justify-between">
-  //       <div>
-  //         <Trash2 />
-  //       </div>
-  //       <div>
-  //         <Pen className="w-4 h-4 text-muted-foreground" />
-  //       </div>
-  //     </div>
-  //   ),
-  // },
-  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const contribution = row.original;
-
+      const [open, setOpen] = useState(false);
+      const dueDate = format(
+        new Date(contribution.contribution_date),
+        "MMMM do yyyy, hh:mm:ss a"
+      );
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => alert(contribution.id)}>
-              View contribution
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`contribution/edit/${contribution.id}`}>
-                Edit <Trash2 />
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Delete <Pencil />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div>
+          <Button
+            onClick={() => setOpen(true)}
+            variant="ghost"
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal />
+          </Button>
+          <CustomDetailsDialog
+            open={open}
+            onOpenChange={setOpen}
+            title="Contribution"
+            // description="Basic information about the user."
+            footer={
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Close
+              </Button>
+            }
+          >
+            <div className="space-y-4 text-sm ">
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Deposit Type
+                </h1>
+                <p className="capitalize">
+                  {contribution.contribution_deposit_type}
+                </p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Contribution
+                </h1>
+                <p>{contribution.contribution_type}</p>
+              </div>
+              <hr />
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">Date</h1>
+                <p>{dueDate}</p>
+              </div>
+              <hr />
+
+              <div className="flex justify-between">
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Reference Number
+                </h1>
+                <p>{contribution.reference_number}</p>
+              </div>
+            </div>
+          </CustomDetailsDialog>
+        </div>
       );
     },
   },
