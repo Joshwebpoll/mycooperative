@@ -37,6 +37,7 @@ import {
 import { useEffect, useState } from "react";
 import dashboardStore from "../userStore/dashboardStore";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 
 export const columns = [
   {
@@ -85,13 +86,24 @@ export const columns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className=" font-medium">{formatted}</div>;
+      return (
+        <div className=" font-medium">
+          ₦{row.getValue("amount_contributed")}
+        </div>
+      );
     },
   },
 
   {
     accessorKey: "contribution_date",
     header: "Date",
+    cell: ({ row }) => {
+      const formattedDate = format(
+        new Date(row.getValue("contribution_date")),
+        "MMMM d, yyyy h:mm a"
+      );
+      return <div className=" font-medium">{formattedDate}</div>;
+    },
   },
   {
     accessorKey: "status",
@@ -166,7 +178,7 @@ export function DashboardTable({ data }) {
   });
 
   return (
-    <div className="w-full bg-white shadow-2xl p-5 rounded">
+    <div className="w-full bg-white shadow-xl p-5 rounded-xl">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Contribution Type"

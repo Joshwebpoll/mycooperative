@@ -2,7 +2,7 @@ import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
 import { create } from "zustand";
-
+import apiClient from "@/lib/axios";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const token = "85|hlTToptbhLxzTJ7Yp3WbhmJaKZwnFzF6Nqpjb9rl1e405d32";
 const memberStore = create((set) => ({
@@ -22,8 +22,8 @@ const memberStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/get_members?page=${page}&per_page=10&search=${search}&status=${status}`,
+      const res = await apiClient.get(
+        `/api/admin/get_members?page=${page}&per_page=10&search=${search}&status=${status}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

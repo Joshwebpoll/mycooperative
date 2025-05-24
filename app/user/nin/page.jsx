@@ -70,7 +70,7 @@ export default function NinVerification() {
     return (
       <div className="flex w-full justify-center py-5 md:p-5">
         <div className="w-full max-w-md ">
-          <Card>
+          <Card className="shadow-xl rounded-xl">
             <CardHeader>
               <div className="flex justify-between item-center">
                 <CardTitle className="text-[16px]"> Nin Details</CardTitle>
@@ -116,7 +116,7 @@ export default function NinVerification() {
   return (
     <div className="flex w-full justify-center py-5 md:p-5">
       <div className="w-full max-w-md   ">
-        <Card>
+        <Card className="shadow-xl rounded-xl">
           <CardHeader>
             <CardTitle className="text-2xl">Nin Verification</CardTitle>
             <CardDescription>

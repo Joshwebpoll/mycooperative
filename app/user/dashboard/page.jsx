@@ -19,6 +19,10 @@ import {
 import { DashboardTable } from "./dashboardTable";
 import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonTable from "@/components/tableSkeleton/tableSkeleton";
+import profileStore from "../userStore/profileStore";
+import { Button } from "@/components/ui/button";
+import ReferralLink from "./referralLink";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // const data = [
 //   {
 //     id: 1,
@@ -198,11 +202,18 @@ const Dashboard = () => {
   );
   const loading = dashboardStore((state) => state.loading);
   const isLoading = dashboardStore((state) => state.isLoading);
+  const personalUser = profileStore((state) => state.personalUser);
+  const getSingleUserUpdate = profileStore(
+    (state) => state.getSingleUserUpdate
+  );
+  useEffect(() => {
+    getSingleUserUpdate();
+  }, [getSingleUserUpdate]);
 
   useEffect(() => {
     fetchLatestContribution();
   }, [fetchLatestContribution]);
-
+  console.log(personalUser);
   useEffect(() => {
     fetchDashboard();
   }, [fetchDashboard]);
@@ -236,7 +247,7 @@ const Dashboard = () => {
       </div>
     );
   }
-
+  let link = `http://localhost:3000/register?ref=${personalUser.referral_code}`;
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4 mb-10">
@@ -301,10 +312,29 @@ const Dashboard = () => {
           />
         </div>
       </div>
-
+      <div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 lg:gap-8 mb-10">
+          <ReferralLink referralUrl={link} />
+        </div>
+      </div>
       <div>
         {/* <h1>Resent Contribution</h1> */}
-        <DashboardTable data={latestContribution} />
+        <Tabs defaultValue="recent_contribution">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="recent_contribution">
+              Recent Contribution
+            </TabsTrigger>
+            <TabsTrigger value="recent_repayment">Recent Repayment</TabsTrigger>
+            <TabsTrigger value="referrals">Referrals</TabsTrigger>
+          </TabsList>
+          <TabsContent value="recent_contribution">
+            <DashboardTable data={latestContribution} />
+          </TabsContent>
+          <TabsContent value="recent_repayment">
+            <h1>Hello word</h1>
+            <DashboardTable data={latestContribution} />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

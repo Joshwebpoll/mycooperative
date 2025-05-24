@@ -69,7 +69,7 @@ export default function bvnVerifcation() {
     return (
       <div className="flex w-full justify-center py-5 md:p-5">
         <div className="w-full max-w-md ">
-          <Card>
+          <Card className='shadow-xl rounded-xl'>
             <CardHeader>
               <div className="flex justify-between item-center">
                 <CardTitle className="text-[16px]">Bvn Details</CardTitle>
@@ -115,7 +115,7 @@ export default function bvnVerifcation() {
     // container mx-auto py-5 shadow rounded bg-white
     <div className="flex w-full justify-center py-5 md:p-5">
       <div className="w-full max-w-md  ">
-        <Card>
+        <Card className="shadow-xl rounded-xl">
           <CardHeader>
             <CardTitle className="text-2xl">Bvn Verification</CardTitle>
             <CardDescription>

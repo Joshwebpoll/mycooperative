@@ -1,5 +1,8 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
+import { mutate } from "swr";
 
 import { create } from "zustand";
 
@@ -17,7 +20,9 @@ const repaymentStore = create((set) => ({
   search: "",
   from: "",
   to: "",
+  isCreatingloading: false,
   setDateRange: (range) => set({ from: range.from, to: range.to }),
+
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
   fetchRepayments: async (
@@ -30,8 +35,8 @@ const repaymentStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/loan_repayment?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
+      const res = await apiClient.get(
+        `/api/admin/loan_repayment?page=${page}&per_page=10&search=${search}&status=${status}&from=${to}&to=${from}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,6 +67,30 @@ const repaymentStore = create((set) => ({
       });
     } catch (err) {
       set({ error: "Failed to fetch contribution", loading: false });
+    }
+  },
+
+  addManualRepayment: async (values, setShowModal) => {
+    try {
+      set({ isCreatingloading: true });
+      const res = await apiClient.post(`/api/admin/loan_repayment`, {
+        repayment_amount: values.repayment_amount,
+        loan_number: values.loan_number,
+        customer_account_number: values.acct_number,
+        payment_method: values.payment_method,
+        status: values.status,
+      });
+      console.log(res.data);
+      if (res.data.status === true) {
+        toast.success(res.data.message);
+        set({ isCreatingloading: false });
+        mutate("/admin/repayment");
+        setShowModal(false);
+      }
+    } catch (error) {
+      set({ isCreatingloading: false });
+    } finally {
+      set({ isCreatingloading: false });
     }
   },
   exportToExcel: async () => {

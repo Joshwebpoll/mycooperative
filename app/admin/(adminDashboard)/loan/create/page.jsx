@@ -46,18 +46,15 @@ import { toast } from "sonner";
 import loanStore from "../../adminStore/loanStore";
 import { Textarea } from "@/components/ui/textarea";
 import Loading from "@/components/loading_spinner/loading";
-// import toast from "react-hot-toast";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-// const LoginSchema = Yup.object().shape({
-//   account_number: Yup.string()
-//     .String("Invalid email, please try again")
-//     .required("Email is required"),
-//   amount_contributed: Yup.string()
-//     .min(6, "Too short!")
-//     .required("Password is required"),
-// });
-
-const CreateContribution = () => {
+const CreateContribution = ({ className, ...props }) => {
   const [date, setDate] = React.useState();
   const [open, setOpen] = useState(false);
   const [opens, setOpens] = React.useState(false);
@@ -116,7 +113,7 @@ const CreateContribution = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-sm rounded">
+              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-xl rounded-xl">
                 <div className="w-full max-w-2xl mx-auto mb-3 ">
                   <Label htmlFor="email" className="text-[14px] mb-1">
                     Choose Member
@@ -233,7 +230,7 @@ const CreateContribution = () => {
                 </div>
               </div>
               <div>
-                <h2 className="text-[16px] bg-white p-3  border-bottom border-b-2 shadow-sm rounded-end rounded-start">
+                {/* <h2 className="text-[16px] bg-white p-3  border-bottom border-b-2 shadow-sm rounded-end rounded-start">
                   Publish
                 </h2>
                 <div className=" rounded bg-white p-5 shadow-sm">
@@ -275,7 +272,64 @@ const CreateContribution = () => {
                     <LogOut />
                     Save & Exit
                   </Button>
-                </div>
+                </div> */}
+
+                <Card className={cn("shadow-xl", className)} {...props}>
+                  <CardHeader>
+                    <CardTitle>Publish</CardTitle>
+
+                    {/* <CardDescription>
+                      You have 3 unread messages.
+                    </CardDescription> */}
+                  </CardHeader>
+                  <hr />
+                  <CardContent className="grid gap-4">
+                    <div className=" rounded bg-white p-5 shadow-sm">
+                      <div className="mb-3">
+                        <Label htmlFor="email" className="text-[14px] mb-1">
+                          Status
+                        </Label>
+                        <Select
+                          value={values.status}
+                          onValueChange={(val) => setFieldValue("status", val)}
+                        >
+                          <SelectTrigger className="w-[100%] ">
+                            <SelectValue placeholder="Choose Loan Status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="approved">Approved</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="disbursed">Disbursed</SelectItem>
+                            <SelectItem value="rejected">Rejected</SelectItem>
+                            <SelectItem value="defaulted">Defaulted</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <div>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="me-3 rounded-1 cursor-pointer "
+                      >
+                        <Save />
+                        {loading ? <Loading /> : "Save"}
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="cursor-pointer"
+                      >
+                        {" "}
+                        <LogOut />
+                        Save & Exit
+                      </Button>
+                    </div>
+                  </CardFooter>
+                </Card>
               </div>
             </div>
           </form>

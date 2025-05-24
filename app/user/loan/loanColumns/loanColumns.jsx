@@ -187,7 +187,9 @@ export const loanColumns = [
           >
             <div className="space-y-4 text-sm ">
               <div className="flex justify-between">
-                <h1 className="uppercase text-[12.5px] text-[#8798AD]">Interest Rate</h1>
+                <h1 className="uppercase text-[12.5px] text-[#8798AD]">
+                  Interest Rate
+                </h1>
                 <p>{loan.interest_rate}</p>
               </div>
               <hr />

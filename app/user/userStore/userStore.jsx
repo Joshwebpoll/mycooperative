@@ -1,3 +1,4 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
 
@@ -15,6 +16,7 @@ const userStores = create((set) => ({
   currentPage: 1,
   searchQuery: "",
   search: "",
+  logotLoading: "",
 
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
@@ -58,6 +60,21 @@ const userStores = create((set) => ({
       set({ loading: false });
     }
   },
+  logOutUser: async (router) => {
+    set({ logotLoading: true, error: null });
+
+    try {
+      const res = await apiClient.post(`/api/user/logout`);
+      if (res.data.status === true) {
+        router.replace("/login");
+      }
+    } catch (err) {
+      set({ error: "Failed to fetch contribution", logotLoading: false });
+    } finally {
+      set({ logotLoading: false });
+    }
+  },
+
   exportToExcel: async () => {
     set({ exportLoading: true, error: null });
     try {

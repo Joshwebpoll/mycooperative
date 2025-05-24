@@ -1,7 +1,7 @@
 "use client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Eye, EyeOff, GalleryVerticalEnd } from "lucide-react";
+import { Eye, EyeOff, Hand } from "lucide-react";
 import { useAuthStore } from "../authStore/userAuthStore";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ import apiClient from "@/lib/axios";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
+import { useGuestRedirect } from "@/hooks/useGuestRedirect";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -34,41 +35,18 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function LoginPage() {
-  const fetcher = (url) => apiClient.get(url).then((res) => res.data.user);
-  const { login, loading, users, isUserLoading, fetchProfile } = useAuthStore();
+  const { isLoading, isAuthenticated } = useGuestRedirect();
+
+  const { login, loading } = useAuthStore();
   const [show, setShow] = useState(false);
   const router = useRouter();
-  console.log(users);
-  // const { data, isLoading, mutate, error } = useSWR(
-  //   "/api/user/profile",
-  //   fetcher
-  // );
-
-  // useEffect(() => {
-  //   fetchProfile();
-  // }, []);
-
-  // if (data.status === true) {
-  //   if (data?.user || data?.user?.role === "user") {
-  //     router.push("/user/dashboard");
-  //   }
-  // }
-  // useEffect(() => {
-  //   if (users && users.role === "user") {
-  //     router.replace("/user/dashboard");
-  //   }
-  // }, [users]);
-
-  // if (isUserLoading) {
-  //   return "Hello word";
-  // }
-
+  if (isLoading || isAuthenticated) return null;
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-md flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <GalleryVerticalEnd className="size-4" />
+            <Hand className="size-4" />
           </div>
           Araromi Cooperative
         </a>
@@ -91,7 +69,7 @@ export default function LoginPage() {
                     await login(values.email, values.password, router);
                     console.log(values);
                   } catch (err) {
-                    toast.error(err.msg);
+                    console.log(err);
                   } finally {
                     setSubmitting(false);
                   }
@@ -117,10 +95,10 @@ export default function LoginPage() {
                           <Input
                             type="email"
                             name="email"
-                            onChange={handleChange}
                             onBlur={handleBlur}
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={values.email}
+                            onChange={handleChange}
                           />
                           <CustomErrorMessage name="email" />
                         </div>

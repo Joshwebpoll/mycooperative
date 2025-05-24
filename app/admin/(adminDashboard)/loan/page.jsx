@@ -66,7 +66,7 @@ export default function DemoPage() {
         <div className="w-[100%]">
           <Input
             type="text"
-            placeholder="Search contribution..."
+            placeholder="Search loan..."
             value={debouncedSearch}
             onChange={handleSearchChange}
           />

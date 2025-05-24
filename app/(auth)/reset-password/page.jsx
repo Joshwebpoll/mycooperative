@@ -1,7 +1,7 @@
 "use client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Eye, EyeOff, GalleryVerticalEnd } from "lucide-react";
+import { Eye, EyeOff, Hand } from "lucide-react";
 import { useAuthStore } from "../authStore/userAuthStore";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -54,7 +54,7 @@ export default function resetPassword() {
       <div className="flex w-full max-w-md flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <GalleryVerticalEnd className="size-4" />
+            <Hand className="size-4" />
           </div>
           Araromi Cooperative
         </a>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
+import React, { useState } from "react";
 import { ArrowUpDown, MoreHorizontal, Pen, Pencil, Trash2 } from "lucide-react";
 import { FaRegEdit } from "react-icons/fa";
 import {
@@ -17,6 +17,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { LoanApproval } from "../loaneditModal/page";
+import ApproveLoans from "../loaneditModal/approveModal";
 
 export const loanColumns = [
   {
@@ -149,32 +151,35 @@ export const loanColumns = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
+      const [isModalOpen, setModalOpen] = useState(false);
       const loan = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => alert(loan.id)}>
-              View contribution
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`loan/edit/${loan.id}`}>
-                Edit <Trash2 />
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Delete <Pencil />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div>
+          <ApproveLoans isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => alert(loan.id)}>
+                View contribution
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link href={`loan/edit/${loan.id}`}>
+                  Edit <Trash2 />
+                </Link>
+              </DropdownMenuItem>
+
+              <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       );
     },
   },

@@ -1,7 +1,7 @@
 "use client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Eye, EyeOff, GalleryVerticalEnd } from "lucide-react";
+import { Eye, EyeOff, Hand } from "lucide-react";
 import { useAuthStore } from "../authStore/userAuthStore";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -17,10 +17,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
-import Loading from "@/components/loading_spinner/loading";
 
-const LoginSchema = Yup.object().shape({
+import Loading from "@/components/loading_spinner/loading";
+import { useRouter, useSearchParams } from "next/navigation";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
+
+const RegisterSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -47,13 +49,16 @@ const LoginSchema = Yup.object().shape({
 export default function RegisterPage() {
   const { register, loading, token } = useAuthStore();
   const [show, setShow] = useState(false);
+  const searchParams = useSearchParams();
+  const ref = searchParams.get("ref");
+  const router = useRouter();
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
+      <div className="flex w-full max-w-md flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <GalleryVerticalEnd className="size-4" />
+            <Hand className="size-4" />
           </div>
           Araromi Cooperative
         </a>
@@ -63,7 +68,7 @@ export default function RegisterPage() {
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
               <CardDescription>
-                Login with your Apple or Google account
+                Fill the form below to register an account
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -72,105 +77,92 @@ export default function RegisterPage() {
                   email: "",
                   first_name: "",
                   password: "",
-
+                  referral_code: ref ? ref : "",
                   username: "",
                   confirm_password: "",
                   phone_number: "",
                 }}
-                validationSchema={LoginSchema}
+                validationSchema={RegisterSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                   try {
-                    console.log(values);
-                    await register(
-                      values.email,
-                      values.first_name,
-                      values.password,
-                      values.username,
-                      values.confirm_password,
-                      values.phone_number
-                    );
-
-                    setTimeout(() => setSubmitting(false), 1000);
+                    await register(values, router);
                   } catch (err) {
-                    toast.error(err.msg);
+                    console.log(err);
+                  } finally {
+                    setSubmitting(false);
                   }
                 }}
               >
-                {({ isSubmitting, touched }) => (
-                  <Form>
+                {({
+                  isSubmitting,
+                  values,
+                  touched,
+                  handleSubmit,
+                  handleChange,
+                }) => (
+                  <form onSubmit={handleSubmit}>
                     <div className="grid gap-6">
                       <div className="flex flex-col gap-4"></div>
 
                       <div className="grid gap-6">
                         <div className="grid gap-2">
                           <Label htmlFor="email">Email</Label>
-                          <Field
-                            as={Input}
+                          <Input
                             name="email"
                             id="email"
                             type="email"
                             placeholder="Email"
+                            value={values.email}
+                            onChange={handleChange}
                           />
-                          <ErrorMessage
-                            name="email"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="email" />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="first_name">First Name</Label>
-                          <Field
-                            as={Input}
+                          <Input
                             name="first_name"
                             id="first_name"
                             type="first_name"
                             placeholder="First Name"
+                            value={values.first_name}
+                            onChange={handleChange}
                           />
-                          <ErrorMessage
-                            name="first_name"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="first_name" />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="username">Username</Label>
-                          <Field
-                            as={Input}
+                          <Input
                             name="username"
                             id="username"
                             type="text"
                             placeholder="Username"
+                            value={values.username}
+                            onChange={handleChange}
                           />
-                          <ErrorMessage
-                            name="username"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="username" />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="phone_number">Phone Number</Label>
-                          <Field
-                            as={Input}
+                          <Input
                             name="phone_number"
                             id="phone_number"
                             type="number"
                             placeholder="Phone Number"
+                            value={values.phone_number}
+                            onChange={handleChange}
                           />
-                          <ErrorMessage
-                            name="phone_number"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="phone_number" />
                         </div>
                         <div className="grid gap-2 relative space-y-1">
                           <Label htmlFor="password">Password</Label>
 
-                          <Field
-                            as={Input}
+                          <Input
                             name="password"
                             id="password"
                             type={show ? "text" : "password"}
-                            placeholder="••••••••"
+                            placeholder="Password"
+                            value={values.password}
+                            onChange={handleChange}
                           />
                           <Button
                             type="button"
@@ -181,36 +173,42 @@ export default function RegisterPage() {
                           >
                             {show ? <EyeOff size={16} /> : <Eye size={16} />}
                           </Button>
-                          <ErrorMessage
-                            name="password"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
-                          />
+                          <CustomErrorMessage name="password" />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="confirm_password">
                             ConfirmPassword
                           </Label>
 
-                          <Field
-                            as={Input}
+                          <Input
                             name="confirm_password"
                             id="confirm_password"
                             type="password"
-                            placeholder="••••••••"
+                            placeholder="Confirm Password"
+                            value={values.confirm_password}
+                            onChange={handleChange}
                           />
 
-                          <ErrorMessage
-                            name="confirm_password"
-                            component="div"
-                            className="text-sm text-red-500 mt-1"
+                          <CustomErrorMessage name="confirm_password" />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="referral_code">
+                            Referral Code (Optional)
+                          </Label>
+                          <Input
+                            name="referral_code"
+                            id="referral_code"
+                            type="text"
+                            placeholder="Referral Code"
+                            value={values.referral_code}
+                            onChange={handleChange}
                           />
                         </div>
 
                         <Button
                           type="submit"
-                          disabled={isSubmitting}
-                          className="w-full py-5"
+                          //disabled={isSubmitting}
+                          className="w-full"
                         >
                           {loading ? <Loading /> : "Register"}
                         </Button>
@@ -225,7 +223,7 @@ export default function RegisterPage() {
                         </Link>
                       </div>
                     </div>
-                  </Form>
+                  </form>
                 )}
               </Formik>
             </CardContent>

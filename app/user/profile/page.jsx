@@ -120,7 +120,7 @@ const Profilexx = () => {
     <div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
         <div>
-          <div className=" rounded  shadow-xl bg-white p-5">
+          <div className=" rounded-xl  shadow-xl bg-white p-5">
             <Formik
               initialValues={{
                 name: personalUser.name || "",

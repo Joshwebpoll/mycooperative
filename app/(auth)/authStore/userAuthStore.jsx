@@ -15,6 +15,8 @@ export const useAuthStore = create((set) => ({
   isOtpLoading: false,
   isUpdateLoading: false,
   isUserLoading: true,
+  isVerifyLoading: false,
+  isAuthenticated: false,
   // csrf: async () => {
   //   try {
   //     const res = await api.get("/sanctum/csrf-cookie", {
@@ -47,7 +49,7 @@ export const useAuthStore = create((set) => ({
           // Referer: "http://localhost:3000",
         },
       });
-      const res = await api.post(
+      const res = await apiClient.post(
         `/api/login`,
         { email, password },
         {
@@ -63,8 +65,10 @@ export const useAuthStore = create((set) => ({
         const token = res.data.token;
         const user = res.data.user;
         console.log(token);
+        Cookies.set("auth_tokens");
 
         set({ loading: false, users: user, token: token });
+        toast.success(res.data.message);
         router.push("/user/dashboard");
       }
 
@@ -94,55 +98,47 @@ export const useAuthStore = create((set) => ({
       //   set({ loading: false, error: null, users: user, token: token });
       // }
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.message || err.message || "Login failed";
-
-      set({ error: errorMsg, loading: false });
-      throw { msg: errorMsg };
+      set({ loading: false });
     } finally {
       set({ loading: false, error: null });
     }
   },
-  register: async (
-    email,
-    first_name,
-    password,
-    username,
-    confirm_password,
-    phone_number
-  ) => {
+  register: async (values, router) => {
     set({ loading: true, error: null });
 
     try {
-      const res = await api.post(`${apiUrl}/register`, {
-        email: email,
-        name: first_name,
-        password,
-        username,
-        password_confirmation: confirm_password,
-        phone_number,
+      const res = await apiClient.post(`/api/register`, {
+        email: values.email,
+        name: values.first_name,
+        password: values.password,
+        username: values.username,
+        password_confirmation: values.confirm_password,
+        phone_number: values.phone_number,
+        referral_code: values.referral_code,
       });
       console.log(res.data);
-      // if (res.data.status === true) {
-      //   const token = res.data.token;
-      //   const user = res.data.user;
-      //   set({ loading: false, error: null, users: user, token: token });
-      // }
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.message || err.message || "Login failed";
-      console.log(err.response?.status);
-
-      if (err.response?.status === 422) {
-        const errors = err.response?.data;
-
-        Object.values(errors).forEach((messages) => {
-          messages.forEach((message) => {
-            console.log(message);
-            throw { msg: message };
-          });
-        });
+      if (res.data.status === true) {
+        const token = res.data.token;
+        const user = res.data.user;
+        set({ loading: false, users: user, token: token });
+        toast.success(res.data.message);
+        router.push("/verify_email");
       }
+    } catch (err) {
+      // const errorMsg =
+      //   err.response?.data?.message || err.message || "Login failed";
+      // console.log(err.response?.status);
+
+      // if (err.response?.status === 422) {
+      //   const errors = err.response?.data;
+
+      //   Object.values(errors).forEach((messages) => {
+      //     messages.forEach((message) => {
+      //       console.log(message);
+      //       throw { msg: message };
+      //     });
+      //   });
+      // }
 
       set({ error: errorMsg, loading: false });
     } finally {
@@ -185,6 +181,42 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
     } finally {
       set({ isForgetloading: false });
+    }
+  },
+  verifyUserEmail: async (values, router) => {
+    console.log(values);
+    try {
+      set({ isVerifyLoading: true });
+      const res = await api.post("/api/verify_email", {
+        emailCode: values.email_otp,
+      });
+      if (res.data.status === true) {
+        set({ isVerifyLoading: false });
+
+        toast.success(res.data.message);
+        router.push("/login");
+      }
+    } catch (error) {
+    } finally {
+      set({ isVerifyLoading: false });
+    }
+  },
+  resendVerifyRegisterEmail: async (values, router) => {
+    console.log(values);
+    try {
+      set({ isVerifyLoading: true });
+      const res = await api.post("/api/resend_otp", {
+        email: "",
+      });
+      if (res.data.status === true) {
+        set({ isVerifyLoading: false });
+
+        toast.success(res.data.message);
+        router.push("/login");
+      }
+    } catch (error) {
+    } finally {
+      set({ isVerifyLoading: false });
     }
   },
   verifyOtp: async (values, router) => {

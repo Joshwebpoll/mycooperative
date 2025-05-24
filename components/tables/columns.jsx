@@ -41,7 +41,11 @@ export const columns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className=" font-medium">{formatted}</div>;
+      return (
+        <div className=" font-medium">
+          ₦{row.getValue("amount_contributed")}
+        </div>
+      );
     },
   },
   {

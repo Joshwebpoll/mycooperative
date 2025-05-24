@@ -16,15 +16,24 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 // import * as Yup from "yup";
 import {
   CalendarIcon,
-  Check,
   ChevronsUpDown,
   LogOut,
   Save,
   SaveAll,
 } from "lucide-react";
+import { BellRing, Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -44,16 +53,8 @@ import {
 } from "@/components/ui/command";
 import { toast } from "sonner";
 import Loading from "@/components/loading_spinner/loading";
-// import toast from "react-hot-toast";
-
-// const LoginSchema = Yup.object().shape({
-//   account_number: Yup.string()
-//     .String("Invalid email, please try again")
-//     .required("Email is required"),
-//   amount_contributed: Yup.string()
-//     .min(6, "Too short!")
-//     .required("Password is required"),
-// });
+import { contributionSchema } from "../validationSchema/validationSchema";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 
 const CreateContribution = () => {
   const [date, setDate] = React.useState();
@@ -61,27 +62,20 @@ const CreateContribution = () => {
   const [opens, setOpens] = React.useState(false);
   const [value, setValue] = React.useState("");
 
-  const { createContributions, users, fetchUsers, sucessMessage, loading } =
+  const { users, fetchUsers, sucessMessage, loading, isCreatingLoading } =
     contributionStore();
+  const createContributions = contributionStore(
+    (state) => state.createContributions
+  );
   useEffect(() => {
     fetchUsers();
   }, []);
   // console.log(sucessMessage);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      await createContributions(values);
-      toast.success("Created contribution successfully");
-    } catch (err) {
-      toast.error(err.msg);
-    }
-  };
-
   return (
     <div className="w-[100%] ">
       <Formik
         initialValues={{
-          member_id: "",
           account_number: "",
           contribution_type: "",
           amount_contributed: "",
@@ -90,8 +84,17 @@ const CreateContribution = () => {
           contribution_date: "",
           contribution_deposit_type: "",
         }}
-        //validationSchema={LoginSchema}
-        onSubmit={handleSubmit}
+        validationSchema={contributionSchema}
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          try {
+            await createContributions(values);
+            resetForm();
+          } catch (err) {
+            console.log(err);
+          } finally {
+            setSubmitting(false);
+          }
+        }}
       >
         {({
           values,
@@ -105,7 +108,7 @@ const CreateContribution = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-sm rounded">
+              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-xl rounded-xl">
                 <div className="mb-3">
                   <Label htmlFor="email" className="text-[14px] mb-1">
                     Contribution Type
@@ -127,6 +130,7 @@ const CreateContribution = () => {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                  <CustomErrorMessage name="contribution_type" />
                 </div>
 
                 <div className="mb-3">
@@ -145,6 +149,7 @@ const CreateContribution = () => {
                     onChange={handleChange}
                     className=""
                   />
+                  <CustomErrorMessage name="amount_contributed" />
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="account_number" className="text-[14px] mb-1">
@@ -160,6 +165,7 @@ const CreateContribution = () => {
                     value={values.account_number}
                     className=""
                   />
+                  <CustomErrorMessage name="account_number" />
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="payment_method" className="text-[14px] mb-1">
@@ -174,6 +180,7 @@ const CreateContribution = () => {
                     value={values.payment_method}
                     className=""
                   />
+                  <CustomErrorMessage name="payment_method" />
                 </div>
                 <div className="mb-3">
                   <Label htmlFor="payment_method" className="text-[14px] mb-1">
@@ -190,7 +197,7 @@ const CreateContribution = () => {
                         )}
                       >
                         <CalendarIcon />
-                        {/* {date ? format(date, "PPP") : <span>Pick a date</span>} */}
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
                         {values.contribution_date
                           ? format(values.contribution_date, "PPP")
                           : "Select date"}
@@ -235,104 +242,62 @@ const CreateContribution = () => {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                  <CustomErrorMessage name="contribution_deposit_type" />
                 </div>
               </div>
               <div>
-                <h2 className="text-[16px] bg-white p-3  border-bottom border-b-2 shadow-sm rounded-end rounded-start">
-                  Publish
-                </h2>
-                <div className=" rounded bg-white p-5 shadow-sm">
-                  <div className="mb-3">
-                    <Label htmlFor="email" className="text-[14px] mb-1">
-                      Choose Member
-                    </Label>
-                    <Popover open={opens} onOpenChange={setOpens}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          aria-expanded={open}
-                          className="w-[100%] justify-between "
-                        >
-                          {value
-                            ? users.find(
-                                (framework) => framework.email === value
-                              )?.email
-                            : "Select member..."}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
-                        <Command className="w-full">
-                          <CommandInput
-                            placeholder="Search framework..."
-                            className="w-full"
-                          />
-                          <CommandList>
-                            <CommandEmpty>No framework found.</CommandEmpty>
-                            <CommandGroup className="w-full">
-                              {users.map((framework) => (
-                                <CommandItem
-                                  key={framework.email}
-                                  value={framework.email}
-                                  onSelect={() => {
-                                    setFieldValue("member_id", framework.id);
-                                    setValue(framework.email);
-                                    setOpens(false);
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      value === framework.email
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {framework.email}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="mb-3">
-                    <Label htmlFor="email" className="text-[14px] mb-1">
-                      Status
-                    </Label>
-                    <Select
-                      value={values.status}
-                      onValueChange={(val) => setFieldValue("status", val)}
-                    >
-                      <SelectTrigger className="w-[100%] ">
-                        <SelectValue placeholder="Contribution" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="me-3 rounded-1 cursor-pointer "
-                  >
-                    <Save />
-                    {loading ? <Loading /> : "Save"}
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="cursor-pointer"
-                  >
-                    {" "}
-                    <LogOut />
-                    Save & Exit
-                  </Button>
-                </div>
+                <Card className="shadow-xl">
+                  <CardHeader>
+                    <CardTitle>Publish</CardTitle>
+
+                    {/* <CardDescription>
+                      You have 3 unread messages.
+                    </CardDescription> */}
+                  </CardHeader>
+                  <hr />
+                  <CardContent className="grid gap-4">
+                    <div className="mb-3">
+                      <Label htmlFor="email" className="text-[14px] mb-1">
+                        Status
+                      </Label>
+                      <Select
+                        value={values.status}
+                        onValueChange={(val) => setFieldValue("status", val)}
+                      >
+                        <SelectTrigger className="w-[100%] ">
+                          <SelectValue placeholder="Contribution" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="completed">Completed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <CustomErrorMessage name="status" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <div>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="me-3 rounded-1 cursor-pointer "
+                        disabled={isSubmitting}
+                      >
+                        <Save />
+                        {isCreatingLoading ? <Loading /> : "Save"}
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="cursor-pointer"
+                      >
+                        {" "}
+                        <LogOut />
+                        Save & Exit
+                      </Button>
+                    </div>
+                  </CardFooter>
+                </Card>
               </div>
             </div>
           </form>

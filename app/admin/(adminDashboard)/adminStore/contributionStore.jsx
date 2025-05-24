@@ -1,6 +1,7 @@
 import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 import { create } from "zustand";
 
@@ -8,6 +9,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const token = "85|hlTToptbhLxzTJ7Yp3WbhmJaKZwnFzF6Nqpjb9rl1e405d32";
 const contributionStore = create((set) => ({
   contributions: [],
+  isCreatingoading: false,
   loading: false,
   exportLoading: false,
   error: null,
@@ -63,7 +65,7 @@ const contributionStore = create((set) => ({
   },
 
   createContributions: async (values) => {
-    set({ loading: true, error: null, sucessMessage: "" });
+    set({ isCreatingLoading: true, error: null, sucessMessage: "" });
     try {
       const res = await apiClient.post(
         `api/admin/contribution`,
@@ -83,32 +85,17 @@ const contributionStore = create((set) => ({
           },
         }
       );
-
+      console.log(res.data);
       if (res.data.status === true) {
         set({
-          loading: false,
-          sucessMessage: res.data.message,
+          isCreatingLoading: false,
         });
+        toast.success(res.data.message);
       }
     } catch (err) {
-      let errorMsg = "";
-      errorMsg = err.response?.data?.message || err.message || "Login failed";
-
-      if (err.response?.status === 422) {
-        const errors = err.response?.data;
-
-        Object.values(errors).forEach((messages) => {
-          messages.forEach((message) => {
-            errorMsg = message;
-            throw { msg: errorMsg };
-          });
-        });
-      }
-
-      set({ error: errorMsg, loading: false });
-      throw { msg: errorMsg };
+      set({ isCreatingLoading: false });
     } finally {
-      set({ error: null, loading: false });
+      set({ error: null, isCreatingLoading: false });
     }
   },
 

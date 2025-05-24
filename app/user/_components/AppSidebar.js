@@ -9,6 +9,7 @@ import {
   Home,
   Inbox,
   Landmark,
+  LogOut,
   Mail,
   MessageSquare,
   Save,
@@ -38,9 +39,13 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { TeamSwitcher } from "@/components/team_switcher/TeamSwitcher";
+import { useState } from "react";
+
 export function AppSidebar({ ...props }) {
   // Menu items.
   const items = {
@@ -119,10 +124,11 @@ export function AppSidebar({ ...props }) {
   const route = usePathname();
 
   const pageName = route.split("/").filter(Boolean).pop();
+  const [active, setActive] = useState(false);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="text-white bg-[#2e3847] text-center  pt-5 ">
-        Araromi Cooperative
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent className="bg-[#2e3847] pt-2">
         <SidebarMenu className="">
@@ -174,9 +180,13 @@ export function AppSidebar({ ...props }) {
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    onClick={() => setActive(!active)}
+                    className={` ${active ? "bg-[#206bc4] text-white" : ""}`}
+                  >
                     {item.icon && (
-                      <item.icon className="text-[13px] text-[#c1c4c8]" />
+                      <item.icon className="text-[13px] text-[#c8c1c5] " />
                     )}
                     <span className="text-[14px] text-[#c1c4c8] ">
                       {item.title}
@@ -246,9 +256,12 @@ export function AppSidebar({ ...props }) {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      {/* <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter> */}
+      <SidebarFooter className="bg-[#2e3847] pt-2">
+        <div className="flext ">
+          <LogOut />
+          Log out
+        </div>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

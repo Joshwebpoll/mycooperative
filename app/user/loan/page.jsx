@@ -115,7 +115,7 @@ export default function DemoPage() {
   // }
 
   return (
-    <div className="container mx-auto py-5 inset-shadow-sm shadow-xl rounded bg-white  overflow-auto relative">
+    <div className="container mx-auto py-5 inset-shadow-sm shadow-xl rounded-xl bg-white  overflow-auto relative">
       <div className="flex justify-end px-3">
         <Button onClick={() => setOpen(true)}>Apply Loan</Button>
       </div>

@@ -112,7 +112,7 @@ export default function ReferralPage() {
   // }
 
   return (
-    <div className="container mx-auto py-5 shadow rounded bg-white  overflow-auto relative">
+    <div className="container mx-auto py-5 shadow-xl rounded-xl bg-white  overflow-auto relative">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
           <Input
@@ -175,7 +175,7 @@ export default function ReferralPage() {
             validationSchema={loanValidationSchema}
             onSubmit={async (values, { setSubmitting, resetform }) => {
               try {
-                await applyForLoan(values);
+                //await applyForLoan(values);
                 resetform();
               } catch (error) {
                 setSubmitting(false);

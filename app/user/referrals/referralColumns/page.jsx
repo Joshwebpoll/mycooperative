@@ -32,9 +32,7 @@ export const referralColumns = [
     cell: ({ row }) => {
       const referraldetails = row.original;
       return (
-        <div className="capitalize font-medium">
-          {referraldetails.referral.email}
-        </div>
+        <div className=" font-medium">{referraldetails.referral.email}</div>
       );
     },
   },

@@ -36,6 +36,7 @@ import {
   CollapsibleTrigger,
   Collapsible,
 } from "@/components/ui/collapsible";
+import { TeamSwitcher } from "@/components/team_switcher/TeamSwitcher";
 export function AppSidebar({ ...props }) {
   // Menu items.
   const items = {
@@ -165,6 +166,31 @@ export function AppSidebar({ ...props }) {
         ],
       },
     ],
+    subItem: [
+      {
+        title: "Notifications",
+        url: "#",
+        icon: Users,
+        item: [
+          {
+            title: "Dividends",
+            url: "#",
+          },
+          {
+            title: "Bulk Email",
+            url: "#",
+          },
+          {
+            title: "Database Notification",
+            url: "/admin/notifications",
+          },
+          {
+            title: "Push Notification",
+            url: "/admin/push",
+          },
+        ],
+      },
+    ],
   };
 
   console.log(items);
@@ -173,7 +199,7 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="text-white bg-[#2e3847] text-center  pt-5 ">
-        Araromi Cooperative
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent className="bg-[#2e3847]">
         <SidebarMenu className="">

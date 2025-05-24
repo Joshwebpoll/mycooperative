@@ -1,5 +1,7 @@
+import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 import { create } from "zustand";
 
@@ -17,6 +19,7 @@ const loanStore = create((set) => ({
   search: "",
   users: [],
   loan: {},
+  approveLoading: false,
 
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
@@ -24,13 +27,8 @@ const loanStore = create((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(
-        `${apiUrl}/get_loan?page=${page}&per_page=10&search=${search}&status=${status}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const res = await apiClient.get(
+        `/api/admin/get_loan?page=${page}&per_page=10&search=${search}&status=${status}`
       );
       const data = res.data.loans.data;
       const pages = res.data.loans.meta;
@@ -106,11 +104,32 @@ const loanStore = create((set) => ({
     }
   },
 
+  approveLoan: async (values, id) => {
+    set({ approveLoading: true });
+    try {
+      const res = await apiClient.put(`/api/admin/approve_loan/${id}`, {
+        guarantor_user_id: values.guarantor_user_id,
+        status: values.status,
+      });
+
+      if (res.data.status === true) {
+        set({
+          approveLoading: false,
+        });
+        toast.success(res.data.message);
+      }
+    } catch (err) {
+      set({ approveLoading: false });
+    } finally {
+      set({ approveLoading: false });
+    }
+  },
+
   fetchUsers: async () => {
     set({ loading: true, error: null });
 
     try {
-      const res = await api.get(`${apiUrl}/users_con`, {
+      const res = await apiClient.get(`/api/admin/users_con`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -128,8 +147,8 @@ const loanStore = create((set) => ({
   getSingleLoan: async (id) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.get(
-        `${apiUrl}/get_loan/${id}`,
+      const res = await apiClient.get(
+        `/api/admin/get_loan/${id}`,
 
         {
           headers: {
@@ -137,7 +156,7 @@ const loanStore = create((set) => ({
           },
         }
       );
-
+      console.log(res.data.loan);
       if (res.data.status === true) {
         set({
           loading: false,
@@ -146,22 +165,7 @@ const loanStore = create((set) => ({
         });
       }
     } catch (err) {
-      let errorMsg = "";
-      errorMsg = err.response?.data?.message || err.message || "Login failed";
-
-      if (err.response?.status === 422) {
-        const errors = err.response?.data;
-
-        Object.values(errors).forEach((messages) => {
-          messages.forEach((message) => {
-            errorMsg = message;
-            throw { msg: errorMsg };
-          });
-        });
-      }
-
-      set({ error: errorMsg, loading: false });
-      throw { msg: errorMsg };
+      set({ loading: false });
     } finally {
       set({ error: null, loading: false });
     }

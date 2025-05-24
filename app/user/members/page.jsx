@@ -90,7 +90,7 @@ export default function DemoPage() {
   //   );
   // }
   return (
-    <div className="container mx-auto py-5 shadow-xl rounded bg-white relative ">
+    <div className="container mx-auto py-5 shadow-xl rounded-xl bg-white relative ">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
           <Input

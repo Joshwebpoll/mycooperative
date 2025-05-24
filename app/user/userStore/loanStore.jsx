@@ -38,7 +38,7 @@ const loanStore = create((set) => ({
       );
       const data = res.data.loans.data;
       const pages = res.data.loans.meta;
-
+      console.log(data);
       set({
         loans: data,
         page: pages.current_page,
@@ -65,21 +65,15 @@ const loanStore = create((set) => ({
     }
   },
   applyForLoan: async (values) => {
-    set({ loading: true, error: null });
+    set({ loading: true });
     try {
       const res = await apiClient.post(`/api/user/request_loan`, {
         amount: values.amount,
         purpose: values.purpose,
       });
-      const data = res.data;
-
-      if (data.status === true) {
-        set({ loading: false });
-        toast.success(res.data.message);
-      }
-      return true;
     } catch (err) {
       set({ loading: false, error: null });
+      console.log(err);
     } finally {
       set({ loading: false, error: null });
     }

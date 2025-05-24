@@ -52,7 +52,9 @@ export const membersColumns = [
         currency: "NGN",
       }).format(amount);
 
-      return <div className=" font-medium">{formatted}</div>;
+      return (
+        <div className=" font-medium">₦{row.getValue("total_shares")}</div>
+      );
     },
   },
   {
@@ -61,13 +63,9 @@ export const membersColumns = [
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("total_savings"));
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-NG", {
-        style: "currency",
-        currency: "NGN",
-      }).format(amount);
-
-      return <div className=" font-medium">{formatted}</div>;
+      return (
+        <div className=" font-medium">₦{row.getValue("total_savings")}</div>
+      );
     },
   },
 

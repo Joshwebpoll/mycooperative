@@ -33,12 +33,14 @@ export const repaymentColumns = [
   {
     accessorKey: "repayment_amount",
     header: "Repayment Amount",
+
+    cell: ({ row }) => {
+      return (
+        <div className="font-medium">₦{row.getValue("repayment_amount")}</div>
+      );
+    },
   },
 
-  // {
-  //   accessorKey: "payment_method",
-  //   header: "Payment Method",
-  // },
   {
     accessorKey: "created_at",
     header: "Date Created",
@@ -157,7 +159,7 @@ export const repaymentColumns = [
                 <h1 className="uppercase text-[12.5px] text-[#8798AD]">
                   Remaining Balance
                 </h1>
-                <p>{formattedRemainig}</p>
+                <p>₦{repayment.remaining_balance}</p>
               </div>
               <hr />
               <div className="flex justify-between">
