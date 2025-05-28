@@ -71,6 +71,8 @@ const loanStore = create((set) => ({
         amount: values.amount,
         purpose: values.purpose,
       });
+      console.log(res.data);
+      set({ loans: [...loans, res.data.loans] });
     } catch (err) {
       set({ loading: false, error: null });
       console.log(err);

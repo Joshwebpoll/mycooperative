@@ -299,3 +299,24 @@
 //     </Formik>
 //   );
 // }
+
+// NotificationBell.jsx
+import * as Popover from "@radix-ui/react-popover";
+import { Bell } from "lucide-react";
+import { useState } from "react";
+
+const notifications = [
+  { id: 1, message: "New comment on your post" },
+  { id: 2, message: "Your order has been shipped" },
+  { id: 3, message: "New follower: John Doe" },
+];
+
+export default function NotificationBell() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+
+    </div>
+  );
+}

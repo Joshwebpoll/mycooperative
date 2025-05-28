@@ -2,18 +2,18 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
+// Society Building Community Through Shared Prosperity
 const HeroSection = ({
-  badge = "✨ Your Website Builder",
-  heading = "Blocks Built With Shadcn & Tailwind",
-  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+  badge = "✨ Araromi Co-operative Society",
+  heading = "Welcome to Araromi Co-operative.",
+  description = "Empowering our members through community-driven financial solutions. At Araromi cooperative society, we believe in the power of unity and shared success. Join our cooperative and experience a secure, transparent, and rewarding way to save, invest, and grow together.",
   buttons = {
     primary: {
-      text: "Discover all components",
+      text: "Join Now",
       url: "https://www.shadcnblocks.com",
     },
     secondary: {
-      text: "View on GitHub",
+      text: "Learn More",
       url: "https://www.shadcnblocks.com",
     },
   },
@@ -24,7 +24,7 @@ const HeroSection = ({
 }) => {
   return (
     <section className="py-32">
-      <div className="container">
+      <div className="mx-auto lg:w-11/12 ">
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             {badge && (
@@ -33,13 +33,16 @@ const HeroSection = ({
                 <ArrowUpRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-4xl font-bold text-pretty lg:text-6xl">
+            <h1 className="my-6 text-2xl font-bold text-pretty lg:text-6xl">
               {heading}
             </h1>
-            <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
+            <p className="mb-8 max-w-xl text-sm md:text-['16px'] text-muted-foreground">
               {description}
             </p>
-            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+            <div
+              data-aos="fade-up"
+              className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start"
+            >
               {buttons.primary && (
                 <Button asChild className="w-full sm:w-auto">
                   <a href={buttons.primary.url}>{buttons.primary.text}</a>

@@ -2,16 +2,17 @@
 
 import { LoginForm } from "@/components/loginForm/login-form";
 import { Hand } from "lucide-react";
-import { useAuthStore } from "../stores/useAuthStore";
+
 import { useState } from "react";
+import { useAdminStore } from "../stores/useAuthStore";
 
 export default function () {
-  const { login } = useAuthStore();
+  const { login } = useAdminStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = async () => {
-    await login(email, password);
-  };
+  // const handleLogin = async () => {
+  //   await login(email, password);
+  // };
   //console.log(email, password);
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -27,11 +28,7 @@ export default function () {
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
             <LoginForm
-              password={password}
-              email={email}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              handleLogin={handleLogin}
+     
             />
           </div>
         </div>

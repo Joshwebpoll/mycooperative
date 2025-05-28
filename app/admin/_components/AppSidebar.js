@@ -77,16 +77,16 @@ export function AppSidebar({ ...props }) {
         url: "/admin/referrals",
         icon: Shield,
       },
-      {
-        title: "Bulk Email",
-        url: "/admin/bulkemail",
-        icon: Mail,
-      },
-      {
-        title: "Bulk Sms",
-        url: "/admin/bulksms",
-        icon: MessageSquare,
-      },
+      // {
+      //   title: "Bulk Email",
+      //   url: "/admin/bulkemail",
+      //   icon: Mail,
+      // },
+      // {
+      //   title: "Bulk Sms",
+      //   url: "/admin/bulksms",
+      //   icon: MessageSquare,
+      // },
       // {
       //   title: "All Users",
       //   url: "/admin/users",
@@ -178,7 +178,8 @@ export function AppSidebar({ ...props }) {
           },
           {
             title: "Bulk Email",
-            url: "#",
+            url: "/admin/bulkemail",
+            icon: Mail,
           },
           {
             title: "Database Notification",

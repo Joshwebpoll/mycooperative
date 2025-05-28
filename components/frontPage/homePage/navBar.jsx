@@ -1,4 +1,4 @@
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Book, Hand, Menu, Sunset, Trees, Zap } from "lucide-react";
 
 import {
   Accordion,
@@ -28,38 +28,28 @@ const Navbar = ({
     url: "https://www.shadcnblocks.com",
     src: "https://shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "Araromi Cooperative",
   },
   menu = [
-    { title: "Home", url: "#" },
+    { title: "Home", url: "/" },
+    { title: "About", url: "/about" },
+    { title: "Contact Us", url: "/contact" },
+
     {
-      title: "Products",
+      title: "Service",
       url: "#",
       items: [
         {
-          title: "Blog",
-          description: "The latest industry news, updates, and info",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
+          title: "Loan",
+          // description: "The latest industry news, updates, and info",
+          // icon: <Book className="size-5 shrink-0" />,
+          url: "/loan-service",
         },
         {
-          title: "Company",
-          description: "Our mission is to innovate and empower the world",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Careers",
-          description: "Browse job listing and discover our workspace",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Support",
-          description:
-            "Get in touch with our support team or visit our community forums",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
+          title: "Contribution",
+          // description: "Our mission is to innovate and empower the world",
+          // icon: <Trees className="size-5 shrink-0" />,
+          url: "/contribution",
         },
       ],
     },
@@ -103,19 +93,20 @@ const Navbar = ({
     },
   ],
   auth = {
-    login: { title: "Login", url: "#" },
-    signup: { title: "Sign up", url: "#" },
+    login: { title: "Login", url: "/login" },
+    signup: { title: "Sign up", url: "/register" },
   },
 }) => {
   return (
-    <section className="py-4">
-      <div className="container">
+    <section className="py-4 ">
+      <div className="mx-auto lg:w-11/12">
         {/* Desktop Menu */}
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              {/* <img src={logo.src} className="max-h-8" alt={logo.alt} /> */}
+              <Hand />
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
               </span>

@@ -133,6 +133,37 @@ const Percentage = () => {
 
                     <CustomErrorMessage name="max_amount" />
                   </div>
+                  <div className="mb-3 relative">
+                    <Label htmlFor="loan_duration" className="text-[14px] mb-1">
+                      Loan duration
+                    </Label>
+                    <Input
+                      type="number"
+                      id="loan_duration"
+                      placeholder="Loan duration"
+                      value={values.loan_duration}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="loan_duration" />
+                  </div>
+                  <div className="mb-3 relative">
+                    <Label
+                      htmlFor="max_interest_rate"
+                      className="text-[14px] mb-1"
+                    >
+                      Loan duration
+                    </Label>
+                    <Input
+                      type="number"
+                      id="max_interest_rate"
+                      placeholder="Max Interest Rate"
+                      value={values.max_interest_rate}
+                      onChange={handleChange}
+                    />
+
+                    <CustomErrorMessage name="max_interest_rate" />
+                  </div>
 
                   <div className="mb-3">
                     <Button

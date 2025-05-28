@@ -19,6 +19,12 @@ import Link from "next/link";
 import userStores from "@/app/user/userStore/userStore";
 import { useRouter } from "next/navigation";
 import profileStore from "@/app/user/userStore/profileStore";
+import useSWR from "swr";
+import apiClient from "@/lib/axios";
+
+import NotificationBell from "../notificationDetails/notificationDetails";
+
+import NotificationDetails from "../notificationDetails/notificationDetails";
 
 export function SiteHeader({ pageName }) {
   const [position, setPosition] = React.useState("right");
@@ -46,6 +52,7 @@ export function SiteHeader({ pageName }) {
     }
   }
   const greeting = getTimeBasedGreeting();
+
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -57,23 +64,16 @@ export function SiteHeader({ pageName }) {
         <div className=" w-full flex justify-between items-center ">
           <h1 className="text-base font-medium capitalize">{pageName}</h1>
 
-             <p className="text-[16px] text-muted-foreground">
-      {greeting}, <span className="font-medium text-foreground capitalize">{personalUser.username}</span> 👋
-    </p>
+          <p className="text-[16px] text-muted-foreground">
+            {greeting},{" "}
+            <span className="font-medium text-foreground capitalize">
+              {personalUser.username}
+            </span>{" "}
+            👋
+          </p>
 
-          <div className="flex items-center gap-3 justify-center mr-5">
-            <div className="relative">
-              {/* Bell Icon wrapped in a button */}
-              <button className="p-2 hover:bg-gray-200 rounded-full focus:outline-none">
-                <BellIcon className="h-6 w-6 text-gray-700" />
-              </button>
-
-              {/* Badge for notification count */}
-
-              <span className="absolute top-0 right-0 bg-blue-700 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </div>
+          <div className="flex items-center gap-3 justify-center mr-[30px]">
+            <NotificationDetails />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
