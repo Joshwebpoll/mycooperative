@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
@@ -42,14 +42,16 @@ export default function WhyChooseUs() {
     <section className="py-16 bg-gray-50 mb-20">
       <motion.div {...fadeInUp} className="max-w-10/12 mx-auto px-5">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800">Why Choose Us</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
+            Why Choose Us
+          </h2>
           <p className="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
             We are committed to building financial security and community wealth
             through trusted cooperative principles.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}

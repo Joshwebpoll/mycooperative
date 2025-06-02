@@ -51,12 +51,10 @@ function RegisterForm() {
   const { loading } = useAuthStore();
   const register = useAuthStore((state) => state.register);
   const [show, setShow] = useState(false);
-  const [ref, setRef] = useState(null);
+  // const [ref, setRef] = useState(null);
 
   const searchParams = useSearchParams();
-  useEffect(() => {
-    setRef(searchParams.get("ref"));
-  }, [searchParams]);
+  const ref = searchParams.get("ref");
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
@@ -82,7 +80,7 @@ function RegisterForm() {
                   email: "",
                   first_name: "",
                   password: "",
-                  referral_code: ref ? ref : "",
+                  referral_code: ref || "",
                   username: "",
                   confirm_password: "",
                   phone_number: "",

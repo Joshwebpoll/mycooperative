@@ -19,7 +19,7 @@ export default function CallToAction2() {
           smarter, and accessing reliable support.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button className=" bg-white text-[#206bc4] hover:bg-white">
+          <Button size="lg" className=" bg-white text-[#206bc4] hover:bg-white">
             <Link href="/register">Become a Member</Link>
           </Button>
         </div>
