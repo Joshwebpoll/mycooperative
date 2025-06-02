@@ -19,11 +19,10 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 import Loading from "@/components/loading_spinner/loading";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 import { useAuthStore } from "../authStore/userAuthStore";
-import SearchBar from "./searchParamRef";
-export const dynamic = "force-dynamic";
+
 const RegisterSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
@@ -48,18 +47,17 @@ const RegisterSchema = Yup.object().shape({
     .required("First name is required"),
 });
 
-export default function RegisterPage() {
+function RegisterForm() {
   const { loading } = useAuthStore();
   const register = useAuthStore((state) => state.register);
   const [show, setShow] = useState(false);
-  // const [ref, setRef] = useState(null);
+  const [ref, setRef] = useState(null);
 
-  // const searchParams = useSearchParams();
-  // useEffect(() => {
-  //   setRef(searchParams.get("ref"));
-  // }, [searchParams]);
-  const ref = SearchBar();
-  console.log(ref, "sjjjjs");
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    setRef(searchParams.get("ref"));
+  }, [searchParams]);
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-md flex-col gap-6">
@@ -79,162 +77,160 @@ export default function RegisterPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Formik
-                  initialValues={{
-                    email: "",
-                    first_name: "",
-                    password: "",
-                    referral_code: ref ? ref : "",
-                    username: "",
-                    confirm_password: "",
-                    phone_number: "",
-                  }}
-                  validationSchema={RegisterSchema}
-                  onSubmit={async (values, { setSubmitting }) => {
-                    try {
-                      await register(values, router);
-                    } catch (err) {
-                      console.log(err);
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                >
-                  {({
-                    isSubmitting,
-                    values,
-                    touched,
-                    handleSubmit,
-                    handleChange,
-                  }) => (
-                    <form onSubmit={handleSubmit}>
+              <Formik
+                initialValues={{
+                  email: "",
+                  first_name: "",
+                  password: "",
+                  referral_code: ref ? ref : "",
+                  username: "",
+                  confirm_password: "",
+                  phone_number: "",
+                }}
+                validationSchema={RegisterSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                  try {
+                    await register(values, router);
+                  } catch (err) {
+                    console.log(err);
+                  } finally {
+                    setSubmitting(false);
+                  }
+                }}
+              >
+                {({
+                  isSubmitting,
+                  values,
+                  touched,
+                  handleSubmit,
+                  handleChange,
+                }) => (
+                  <form onSubmit={handleSubmit}>
+                    <div className="grid gap-6">
+                      <div className="flex flex-col gap-4"></div>
+
                       <div className="grid gap-6">
-                        <div className="flex flex-col gap-4"></div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="email">Email</Label>
+                          <Input
+                            name="email"
+                            id="email"
+                            type="email"
+                            placeholder="Email"
+                            value={values.email}
+                            onChange={handleChange}
+                          />
+                          <CustomErrorMessage name="email" />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="first_name">First Name</Label>
+                          <Input
+                            name="first_name"
+                            id="first_name"
+                            type="first_name"
+                            placeholder="First Name"
+                            value={values.first_name}
+                            onChange={handleChange}
+                          />
+                          <CustomErrorMessage name="first_name" />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="username">Username</Label>
+                          <Input
+                            name="username"
+                            id="username"
+                            type="text"
+                            placeholder="Username"
+                            value={values.username}
+                            onChange={handleChange}
+                          />
+                          <CustomErrorMessage name="username" />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="phone_number">Phone Number</Label>
+                          <Input
+                            name="phone_number"
+                            id="phone_number"
+                            type="number"
+                            placeholder="Phone Number"
+                            value={values.phone_number}
+                            onChange={handleChange}
+                          />
+                          <CustomErrorMessage name="phone_number" />
+                        </div>
+                        <div className="grid gap-2 relative space-y-1">
+                          <Label htmlFor="password">Password</Label>
 
-                        <div className="grid gap-6">
-                          <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                              name="email"
-                              id="email"
-                              type="email"
-                              placeholder="Email"
-                              value={values.email}
-                              onChange={handleChange}
-                            />
-                            <CustomErrorMessage name="email" />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="first_name">First Name</Label>
-                            <Input
-                              name="first_name"
-                              id="first_name"
-                              type="first_name"
-                              placeholder="First Name"
-                              value={values.first_name}
-                              onChange={handleChange}
-                            />
-                            <CustomErrorMessage name="first_name" />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="username">Username</Label>
-                            <Input
-                              name="username"
-                              id="username"
-                              type="text"
-                              placeholder="Username"
-                              value={values.username}
-                              onChange={handleChange}
-                            />
-                            <CustomErrorMessage name="username" />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="phone_number">Phone Number</Label>
-                            <Input
-                              name="phone_number"
-                              id="phone_number"
-                              type="number"
-                              placeholder="Phone Number"
-                              value={values.phone_number}
-                              onChange={handleChange}
-                            />
-                            <CustomErrorMessage name="phone_number" />
-                          </div>
-                          <div className="grid gap-2 relative space-y-1">
-                            <Label htmlFor="password">Password</Label>
-
-                            <Input
-                              name="password"
-                              id="password"
-                              type={show ? "text" : "password"}
-                              placeholder="Password"
-                              value={values.password}
-                              onChange={handleChange}
-                            />
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setShow((s) => !s)}
-                              className="absolute right-2 top-[38px] h-auto px-1"
-                            >
-                              {show ? <EyeOff size={16} /> : <Eye size={16} />}
-                            </Button>
-                            <CustomErrorMessage name="password" />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="confirm_password">
-                              ConfirmPassword
-                            </Label>
-
-                            <Input
-                              name="confirm_password"
-                              id="confirm_password"
-                              type="password"
-                              placeholder="Confirm Password"
-                              value={values.confirm_password}
-                              onChange={handleChange}
-                            />
-
-                            <CustomErrorMessage name="confirm_password" />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="referral_code">
-                              Referral Code (Optional)
-                            </Label>
-                            <Input
-                              name="referral_code"
-                              id="referral_code"
-                              type="text"
-                              placeholder="Referral Code"
-                              value={values.referral_code}
-                              onChange={handleChange}
-                            />
-                          </div>
-
+                          <Input
+                            name="password"
+                            id="password"
+                            type={show ? "text" : "password"}
+                            placeholder="Password"
+                            value={values.password}
+                            onChange={handleChange}
+                          />
                           <Button
-                            type="submit"
-                            //disabled={isSubmitting}
-                            className="w-full"
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setShow((s) => !s)}
+                            className="absolute right-2 top-[38px] h-auto px-1"
                           >
-                            {loading ? <Loading /> : "Register"}
+                            {show ? <EyeOff size={16} /> : <Eye size={16} />}
                           </Button>
+                          <CustomErrorMessage name="password" />
                         </div>
-                        <div className="text-center text-sm">
-                          Don&apos;t have an account?{" "}
-                          <Link
-                            href="/login"
-                            className="underline underline-offset-4"
-                          >
-                            Login
-                          </Link>
+                        <div className="grid gap-2">
+                          <Label htmlFor="confirm_password">
+                            ConfirmPassword
+                          </Label>
+
+                          <Input
+                            name="confirm_password"
+                            id="confirm_password"
+                            type="password"
+                            placeholder="Confirm Password"
+                            value={values.confirm_password}
+                            onChange={handleChange}
+                          />
+
+                          <CustomErrorMessage name="confirm_password" />
                         </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="referral_code">
+                            Referral Code (Optional)
+                          </Label>
+                          <Input
+                            name="referral_code"
+                            id="referral_code"
+                            type="text"
+                            placeholder="Referral Code"
+                            value={values.referral_code}
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <Button
+                          type="submit"
+                          //disabled={isSubmitting}
+                          className="w-full"
+                        >
+                          {loading ? <Loading /> : "Register"}
+                        </Button>
                       </div>
-                    </form>
-                  )}
-                </Formik>
-              </Suspense>
+                      <div className="text-center text-sm">
+                        Don&apos;t have an account?{" "}
+                        <Link
+                          href="/login"
+                          className="underline underline-offset-4"
+                        >
+                          Login
+                        </Link>
+                      </div>
+                    </div>
+                  </form>
+                )}
+              </Formik>
             </CardContent>
           </Card>
           <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
@@ -244,5 +240,12 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div>Loading form...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }
