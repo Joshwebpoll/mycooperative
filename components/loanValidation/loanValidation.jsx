@@ -8,4 +8,5 @@ export const loanValidationSchema = Yup.object().shape({
   purpose: Yup.string()
     .required("Purpose is required")
     .min(3, "Purpose must be at least 3 characters"),
+  membership: Yup.string().required("Purpose is required"),
 });

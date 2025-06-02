@@ -70,9 +70,9 @@ const loanStore = create((set) => ({
       const res = await apiClient.post(`/api/user/request_loan`, {
         amount: values.amount,
         purpose: values.purpose,
+        gurantor_name: values.membership,
       });
       console.log(res.data);
-      set({ loans: [...loans, res.data.loans] });
     } catch (err) {
       set({ loading: false, error: null });
       console.log(err);

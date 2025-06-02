@@ -1,4 +1,8 @@
+'use client'
+
 import { CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 const features = [
   {
@@ -36,7 +40,7 @@ const features = [
 export default function WhyChooseUs() {
   return (
     <section className="py-16 bg-gray-50 mb-20">
-      <div className="max-w-10/12 mx-auto px-4">
+      <motion.div {...fadeInUp} className="max-w-10/12 mx-auto px-5">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-800">Why Choose Us</h2>
           <p className="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
@@ -47,8 +51,9 @@ export default function WhyChooseUs() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
+              whileHover={{ scale: 1.03 }}
               className="bg-white rounded-2xl shadow p-6 border hover:shadow-lg transition"
             >
               <div className="flex items-start gap-4">
@@ -62,10 +67,10 @@ export default function WhyChooseUs() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

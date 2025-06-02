@@ -161,6 +161,9 @@
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* For Firefox */
 * {

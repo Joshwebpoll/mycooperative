@@ -14,6 +14,8 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 const testimonials = [
   {
@@ -90,7 +92,7 @@ const Testimonials = () => {
       className="bg-[#f3f5fa] py-16 mb-20
     "
     >
-      <div className="max-w-10/12 mx-auto px-4 ">
+      <motion.div {...fadeInUp} className="max-w-10/12 mx-auto px-5 ">
         <h2 className="text-3xl font-bold text-center mb-8">
           What Our Members Say
         </h2>
@@ -101,7 +103,7 @@ const Testimonials = () => {
                 key={index}
                 className="pl-4 basis-1/1 sm:basis-1/2 md:basis-1/4"
               >
-                <Card className="h-full  border rounded-xl">
+                <Card className="h-full   rounded-xl">
                   <CardContent className="p-6 flex flex-col gap-4">
                     <p className="text-gray-600 italic">
                       "{testimonial.message}"
@@ -122,7 +124,7 @@ const Testimonials = () => {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-      </div>
+      </motion.div>
     </section>
   );
 };

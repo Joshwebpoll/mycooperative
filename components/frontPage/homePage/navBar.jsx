@@ -22,11 +22,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Image from "next/image";
 
 const Navbar = ({
   logo = {
     url: "https://www.shadcnblocks.com",
-    src: "https://shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
+    src: "/images/coop.png",
     alt: "logo",
     title: "Araromi Cooperative",
   },
@@ -46,47 +47,14 @@ const Navbar = ({
           url: "/loan-service",
         },
         {
-          title: "Contribution",
+          title: "Contributions",
           // description: "Our mission is to innovate and empower the world",
           // icon: <Trees className="size-5 shrink-0" />,
-          url: "/contribution",
+          url: "/contributions",
         },
       ],
     },
-    {
-      title: "Resources",
-      url: "#",
-      items: [
-        {
-          title: "Help Center",
-          description: "Get all the answers you need right here",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Contact Us",
-          description: "We are here to help you with any questions you have",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Status",
-          description: "Check the current status of our services and APIs",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Terms of Service",
-          description: "Our terms and conditions for using our services",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Pricing",
-      url: "#",
-    },
+
     {
       title: "Blog",
       url: "#",
@@ -98,26 +66,32 @@ const Navbar = ({
   },
 }) => {
   return (
-    <section className="py-4 ">
+    <section className="py-3 px-5 ">
       <div className="mx-auto lg:w-11/12">
         {/* Desktop Menu */}
-        <nav className="hidden justify-between lg:flex">
+        <nav className="hidden justify-between items-center lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
-              {/* <img src={logo.src} className="max-h-8" alt={logo.alt} /> */}
-              <Hand />
+              <Image
+                src={logo.src}
+                width={100}
+                height={50}
+                //   loader={imageLoader}
+                alt="Picture of the author"
+              />
+              {/* <Hand />
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
-              </span>
+              </span> */}
             </a>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+          </div>
+          <div className="flex items-center">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {menu.map((item) => renderMenuItem(item))}
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
           <div className="flex gap-2">
             <Button asChild variant="outline" size="sm">
@@ -182,9 +156,13 @@ const renderMenuItem = (item) => {
     return (
       <NavigationMenuItem key={item.title}>
         <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-        <NavigationMenuContent className="bg-popover text-popover-foreground">
+        <NavigationMenuContent className="bg-popover text-popover-foreground ">
           {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
+            <NavigationMenuLink
+              asChild
+              key={subItem.title}
+              className="text-center "
+            >
               <SubMenuLink item={subItem} />
             </NavigationMenuLink>
           ))}

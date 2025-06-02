@@ -1,9 +1,16 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 export default function CallToAction2() {
   return (
     <section className="">
-      <div className="max-w-10/12 mx-auto text-center bg-primary text-white py-16 px-4 rounded-xl mb-20  my-8">
+      <motion.div
+        {...fadeInUp}
+        className="max-w-10/12 mx-auto text-center bg-primary text-white py-16 px-4 rounded-xl mb-20  my-8"
+      >
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Ready to Take Control of Your Finances?
         </h2>
@@ -12,21 +19,11 @@ export default function CallToAction2() {
           smarter, and accessing reliable support.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button
-            size="lg"
-            className="bg-white w-[102.86px] lg:w-[180px] h-[32px] lg:h-[40px] rounded-[10px] text-primary hover:bg-white/90 transition font-bold"
-          >
-            Become a Member
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-white text-white bg-white/10 font-bold"
-          >
-            Learn More
+          <Button className=" bg-white text-[#206bc4] hover:bg-white">
+            <Link href="/register">Become a Member</Link>
           </Button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

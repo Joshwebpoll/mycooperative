@@ -257,10 +257,10 @@ export function AppSidebar({ ...props }) {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="bg-[#2e3847] pt-2">
-        <div className="flext ">
+        {/* <div className="flext ">
           <LogOut />
           Log out
-        </div>
+        </div> */}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -15,6 +15,7 @@ import WhyChooseUs from "@/components/frontPage/homePage/whyChooseUs";
 import LoanSettings from "@/components/frontPage/homePage/loanSettings";
 import HeroSections from "@/components/frontPage/homePage/HeroBg";
 import CallToAction2 from "@/components/frontPage/homePage/callAction2";
+import CountDown from "@/components/frontPage/homePage/couterDown";
 
 export default function Home() {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
       <Navbar />
 
       <HeroSections />
-      {/* <ImageCenter /> */}
+      <ImageCenter />
       <AboutSection />
       <Services />
 
@@ -33,6 +34,7 @@ export default function Home() {
       <FrequentAskQuestion />
       <CallToAction />
       <WhyChooseUs />
+      <CountDown />
       <LoanSettings />
       <Testimonials />
       <CallToAction2 />

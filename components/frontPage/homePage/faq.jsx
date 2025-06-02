@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Accordion,
@@ -6,11 +8,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Image from "next/image";
+import { fadeInUp } from "@/lib/animations";
+import { motion } from "framer-motion";
 
 const FrequentAskQuestion = () => {
   return (
     <section className=" py-20 mb-28 bg-[#f3f5fa]">
-      <div className="mx-auto lg:w-11/12">
+      <motion.div {...fadeInUp} className="mx-auto lg:w-11/12 px-5">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 pb-[30px]">
           <div>
             <Image
@@ -107,7 +111,7 @@ const FrequentAskQuestion = () => {
             </Accordion>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

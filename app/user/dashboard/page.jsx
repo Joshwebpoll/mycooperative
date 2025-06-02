@@ -247,7 +247,7 @@ const Dashboard = () => {
       </div>
     );
   }
-  let link = `http://localhost:3000/register?ref=${personalUser.referral_code}`;
+  let link = `https://araromicooperative/register?ref=${personalUser.referral_code}`;
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4 mb-10">

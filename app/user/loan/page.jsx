@@ -117,7 +117,9 @@ export default function DemoPage() {
   return (
     <div className="container mx-auto py-5 inset-shadow-sm shadow-xl rounded-xl bg-white  overflow-auto relative">
       <div className="flex justify-end px-3">
-        <Button onClick={() => setOpen(true)}>Apply Loan</Button>
+        <Button>
+          <Link href="/user/loan/create">Create</Link>
+        </Button>
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">

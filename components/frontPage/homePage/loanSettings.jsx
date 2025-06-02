@@ -1,11 +1,17 @@
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
+"use client";
 import React from "react";
+import { Badge } from "@/components/ui/badge";
+import { fadeInUp } from "@/lib/animations";
+import Image from "next/image";
 
+import { motion } from "framer-motion";
 const LoanSettings = () => {
   return (
     <section>
-      <div className="mx-auto lg:max-w-10/12 py-20 px-10 rounded-xl shadow-xl mb-20">
+      <motion.div
+        {...fadeInUp}
+        className="mx-auto lg:max-w-10/12 py-20 px-10 rounded-xl shadow-xl mb-20"
+      >
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 items-center ">
           <div className="">
             <Badge className="mb-3">Uninterrupted Funds Supply</Badge>
@@ -28,7 +34,7 @@ const LoanSettings = () => {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

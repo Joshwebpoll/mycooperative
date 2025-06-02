@@ -26,6 +26,7 @@ import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import { useGuestRedirect } from "@/hooks/useGuestRedirect";
+import Image from "next/image";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -48,6 +49,14 @@ export default function LoginPage() {
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Hand className="size-4" />
           </div>
+          {/* <Image
+            src="/images/cooplogo.png"
+            width={100}
+            height={100}
+            //   loader={imageLoader}
+            alt="Araromi cooperative"
+            className="mix-blend-multiply"
+          /> */}
           Araromi Cooperative
         </a>
 
