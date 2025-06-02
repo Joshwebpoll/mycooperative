@@ -25,15 +25,7 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          {/* <Input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={handleChange}
-            required
-          /> */}
+
           <Input
             id="email"
             type="email"

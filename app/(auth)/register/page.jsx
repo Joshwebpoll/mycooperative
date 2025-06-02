@@ -47,7 +47,6 @@ const RegisterSchema = Yup.object().shape({
 });
 
 export default function RegisterPage() {
-  const { register, loading, token } = useAuthStore();
   const [show, setShow] = useState(false);
   const searchParams = useSearchParams();
   const ref = searchParams.get("ref");
