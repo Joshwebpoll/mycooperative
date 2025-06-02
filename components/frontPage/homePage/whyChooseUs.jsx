@@ -40,12 +40,12 @@ const features = [
 export default function WhyChooseUs() {
   return (
     <section className="py-16 bg-gray-50 mb-20">
-      <motion.div {...fadeInUp} className="max-w-10/12 mx-auto px-5">
+      <motion.div {...fadeInUp} className="max-w-11/12 mx-auto px-5">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
             Why Choose Us
           </h2>
-          <p className="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-600 md:text-lg max-w-2xl mx-auto">
             We are committed to building financial security and community wealth
             through trusted cooperative principles.
           </p>
@@ -59,12 +59,12 @@ export default function WhyChooseUs() {
               className="bg-white rounded-2xl shadow p-6 border hover:shadow-lg transition"
             >
               <div className="flex items-start gap-4">
-                <CheckCircle className="text-green-600 mt-1" />
+                <CheckCircle className="text-green-600 mt-1 text-[16px]" />
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-gray-600 text-sm">
+                  <p className="mt-2 text-gray-600 text-[16px">
                     {feature.description}
                   </p>
                 </div>
