@@ -71,35 +71,35 @@ export default function RegisterPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Formik
-                initialValues={{
-                  email: "",
-                  first_name: "",
-                  password: "",
-                  referral_code: ref ? ref : "",
-                  username: "",
-                  confirm_password: "",
-                  phone_number: "",
-                }}
-                validationSchema={RegisterSchema}
-                onSubmit={async (values, { setSubmitting }) => {
-                  try {
-                    await register(values, router);
-                  } catch (err) {
-                    console.log(err);
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-              >
-                {({
-                  isSubmitting,
-                  values,
-                  touched,
-                  handleSubmit,
-                  handleChange,
-                }) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Formik
+                  initialValues={{
+                    email: "",
+                    first_name: "",
+                    password: "",
+                    referral_code: ref ? ref : "",
+                    username: "",
+                    confirm_password: "",
+                    phone_number: "",
+                  }}
+                  validationSchema={RegisterSchema}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    try {
+                      await register(values, router);
+                    } catch (err) {
+                      console.log(err);
+                    } finally {
+                      setSubmitting(false);
+                    }
+                  }}
+                >
+                  {({
+                    isSubmitting,
+                    values,
+                    touched,
+                    handleSubmit,
+                    handleChange,
+                  }) => (
                     <form onSubmit={handleSubmit}>
                       <div className="grid gap-6">
                         <div className="flex flex-col gap-4"></div>
@@ -224,9 +224,9 @@ export default function RegisterPage() {
                         </div>
                       </div>
                     </form>
-                  </Suspense>
-                )}
-              </Formik>
+                  )}
+                </Formik>
+              </Suspense>
             </CardContent>
           </Card>
           <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
