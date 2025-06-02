@@ -31,7 +31,6 @@ export default function DemoPage() {
   } = bankStore();
   const fetchAllAccount = bankStore((state) => state.fetchAllAccount);
   const allAccounts = bankStore((state) => state.allAccounts);
-  console.log(allAccounts);
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
