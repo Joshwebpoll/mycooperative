@@ -14,7 +14,7 @@ export default function CallToAction2() {
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Ready to Take Control of Your Finances?
         </h2>
-        <p className="text-[16px] md:text-[18px] text-white/90 mb-8">
+        <p className=" text-[18px] text-white/90 mb-8">
           Join our cooperative society today and start building wealth, saving
           smarter, and accessing reliable support.
         </p>

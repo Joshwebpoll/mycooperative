@@ -10,14 +10,11 @@ const ServiceCard = () => {
     <section className="bg-[#05212f] py-28 mb-28 ">
       <motion.div {...fadeInUp} className="lg:w-8/12 px-5">
         <div className="mx-auto w-[90%]">
-          <h1 className="sm:text-2xl md:text-3xl font-bold text-white leading-normal capitalize mb-4">
+          <h1 className=" text-xl md:text-3xl font-bold text-white leading-normal capitalize mb-4">
             Empowering our members by providing sustainable financial solutions
             that enhance their economic well-being.
           </h1>
-          <Button
-            className=" w-[102.86px] lg:w-[180px] h-[32px] lg:h-[40px] rounded-[10px] font-bold"
-            size="lg"
-          >
+          <Button className=" " size="lg">
             Get Started
           </Button>
         </div>
