@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 
-import { banksColumns } from "./banksColumns/banksColumns";
 import adminRoleStore from "../adminStore/adminroleStore";
 import { AdminRolesColumns } from "./adminRolesColumns/adminRolesColumns";
 

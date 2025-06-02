@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 
 import { useState } from "react";
 import Loading from "../loading_spinner/loading";
-import { Spin } from "antd";
+
 import LoadingOverlay from "../loadingOvalay/loadingOverlay";
 
 export function AdminDataTables({ columns, data, fetchPage, meta, loading }) {

@@ -1,11 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "@ant-design/v5-patch-for-react-19";
+import React from "react";
 
 import DashboardLayoutProvider from "./providers";
-import { useRouter } from "next/navigation";
-import useSWR from "swr";
-import apiClient from "@/lib/axios";
+
 import { useAuthStore } from "../(auth)/authStore/userAuthStore";
 
 const Layout = ({ children }) => {

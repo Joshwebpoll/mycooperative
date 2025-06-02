@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 
 import { useState } from "react";
 import Loading from "../loading_spinner/loading";
-import { Empty, Spin } from "antd";
+// import { Empty, Spin } from "antd";
 import LoadingOverlay from "../loadingOvalay/loadingOverlay";
 
 export function DataTables({ columns, data, fetchPage, meta, loading }) {
@@ -97,10 +97,10 @@ export function DataTables({ columns, data, fetchPage, meta, loading }) {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                <Empty
+                {/* <Empty
                   style={{ image: { height: 40 } }}
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
-                />
+                /> */}
               </TableCell>
             </TableRow>
           )}
