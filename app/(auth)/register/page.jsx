@@ -2,8 +2,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff, Hand } from "lucide-react";
-import { useAuthStore } from "../authStore/userAuthStore";
-import { Suspense, useState } from "react";
+
+import { Suspense, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +21,7 @@ import Link from "next/link";
 import Loading from "@/components/loading_spinner/loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
-
+export const dynamic = "force-dynamic";
 const RegisterSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
@@ -48,9 +48,11 @@ const RegisterSchema = Yup.object().shape({
 
 export default function RegisterPage() {
   const [show, setShow] = useState(false);
+  const [ref, setRef] = useState(null);
   const searchParams = useSearchParams();
-  const ref = searchParams.get("ref");
-  const router = useRouter();
+  useEffect(() => {
+    setRef(searchParams.get("ref"));
+  }, [searchParams]);
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
