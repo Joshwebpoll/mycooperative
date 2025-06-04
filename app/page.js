@@ -37,9 +37,9 @@ export default function Home() {
       <WhyChooseUs />
       <CountDown />
       <LoanSettings />
-      <Testimonials />
-      <CallToAction2 />
+      {/* <Testimonials /> */}
       <TestimonialsCarousel />
+      <CallToAction2 />
 
       <Footer />
     </div>
