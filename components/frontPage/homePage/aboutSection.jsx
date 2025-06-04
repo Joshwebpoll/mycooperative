@@ -8,7 +8,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeInUp } from "@/lib/animations";
 const AboutSection = () => {
-
   return (
     <section className="bg-[#f3f5fa] py-28 mb-28">
       <motion.div {...fadeInUp} className="mx-auto lg:w-11/12 px-5">
@@ -24,7 +23,7 @@ const AboutSection = () => {
             />
           </div>
           <div>
-            <p className="mb-8 max-w-xl  md:text-['16px'] text-gray-600">
+            <p className="mb-8 max-w-xl text-sm  md:text-base text-gray-600">
               Araromi Cooperative Society is a registered and member-owned
               cooperative society established to promote financial inclusion,
               shared prosperity, and mutual support among its members. We have
@@ -32,7 +31,7 @@ const AboutSection = () => {
               individuals and small businesses through collaborative financial
               services.
             </p>
-            <p className="mb-8 max-w-xl  md:text-['16px'] text-gray-600">
+            <p className="mb-8 max-w-xl  text-sm  md:text-base text-gray-600">
               Our cooperative brings together individuals who share common goals
               and work collectively to achieve what would be difficult to
               accomplish alone. Every member has an equal voice in

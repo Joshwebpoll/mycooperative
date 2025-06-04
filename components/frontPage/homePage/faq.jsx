@@ -31,10 +31,10 @@ const FrequentAskQuestion = () => {
                 value="item-1"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className=" text-base md:text-lg hover:no-underline ">
                   What is a cooperative society?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   A cooperative is an autonomous association of people united
                   voluntarily to meet their common economic, social, and
                   cultural needs through a jointly owned and democratically
@@ -45,10 +45,10 @@ const FrequentAskQuestion = () => {
                 value="item-2"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className="text-base md:text-lg hover:no-underline ">
                   How is a cooperative different from a bank?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   Unlike banks owned by shareholders, cooperatives are owned by
                   members who use the services. Profits are returned to members
                   as dividends, and each member has equal voting rights
@@ -59,10 +59,10 @@ const FrequentAskQuestion = () => {
                 value="item-3"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className="text-base md:text-lg hover:no-underline ">
                   What are the benefits of joining?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   Members enjoy better rates on loans, higher returns on
                   savings, dividend payments, democratic participation in
                   decision-making, and access to financial education and
@@ -73,10 +73,10 @@ const FrequentAskQuestion = () => {
                 value="item-4"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className="text-base md:text-lg hover:no-underline ">
                   How much does membership cost?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   Membership requires a one-time fee of $[Amount] and a minimum
                   share purchase of $[Amount]. There are no hidden fees or
                   charges.
@@ -86,10 +86,10 @@ const FrequentAskQuestion = () => {
                 value="item-5"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className="text-base md:text-lg hover:no-underline ">
                   Are my deposits safe?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   Yes, we maintain strict financial controls, regular audits,
                   and appropriate insurance coverage to protect member deposits
                   and investments.
@@ -99,10 +99,10 @@ const FrequentAskQuestion = () => {
                 value="item-6"
                 className="bg-white px-5 rounded-sm mb-3"
               >
-                <AccordionTrigger className="text-[18px] hover:no-underline ">
+                <AccordionTrigger className="text-base md:text-lg hover:no-underline ">
                   Can I withdraw my shares?
                 </AccordionTrigger>
-                <AccordionContent className="text-[15px] text-gray-700">
+                <AccordionContent className="text-sm  md:text-base text-gray-700">
                   Yes, members can withdraw shares according to our bylaws,
                   typically with appropriate notice to ensure cooperative
                   stability.

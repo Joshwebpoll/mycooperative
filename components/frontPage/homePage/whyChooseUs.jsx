@@ -42,10 +42,10 @@ export default function WhyChooseUs() {
     <section className="py-16 bg-gray-50 mb-20">
       <motion.div {...fadeInUp} className="max-w-11/12 mx-auto px-5">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
             Why Choose Us
           </h2>
-          <p className="mt-4 text-gray-600 md:text-lg max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
             We are committed to building financial security and community wealth
             through trusted cooperative principles.
           </p>
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
             <motion.div
               key={index}
               whileHover={{ scale: 1.03 }}
-              className="bg-white rounded-2xl shadow p-6 border hover:shadow-lg transition"
+              className="bg-white rounded-xl shadow-xl p-6  hover:shadow-lg transition"
             >
               <div className="flex items-start gap-4">
                 <CheckCircle className="text-green-600 mt-1 text-[16px]" />
