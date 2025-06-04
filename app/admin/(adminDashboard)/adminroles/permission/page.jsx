@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 
-import { RolesColumns } from "./rolesColumns";
 import adminRoleStore from "../../adminStore/adminroleStore";
-import Modals from "@/components/standardModal/standardModal";
+import { PermissionColumns } from "./permissionColumn";
+
 import { Formik } from "formik";
 import { Label } from "@/components/ui/label";
+import Modals from "@/components/standardModal/standardModal";
 import CustomErrorMessage from "@/components/errorMessage/errorMessage";
 import Loading from "@/components/loading_spinner/loading";
 
@@ -34,10 +35,19 @@ export default function AdminRolePage() {
     exportToExcel,
     exportLoading,
   } = adminRoleStore();
-  const fetchAllRole = adminRoleStore((state) => state.fetchAllRole);
-  const roles = adminRoleStore((state) => state.roles);
-  const addRole = adminRoleStore((state) => state.addRole);
+  const fetchAllPermission = adminRoleStore(
+    (state) => state.fetchAllPermission
+  );
+  const permissions = adminRoleStore((state) => state.permissions);
+  const addPermission = adminRoleStore((state) => state.addPermission);
   const addPerLoading = adminRoleStore((state) => state.addPerLoading);
+  const fetchAllRoleWithOutPagination = adminRoleStore(
+    (state) => state.fetchAllRoleWithOutPagination
+  );
+  const allRolesPag = adminRoleStore((state) => state.allRolesPag);
+  useEffect(() => {
+    fetchAllRoleWithOutPagination();
+  }, []);
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -45,7 +55,7 @@ export default function AdminRolePage() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setSearch(debouncedSearch);
-      fetchAllRole(1, debouncedSearch, status);
+      fetchAllPermission(1, debouncedSearch, status);
     }, 500); // 500ms delay
 
     return () => clearTimeout(handler); // cleanup previous timer
@@ -58,41 +68,53 @@ export default function AdminRolePage() {
     setStatus(value == "all" ? "" : value);
   };
   useEffect(() => {
-    fetchAllRole(currentPage, search, status);
+    fetchAllPermission(currentPage, search, status);
   }, []);
   useEffect(() => {
-    fetchAllRole(1, debouncedSearch, status);
+    fetchAllPermission(1, debouncedSearch, status);
   }, [status]);
 
   const downloadExport = () => {
     exportToExcel();
   };
   const [isModalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white ">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3 justify-end">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
         <div className="w-[100%]">
-          <Button onClick={() => setModalOpen(true)}>
+          <Input
+            type="text"
+            placeholder="Search contribution..."
+            value={debouncedSearch}
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <div className="w-[100%]">
+          <Button className="w-full" onClick={() => setModalOpen(true)}>
             <Plus className="text-bold" /> Create
           </Button>
         </div>
       </div>
       <DataTables
-        columns={RolesColumns}
-        data={roles}
-        fetchPage={fetchAllRole}
+        columns={PermissionColumns}
+        data={permissions}
+        fetchPage={fetchAllPermission}
         meta={meta}
       />
+
       <Modals isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <div>
           <Formik
             initialValues={{
-              role_name: "",
+              permission_name: "",
+              role: "",
             }}
             //validationSchema={LoginSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                await addRole(values, setModalOpen);
+                await addPermission(values, setModalOpen);
                 console.log(values);
               } catch (err) {
                 toast.error(err.msg);
@@ -115,19 +137,42 @@ export default function AdminRolePage() {
               <form onSubmit={handleSubmit}>
                 <div>
                   <div className="mb-5">
-                    <Label htmlFor="role_name" className="text-[14px] mb-1">
-                      Role Name
+                    <Label htmlFor="email" className="text-[14px] mb-1">
+                      Permission Name
                     </Label>
                     <Input
-                      name="role_name"
-                      id="role_name"
+                      name="permission_name"
+                      id="permission_name"
                       type="text"
-                      placeholder="Role name"
-                      value={values.role_name}
+                      placeholder="Permission name"
+                      value={values.permission_name}
                       onChange={handleChange}
                       autoComplete="false"
                     />
                     <CustomErrorMessage name="permission_name" />
+                  </div>
+
+                  <div className="mb-3">
+                    <Label htmlFor="roles" className="text-[14px] mb-1">
+                      Roles
+                    </Label>
+                    <Select
+                      value={values.role} // Ensure string for matching
+                      onValueChange={(val) => setFieldValue("role", val)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {allRolesPag.map((data) => (
+                          <SelectItem key={data.id} value={data.name}>
+                            {data.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <CustomErrorMessage name="role" />
                   </div>
 
                   <div className="flex justify-end">

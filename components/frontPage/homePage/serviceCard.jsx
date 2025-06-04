@@ -14,9 +14,7 @@ const ServiceCard = () => {
             Empowering our members by providing sustainable financial solutions
             that enhance their economic well-being.
           </h1>
-          <Button className=" " size="lg">
-            Get Started
-          </Button>
+          <Button size="lg">Get Started</Button>
         </div>
       </motion.div>
     </section>

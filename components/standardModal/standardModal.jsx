@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import React from "react";
 
-export default function Modal({ isOpen, onClose, children }) {
+export default function Modals({ isOpen, onClose, children }) {
   return (
     <AnimatePresence>
       {isOpen && (

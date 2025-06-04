@@ -57,13 +57,18 @@ function RegisterForm() {
   const ref = searchParams.get("ref");
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
+    <div
+      className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10    overflow-y-auto overflow-x-hidden
+    bg-[#063a4f]
+    bg-[url('/images/pattenbg.png')]
+    bg-repeat bg-blend-multiply"
+    >
       <div className="flex w-full max-w-md flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Hand className="size-4" />
           </div>
-          Araromi Cooperative
+          <h1 className="text-white text-sm md:text-xl">Araromi Cooperative</h1>
         </a>
 
         <div className={cn("flex flex-col gap-6")}>

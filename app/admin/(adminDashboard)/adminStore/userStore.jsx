@@ -1,6 +1,7 @@
 import apiClient from "@/lib/axios";
 import api from "@/lib/axios";
 import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 import { create } from "zustand";
 
@@ -17,6 +18,7 @@ const userStores = create((set) => ({
   searchQuery: "",
   search: "",
   singleUser: {},
+  updateLoading: false,
 
   setSearch: (search) => set({ search }),
   setStatus: (status) => set({ status }),
@@ -89,6 +91,39 @@ const userStores = create((set) => ({
       throw { msg: errorMsg };
     } finally {
       set({ error: null, loading: false });
+    }
+  },
+
+  updateUser: async (values) => {
+    set({ updateLoading: true });
+
+    try {
+      const res = await apiClient.put(`/api/admin/users/${values.userid}`, {
+        surname: values.surname,
+        name: values.name,
+        lastname: values.lastname,
+        email: values.email,
+        username: values.username,
+        phone_number: values.phone_number,
+        address: values.address,
+        city: values.city,
+        state: values.state,
+        country: values.country,
+        roles: values.role,
+        status: values.status,
+        date_of_birth: values.date_of_birth,
+      });
+      console.log(res.data);
+      if (res.data.status === true) {
+        toast.success(res.data.message);
+        set({
+          updateLoading: false,
+        });
+      }
+    } catch (err) {
+      set({ updateLoading: false });
+    } finally {
+      set({ updateLoading: false });
     }
   },
 

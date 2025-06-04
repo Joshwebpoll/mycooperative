@@ -51,6 +51,12 @@ export const usersColumns = [
     header: "Email",
   },
   {
+    accessorKey: "roles",
+    cell: ({ row }) => {
+      return <div>{row.getValue("roles")[0]}</div>;
+    },
+  },
+  {
     accessorKey: "phone_number",
     header: "Phone Number",
   },

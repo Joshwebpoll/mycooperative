@@ -9,7 +9,7 @@ import { fadeInUp } from "@/lib/animations";
 export default function HeroSections() {
   return (
     <motion.section {...fadeInUp} className="relative py-20 ">
-      {/* Background image with linear gradient overlay */}
+    
       <div>
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -27,7 +27,7 @@ export default function HeroSections() {
           className="relative z-10 flex items-center h-full px-8 md:px-16"
         >
           <div className=" max-w-xl">
-            <span className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-[#206bc4] text-white dark:bg-white dark:text-neutral-800">
+            <span className="inline-flex mb-3 items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-[#206bc4] text-white dark:bg-white dark:text-neutral-800">
               Transforming lives and changing lives
             </span>
             <h1 className="text-2xl md:text-[45px]  mb-4 text-black">
@@ -43,7 +43,7 @@ export default function HeroSections() {
               secure, transparent, and rewarding way to save, invest, and grow
               together.
             </p>
-            <Button className=" w-[102.86px] lg:w-[180px] h-[32px] lg:h-[40px] rounded-[10px]">
+            <Button size="lg" className=" ">
               Join Now
             </Button>
           </div>

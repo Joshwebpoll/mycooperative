@@ -9,26 +9,22 @@ import { usePathname, useRouter } from "next/navigation";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
 import { useAuthStore } from "../(auth)/authStore/userAuthStore";
-import useAuth from "@/hooks/useAuth";
+// import useAuth from "@/hooks/useAuth";
+import useAuth from "./../../hooks/useAuth";
 
 const DashboardLayoutProvider = ({ children }) => {
   const users = useAuthStore((state) => state.users);
-  const router = useRouter();
-  const { user, isLoading, isAuthenticated } = useAuth();
 
   const route = usePathname();
   // console.log(route.split("/").filter(Boolean).pop(), "kkkk");
   const pageName = route.split("/").filter(Boolean).pop();
 
-  console.log(user);
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.replace("/login");
-    }
-  }, [isLoading, isAuthenticated]);
+  const user = useAuth();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!isAuthenticated) return null; // avoid flicker before redirect
+  if (!user) {
+    // Redirect triggered, render nothing
+    return null;
+  }
 
   return (
     <SidebarProvider>

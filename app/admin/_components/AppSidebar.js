@@ -128,12 +128,37 @@ export function AppSidebar({ ...props }) {
         ],
       },
     ],
+    admin: [
+      {
+        title: "Admin Care",
+        url: "#",
+        icon: BookCheck,
+        item: [
+          {
+            title: "All Admin",
+            url: "/admin/adminroles",
+          },
+          {
+            title: "Admin Roles",
+            url: "/admin/adminroles/roles",
+          },
+          {
+            title: "Role Permission",
+            url: "/admin/adminroles/permission",
+          },
+        ],
+      },
+    ],
     loan: [
       {
         title: "Loan",
         url: "#",
         icon: BookCheck,
         item: [
+          {
+            title: "All Loan",
+            url: "/admin/loan",
+          },
           {
             title: "Approved Loan",
             url: "#",
@@ -324,6 +349,45 @@ export function AppSidebar({ ...props }) {
         </SidebarMenu>
         <SidebarMenu>
           {items.subItem.map((item) => (
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={item.isActive}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && (
+                      <item.icon className="text-[13px] text-[#c1c4c8]" />
+                    )}
+                    <span className="text-[14px] text-[#c1c4c8]">
+                      {item.title}
+                    </span>
+                    <ChevronRight className="text-white cursor-pointer ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.item?.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <a href={subItem.url}>
+                            <span className="text-[14px] text-[#c1c4c8]">
+                              {subItem.title}
+                            </span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          ))}
+        </SidebarMenu>
+        <SidebarMenu>
+          {items.admin.map((item) => (
             <Collapsible
               key={item.title}
               asChild

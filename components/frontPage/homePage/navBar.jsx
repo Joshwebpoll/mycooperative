@@ -48,8 +48,7 @@ const Navbar = ({
         },
         {
           title: "Contributions",
-          // description: "Our mission is to innovate and empower the world",
-          // icon: <Trees className="size-5 shrink-0" />,
+
           url: "/contributions",
         },
       ],
@@ -108,7 +107,13 @@ const Navbar = ({
           <div className="flex items-center justify-between">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              <Image
+                src={logo.src}
+                width={70}
+                height={70}
+                //   loader={imageLoader}
+                alt="Picture of the author"
+              />
             </a>
             <Sheet>
               <SheetTrigger asChild>
@@ -120,7 +125,13 @@ const Navbar = ({
                 <SheetHeader>
                   <SheetTitle>
                     <a href={logo.url} className="flex items-center gap-2">
-                      <img src={logo.src} className="max-h-8" alt={logo.alt} />
+                      <Image
+                        src={logo.src}
+                        width={50}
+                        height={50}
+                        //   loader={imageLoader}
+                        alt="Picture of the author"
+                      />
                     </a>
                   </SheetTitle>
                 </SheetHeader>

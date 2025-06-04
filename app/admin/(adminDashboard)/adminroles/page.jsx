@@ -18,7 +18,7 @@ import { Plus } from "lucide-react";
 import adminRoleStore from "../adminStore/adminroleStore";
 import { AdminRolesColumns } from "./adminRolesColumns/adminRolesColumns";
 
-export default function DemoPage() {
+export default function AdminRolePage() {
   const {
     meta,
     currentPage,
@@ -29,9 +29,9 @@ export default function DemoPage() {
     exportToExcel,
     exportLoading,
   } = adminRoleStore();
-  const fetchAllAdmin = adminRoleStore((state) => state.fetchAllBanks);
+  const fetchAllAdmin = adminRoleStore((state) => state.fetchAllAdmin);
   const allAdmin = adminRoleStore((state) => state.allAdmin);
-  console.log(allAdmin);
+  console.log(allAdmin, "uus");
 
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -58,9 +58,6 @@ export default function DemoPage() {
     fetchAllAdmin(1, debouncedSearch, status);
   }, [status]);
 
-  const downloadExport = () => {
-    exportToExcel();
-  };
   return (
     <div className="container mx-auto py-5 shadow rounded bg-white ">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-3 p-3">
@@ -72,7 +69,7 @@ export default function DemoPage() {
             onChange={handleSearchChange}
           />
         </div>
-        <div className="w-[100%]">
+        {/* <div className="w-[100%]">
           <Button
             variant="outline"
             className="w-[100%]"
@@ -80,7 +77,7 @@ export default function DemoPage() {
           >
             {exportLoading ? "loading..." : "Export Contribution"}
           </Button>
-        </div>
+        </div> */}
 
         <div className="w-[100%]">
           <Select onValueChange={handleStatusChange}>

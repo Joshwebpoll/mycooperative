@@ -34,7 +34,9 @@ const CallToAction = () => {
                 none of us could accomplish alone. Your cooperative awaits!
               </p>
             </div>
-            <Button className=" ">Become a Member</Button>
+            <Button size="lg" className=" ">
+              Become a Member
+            </Button>
           </div>
           <div>
             <Image

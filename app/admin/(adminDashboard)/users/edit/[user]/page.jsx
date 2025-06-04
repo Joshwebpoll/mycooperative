@@ -34,6 +34,21 @@ import {
 import { format } from "date-fns";
 
 // import { toast as my } from "react-toastify";
+
+import { toast } from "sonner";
+import Loading from "@/components/loading_spinner/loading";
+import userStores from "../../../adminStore/userStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import CustomErrorMessage from "@/components/errorMessage/errorMessage";
+import adminRoleStore from "../../../adminStore/adminroleStore";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import {
   Command,
   CommandEmpty,
@@ -42,20 +57,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { toast } from "sonner";
-import Loading from "@/components/loading_spinner/loading";
-import userStores from "../../../adminStore/userStore";
-import { Skeleton } from "@/components/ui/skeleton";
-// import toast from "react-hot-toast";
-
-// const LoginSchema = Yup.object().shape({
-//   account_number: Yup.string()
-//     .String("Invalid email, please try again")
-//     .required("Email is required"),
-//   amount_contributed: Yup.string()
-//     .min(6, "Too short!")
-//     .required("Password is required"),
-// });
 
 const EditUser = ({ params }) => {
   const { user } = use(params);
@@ -66,40 +67,55 @@ const EditUser = ({ params }) => {
 
   const { Singleuser, getSingleUser, singleUser, sucessMessage, loading } =
     userStores();
-  console.log(singleUser);
+  const updateUser = userStores((state) => state.updateUser);
+  const updateLoading = userStores((state) => state.updateLoading);
+  const allRolesPag = adminRoleStore((state) => state.allRolesPag);
+  const fetchAllRoleWithOutPagination = adminRoleStore(
+    (state) => state.fetchAllRoleWithOutPagination
+  );
+  useEffect(() => {
+    fetchAllRoleWithOutPagination();
+  }, []);
   useEffect(() => {
     getSingleUser(user);
   }, []);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      // await EditUsers(values);
-      toast.success("Created contribution successfully");
-    } catch (err) {
-      toast.error(err.msg);
-    }
-  };
-
-  if (loading) {
-    return <Skeleton className="w-[100%] h-full rounded-full shadow-lg" />;
-  }
+  // if (loading) {
+  //   return <Skeleton className="w-[100%] h-full rounded-full shadow-lg" />;
+  // }
 
   return (
     <div className="w-[100%] ">
       <Formik
         initialValues={{
-          name: singleUser.name || "",
-          surname: singleUser.surname || "",
-          lastname: singleUser.lastname || "",
-          email: singleUser.email || "",
-          username: singleUser.username || "",
-          phone_number: singleUser.phone_number || "",
-          username: singleUser.username || "",
-          status: singleUser.status || "",
+          name: singleUser?.name || "",
+          surname: singleUser?.surname || "",
+          lastname: singleUser?.lastname || "",
+          email: singleUser?.email || "",
+          username: singleUser?.username || "",
+          phone_number: singleUser?.phone_number || "",
+          username: singleUser?.username || "",
+          status: singleUser?.status || "",
+          role: singleUser?.roles?.[0] || "",
+          userid: singleUser?.id,
+          date_of_birth: singleUser?.date_of_birth || "",
+          country: singleUser?.country || "",
+          state: singleUser?.state || "",
+          address: singleUser?.address || "",
+          city: singleUser?.city || "",
+          gender: singleUser?.gender || "",
         }}
         enableReinitialize={true}
         //validationSchema={LoginSchema}
-        onSubmit={handleSubmit}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            await updateUser(values);
+            console.log(values);
+          } catch (err) {
+          } finally {
+            setSubmitting(false);
+          }
+        }}
       >
         {({
           values,
@@ -113,7 +129,7 @@ const EditUser = ({ params }) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-sm rounded">
+              <div className="  lg:col-span-2 p-6  bg-[#ffffff] shadow-xl rounded-xl">
                 <div className="mb-3">
                   <Label htmlFor="name" className="text-[14px] mb-1">
                     First Name
@@ -156,7 +172,7 @@ const EditUser = ({ params }) => {
                     className="py-5"
                   />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <Label htmlFor="email" className="text-[14px] mb-1">
                     Email
                   </Label>
@@ -170,7 +186,7 @@ const EditUser = ({ params }) => {
                     value={values.email}
                     className="py-5"
                   />
-                </div>
+                </div> */}
                 <div className="mb-3">
                   <Label htmlFor="phone_number" className="text-[14px] mb-1">
                     Phone Number
@@ -200,46 +216,196 @@ const EditUser = ({ params }) => {
                     className="py-5"
                   />
                 </div>
-              </div>
-              <div>
-                <h2 className="text-[16px] bg-white p-3  border-bottom border-b-2 shadow-sm rounded-end rounded-start">
-                  Publish
-                </h2>
-                <div className=" rounded bg-white p-5 shadow-sm">
+                <div className="mb-3">
+                  <Label htmlFor="address" className="text-[14px] mb-1">
+                    Address
+                  </Label>
+
+                  <Input
+                    type="text"
+                    id="address"
+                    placeholder="Address"
+                    onChange={handleChange}
+                    value={values.address}
+                    className="py-5"
+                  />
+                </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
                   <div className="mb-3">
-                    <Label htmlFor="email" className="text-[14px] mb-1">
-                      Status
+                    <Label htmlFor="state" className="text-[14px] mb-1">
+                      State
                     </Label>
+
+                    <Input
+                      type="text"
+                      id="state"
+                      placeholder="State"
+                      onChange={handleChange}
+                      value={values.state}
+                      className="py-5"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <Label htmlFor="address" className="text-[14px] mb-1">
+                      Country
+                    </Label>
+
+                    <Input
+                      type="text"
+                      id="country"
+                      placeholder="Country"
+                      onChange={handleChange}
+                      value={values.country}
+                      className="py-5"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+                  <div className="mb-3">
+                    <Label htmlFor="address" className="text-[14px] mb-1">
+                      City
+                    </Label>
+
+                    <Input
+                      type="text"
+                      id="city"
+                      placeholder="City"
+                      onChange={handleChange}
+                      value={values.city}
+                      className="py-5"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <Label htmlFor="address" className="text-[14px] mb-1">
+                      Gender
+                    </Label>
+
                     <Select
-                      value={values.status}
-                      onValueChange={(val) => setFieldValue("status", val)}
+                      value={values.gender}
+                      onValueChange={(val) => setFieldValue("gender", val)}
+                      name="gender"
                     >
-                      <SelectTrigger className="w-[100%] py-5">
-                        Select status
+                      <SelectTrigger className="w-[100%]">
+                        <SelectValue placeholder="Select a Gender" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="enable">Enable</SelectItem>
-                        <SelectItem value="disable">Disable</SelectItem>
+                        <SelectGroup>
+                          <SelectLabel>Gender</SelectLabel>
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
+                        </SelectGroup>
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="me-3 rounded-1 cursor-pointer "
-                  >
-                    <Save />
-                    {loading ? <Loading /> : "Save"}
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="cursor-pointer"
-                  >
-                    {" "}
-                    <LogOut />
-                    Save & Exit
-                  </Button>
+                </div>
+                <div className="mb-3">
+                  <Label htmlFor="date_of_birth" className="text-[14px] mb-1">
+                    Date of Birth
+                  </Label>
+                  <Popover className="py-5">
+                    <PopoverTrigger asChild className="py-5">
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[100%] justify-start text-left font-normal",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {values.date_of_birth ? (
+                          format(values.date_of_birth, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 py-5" align="start">
+                      <Calendar
+                        disabled={(date) => date > new Date()}
+                        mode="single"
+                        selected={values.date_of_birth}
+                        onSelect={(date) =>
+                          setFieldValue(
+                            "date_of_birth",
+                            date?.toISOString().split("T")[0]
+                          )
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <CustomErrorMessage name="date_of_birth" />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <Card className="shadow-xl">
+                    <CardHeader>
+                      <CardTitle>Publish</CardTitle>
+                    </CardHeader>
+                    <hr />
+                    <CardContent className="grid gap-4">
+                      <div className="mb-3">
+                        <Label htmlFor="roles" className="text-[14px] mb-1">
+                          Roles
+                        </Label>
+                        <Select
+                          value={values.role} // Ensure string for matching
+                          onValueChange={(val) => setFieldValue("role", val)}
+                          className="h-25"
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select role" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {allRolesPag.map((data) => (
+                              <SelectItem key={data.id} value={data.name}>
+                                {data.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        <CustomErrorMessage name="role" />
+                      </div>
+                      <div className="mb-3">
+                        <Label htmlFor="email" className="text-[14px] mb-1">
+                          Status
+                        </Label>
+                        <Select
+                          value={values.status}
+                          onValueChange={(val) => setFieldValue("status", val)}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="enable">Enable</SelectItem>
+                            <SelectItem value="disable">Disable</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="me-3 rounded-1 cursor-pointer "
+                      >
+                        <Save />
+                        {updateLoading ? <Loading /> : "Save"}
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="cursor-pointer"
+                      >
+                        {" "}
+                        <LogOut />
+                        Save & Exit
+                      </Button>
+                    </CardFooter>
+                  </Card>
                 </div>
               </div>
             </div>

@@ -42,7 +42,15 @@ export const AdminRolesColumns = [
   },
   {
     accessorKey: "roles",
-    header: "Roles",
+    cell: ({ row }) => {
+      const roles = row.original.roles;
+      const getRoles = roles.map((role) => role.name);
+      return (
+        <div>
+          <h1>{getRoles}</h1>
+        </div>
+      );
+    },
   },
 
   {
