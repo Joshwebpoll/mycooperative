@@ -16,6 +16,7 @@ import LoanSettings from "@/components/frontPage/homePage/loanSettings";
 import HeroSections from "@/components/frontPage/homePage/HeroBg";
 import CallToAction2 from "@/components/frontPage/homePage/callAction2";
 import CountDown from "@/components/frontPage/homePage/couterDown";
+import TestimonialsCarousel from "@/components/frontPage/homePage/testimonial2";
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
       <LoanSettings />
       <Testimonials />
       <CallToAction2 />
+      <TestimonialsCarousel />
 
       <Footer />
     </div>
