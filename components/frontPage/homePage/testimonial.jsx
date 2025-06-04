@@ -16,6 +16,7 @@ import "keen-slider/keen-slider.min.css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
 import { fadeInUp } from "@/lib/animations";
+import { Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -97,14 +98,15 @@ const Testimonials = () => {
           What Our Members Say
         </h2>
         <Carousel className="w-full">
-          <CarouselContent className="-ml-4">
+          <CarouselContent className="">
             {testimonials.map((testimonial, index) => (
               <CarouselItem
                 key={index}
                 className="pl-4 basis-1/1 sm:basis-1/2 md:basis-1/4"
               >
-                <Card className="h-full   rounded-xl">
-                  <CardContent className="p-6 flex flex-col gap-4">
+                <Card className="h-full rounded-sm shadow-xl my-3 border-none">
+                  <CardContent className="p-6 flex flex-col gap-4 my-3">
+                    <Quote size={23} color="#206bc4" />
                     <p className="text-gray-600 italic">
                       "{testimonial.message}"
                     </p>
@@ -118,6 +120,19 @@ const Testimonials = () => {
                     </div>
                   </CardContent>
                 </Card>
+                {/* 
+                <div className="bg-white p-5 rounded-sm shadow-xl my-5">
+                  <Quote size={23} color="#206bc4" />
+                  <p className="text-gray-600 italic">
+                    "{testimonial.message}"
+                  </p>
+                  <div className="mt-auto">
+                    <p className="font-semibold text-gray-800">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
+                </div> */}
               </CarouselItem>
             ))}
           </CarouselContent>

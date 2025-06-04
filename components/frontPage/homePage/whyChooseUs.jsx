@@ -3,34 +3,41 @@
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeInUp } from "@/lib/animations";
+import Image from "next/image";
 
 const features = [
   {
+    image: "/images/plant.png",
     title: "Member-Owned & Transparent",
     description:
       "We operate with full transparency and accountability — no hidden charges, no surprises.",
   },
   {
+    image: "/images/recycle-sign.png",
     title: "Affordable Loans",
     description:
       "Access low-interest loans quickly with flexible repayment options designed for members.",
   },
   {
+    image: "/images/reduce.png",
     title: "Profit Sharing & Dividends",
     description:
       "Earn yearly dividends from cooperative profits — your savings work harder here.",
   },
   {
+    image: "/images/reuse.png",
     title: "Emergency Support",
     description:
       "We stand by our members with fast, supportive assistance in times of financial need.",
   },
   {
+    image: "/images/product-life.png",
     title: "Flexible Contribution Plans",
     description:
       "Save daily, weekly, or monthly — tailored to your income pattern.",
   },
   {
+    image: "/images/finance.png",
     title: "Financial Growth & Empowerment",
     description:
       "Enjoy access to trainings, investment opportunities, and tools to grow your wealth.",
@@ -56,15 +63,24 @@ export default function WhyChooseUs() {
             <motion.div
               key={index}
               whileHover={{ scale: 1.03 }}
-              className="bg-white rounded-xl shadow-xl p-6  hover:shadow-lg transition"
+              className="bg-white rounded-xl shadow-xl p-6  transition"
             >
-              <div className="flex items-start gap-4">
-                <CheckCircle className="text-green-600 mt-1 text-[16px]" />
+              <div className=" gap-4">
+                <div className="mb-3">
+                  <Image
+                    src={feature.image}
+                    width={40}
+                    height={40}
+                    //   loader={imageLoader}
+                    alt="Araromi cooperative"
+                    className=" rounded-sm "
+                  />
+                </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
+                  <h3 className="text-base  md:text-lg font-semibold text-gray-800">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-gray-600 text-[16px">
+                  <p className="mt-2 text-gray-600 text-sm md:text-base">
                     {feature.description}
                   </p>
                 </div>

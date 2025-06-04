@@ -7,18 +7,20 @@ import { fadeInUp } from "@/lib/animations";
 const CallToAction = () => {
   return (
     <section className="mx-auto lg:w-10/12 pb-28 px-5">
+      <div className="mb-10">
+        <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
+          Join Our Cooperative Family?
+        </h3>
+      </div>
       <motion.div {...fadeInUp}>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 items-center">
-          <div className="mb-5 px-5">
+          <div className="px-5">
             <div className="mb-5 ">
-              <h3 className="text-[20px] md:text-[25px] font-semibold mb-2">
-                Ready to Join Our Cooperative Family?
-              </h3>
-              <p className="mb-2 text-gray-700 text-[16px]">
+              <p className="mb-2 text-gray-700 text-sm md:text-base">
                 Take the first step toward financial empowerment and community
                 building. Membership is open and we're here to help you succeed.
               </p>
-              <h3 className="text-[18px] font-semibold mb-2">
+              <h3 className="text-sm md:text-base font-semibold mb-2">
                 Contact us today to:
               </h3>
               <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-[16px]">
@@ -28,7 +30,7 @@ const CallToAction = () => {
                 <li>Learn about special launch promotions</li>
               </ul>
 
-              <p className="text-gray-700 text-[16px]">
+              <p className="text-gray-700 text-sm md:text-base">
                 <strong>Join the Cooperative Movement</strong> Be part of
                 something bigger than yourself. Together, we can achieve what
                 none of us could accomplish alone. Your cooperative awaits!

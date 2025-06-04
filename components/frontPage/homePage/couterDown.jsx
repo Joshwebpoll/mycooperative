@@ -62,17 +62,19 @@ const CountDown = () => {
       <motion.div className="mx-auto lg:max-w-10/12 px-5">
         <div id="stats-section" className="grid md:grid-cols-4 gap-4 ">
           <div
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
             data-aos="flip-left"
             data-aos-duration="1000"
           >
             <div className="text-4xl font-bold text-blue-600 mb-2">
               {counters.members}+
             </div>
-            <div className="text-gray-600 text-lg">Active Members</div>
+            <div className="text-gray-600 text-base md:text-lg">
+              Active Members
+            </div>
           </div>
           <div
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
             data-aos="flip-up"
             data-aos-duration="1000"
             data-aos-delay="200"
@@ -80,10 +82,12 @@ const CountDown = () => {
             <div className="text-4xl font-bold text-green-600 mb-2">
               ₦{counters.savings}M+
             </div>
-            <div className="text-gray-600 text-lg">Total Savings</div>
+            <div className="text-gray-600 text-base md:text-lg">
+              Total Savings
+            </div>
           </div>
           <div
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
             data-aos="flip-right"
             data-aos-duration="1000"
             data-aos-delay="400"
@@ -91,10 +95,12 @@ const CountDown = () => {
             <div className="text-4xl font-bold text-purple-600 mb-2">
               {counters.satisfaction}%
             </div>
-            <div className="text-gray-600 text-lg">Member Satisfaction</div>
+            <div className="text-gray-600 text-base md:text-lg">
+              Member Satisfaction
+            </div>
           </div>
           <div
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl hover:scale-105 transition-all duration-300"
             data-aos="flip-right"
             data-aos-duration="1000"
             data-aos-delay="400"
@@ -102,7 +108,9 @@ const CountDown = () => {
             <div className="text-4xl font-bold text-amber-600 mb-2">
               {counters.disbursed}
             </div>
-            <div className="text-gray-600 text-lg">Disbursed Loan</div>
+            <div className="text-gray-600 text-base md:text-lg">
+              Disbursed Loan
+            </div>
           </div>
         </div>
       </motion.div>
