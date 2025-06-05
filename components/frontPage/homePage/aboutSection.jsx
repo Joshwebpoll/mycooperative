@@ -23,7 +23,7 @@ const AboutSection = () => {
             />
           </div>
           <div>
-            <p className="mb-8 max-w-xl text-[15px]  md:text-base text-gray-600">
+            <p className="mb-5 max-w-xl text-[15px]  md:text-base text-gray-600">
               Araromi Cooperative Society is a registered and member-owned
               cooperative society established to promote financial inclusion,
               shared prosperity, and mutual support among its members. We have
@@ -31,17 +31,14 @@ const AboutSection = () => {
               individuals and small businesses through collaborative financial
               services.
             </p>
-            <p className="mb-8 max-w-xl  text-[15px]  md:text-base text-gray-600">
+            <p className="mb-5 max-w-xl  text-[15px]  md:text-base text-gray-600">
               Our cooperative brings together individuals who share common goals
               and work collectively to achieve what would be difficult to
               accomplish alone. Every member has an equal voice in
               decision-making, and every member benefits from our shared
               success.
             </p>
-            <Button
-              asChild
-              className=" w-[102.86px] lg:w-[180px] h-[32px] lg:h-[40px] rounded-[10px]"
-            >
+            <Button asChild className="xl">
               <Link href="/about">Read More</Link>
             </Button>
           </div>
