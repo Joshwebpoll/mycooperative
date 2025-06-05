@@ -71,25 +71,25 @@ const Services = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Small business loans and microfinance
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Business development training and mentorship
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Group purchasing programs for better rates
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Marketing and networking opportunities
                 </span>
               </div>
@@ -110,25 +110,25 @@ const Services = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Dividend sharing from cooperative profits
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Lower fees and better rates than traditional banks
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Democratic participation in all major decisions
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Access to exclusive member-only services and events
                 </span>
               </div>
@@ -151,26 +151,26 @@ const Services = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   {" "}
                   Savings accounts with competitive interest rates
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Affordable loans for personal, business, and emergency needs
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Investment opportunities and financial planning
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span className="text-sm md:text-base text-gray-600">
+                <span className="text-[15px] md:text-base text-gray-600">
                   Money transfer and payment services
                 </span>
               </div>

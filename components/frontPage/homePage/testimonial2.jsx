@@ -157,7 +157,9 @@ export default function TestimonialsCarousel() {
                     alt={t.name}
                     className="w-16 h-16 rounded-full object-cover mb-4 shadow"
                   />
-                  <p className="text-sm text-gray-600 italic">"{t.quote}"</p>
+                  <p className="text-[15px] text-gray-600 italic">
+                    "{t.quote}"
+                  </p>
                   <div className="mt-4">
                     <h4 className="font-semibold">{t.name}</h4>
                     <p className="text-xs text-gray-400">{t.role}</p>

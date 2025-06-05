@@ -25,7 +25,7 @@ const Footer = () => {
                   Services Meet Community Development and Every Member Becomes
                   an Owner, Stakeholder, and Beneficiary
                 </p>
-                <p className="flex items-center text-sm font-medium text-dark dark:text-white">
+                <p className="flex items-center text-[15px] font-medium text-dark dark:text-white">
                   <span className="mr-3 animate-bounce text-primary">
                     <svg
                       width="20"

@@ -114,7 +114,7 @@ const Testimonials = () => {
                       <p className="font-semibold text-gray-800">
                         {testimonial.name}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-[15px] text-gray-500">
                         {testimonial.role}
                       </p>
                     </div>
@@ -130,7 +130,7 @@ const Testimonials = () => {
                     <p className="font-semibold text-gray-800">
                       {testimonial.name}
                     </p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <p className="text-[15px] text-gray-500">{testimonial.role}</p>
                   </div>
                 </div> */}
               </CarouselItem>

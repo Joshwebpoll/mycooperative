@@ -16,11 +16,11 @@ const CallToAction = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8 items-center">
           <div>
             <div className="mb-5 ">
-              <p className="mb-2 text-gray-700 text-sm md:text-base">
+              <p className="mb-2 text-gray-700 text-[15px] md:text-base">
                 Take the first step toward financial empowerment and community
                 building. Membership is open and we're here to help you succeed.
               </p>
-              {/* <h3 className="text-sm md:text-base font-semibold mb-2">
+              {/* <h3 className="text-[15px] md:text-base font-semibold mb-2">
                 Contact us today to:
               </h3>
               <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-[16px]">
@@ -30,7 +30,7 @@ const CallToAction = () => {
                 <li>Learn about special launch promotions</li>
               </ul> */}
 
-              <p className="text-gray-700 text-sm md:text-base">
+              <p className="text-gray-700 text-[15px] md:text-base">
                 <strong>Join the Cooperative Movement</strong> Be part of
                 something bigger than yourself. Together, we can achieve what
                 none of us could accomplish alone. Your cooperative awaits!

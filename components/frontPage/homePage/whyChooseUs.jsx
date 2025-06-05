@@ -80,7 +80,7 @@ export default function WhyChooseUs() {
                   <h3 className="text-base  md:text-lg font-semibold text-gray-800">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-gray-600 text-sm md:text-base">
+                  <p className="mt-2 text-gray-600 text-[15px] md:text-base">
                     {feature.description}
                   </p>
                 </div>

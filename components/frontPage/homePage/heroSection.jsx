@@ -37,7 +37,7 @@ const HeroSection = ({
             <h1 className="my-6 text-2xl font-bold text-pretty lg:text-6xl">
               {heading}
             </h1>
-            <p className="mb-8 max-w-xl text-sm md:text-['16px'] text-muted-foreground">
+            <p className="mb-8 max-w-xl text-[15px] md:text-['16px'] text-muted-foreground">
               {description}
             </p>
             <div
