@@ -17,6 +17,9 @@ import HeroSections from "@/components/frontPage/homePage/HeroBg";
 import CallToAction2 from "@/components/frontPage/homePage/callAction2";
 import CountDown from "@/components/frontPage/homePage/couterDown";
 import TestimonialsCarousel from "@/components/frontPage/homePage/testimonial2";
+import ServiceList from "@/components/frontPage/homePage/iconList";
+import ServiceCategory from "@/components/frontPage/homePage/iconList";
+import ServiceCategories from "@/components/frontPage/homePage/iconList";
 
 export default function Home() {
   return (

@@ -5,6 +5,35 @@ import { CheckCircle, Hand, List, Users, Wallet } from "lucide-react";
 import React from "react";
 import { motion } from "framer-motion";
 import BouncingBlobCoop from "@/components/blob/blob";
+const services = [
+  {
+    title: "Business Support",
+    points: [
+      "Small business loans and microfinance",
+      "Business development training and mentorship",
+      "Group purchasing programs for better rates",
+      "Marketing and networking opportunities",
+    ],
+  },
+  {
+    title: "Member Benefits",
+    points: [
+      "Dividend sharing from cooperative profits",
+      "Lower fees and better rates than traditional banks",
+      "Democratic participation in all major decisions",
+      "Access to exclusive member-only services and events",
+    ],
+  },
+  {
+    title: "Financial Services",
+    points: [
+      " Savings accounts with competitive interest rates",
+      " Affordable loans for personal, business, and emergency needs",
+      "Investment opportunities and financial planning",
+      "Money transfer and payment services",
+    ],
+  },
+];
 
 const Services = () => {
   return (
@@ -25,39 +54,8 @@ const Services = () => {
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-          {/* <div className="bg-white shadow-md rounded-xl p-6">
-          <div className=" mb-2">
-            <div className="bg-blue-100 p-3 rounded-full inline-block ">
-              <Hand className="w-8 h-8 text-[#206bc4]" />
-            </div>
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Community Programs</h3>
-          <div className="space-y-3">
-            <div className="flex items-start gap-2 text-gray-700">
-              <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-              <span>Financial literacy workshops</span>
-            </div>
-            <div className="flex items-start gap-2 text-gray-700">
-              <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-              <span>
-                Affordable loans for personal, business, and emergency needs
-              </span>
-            </div>
-            <div className="flex items-start gap-2 text-gray-700">
-              <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-              <span>Educational scholarships and grants</span>
-            </div>
-            <div className="flex items-start gap-2 text-gray-700">
-              <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-              <span>Community development projects</span>
-            </div>
-            <div className="flex items-start gap-2 text-gray-700">
-              <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-              <span>Emergency assistance fund</span>
-            </div>
-          </div>
-        </div> */}
+        {/* <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+          
           <motion.div
             whileHover={{ scale: 1.03 }}
             className="bg-white shadow-md rounded-xl p-6"
@@ -178,6 +176,29 @@ const Services = () => {
               </div>
             </div>
           </motion.div>
+        </div> */}
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, i) => (
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              key={i}
+              className="p-6 bg-white rounded-xl border shadow-sm hover:shadow-md transition"
+            >
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                {service.title}
+              </h2>
+              <ul className="space-y-2 text-gray-700">
+                {service.points.map((point, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold leading-tight">
+                      ✔
+                    </span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
     </section>
