@@ -7,14 +7,14 @@ import { fadeInUp } from "@/lib/animations";
 const CallToAction = () => {
   return (
     <section className="mx-auto lg:w-10/12 pb-28 px-5">
-      <div className="mb-10">
-        <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
+      <div className="mb-3 md:mb-10">
+        <h3 className="text-xl md:text-2xl font-bold text-center text-gray-800 capitalize lg:text-4xl">
           Join Our Cooperative Family?
         </h3>
       </div>
       <motion.div {...fadeInUp}>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8 items-center">
-          <div className="px-5">
+          <div>
             <div className="mb-5 ">
               <p className="mb-2 text-gray-700 text-sm md:text-base">
                 Take the first step toward financial empowerment and community
