@@ -13,7 +13,7 @@ const ContactPage = () => {
   return (
     <div>
       <Navbar />
-      <section className="bg-[#37517e] py-28 mb-20">
+      <section className="bg-[#37517e] py-28 mb-20 px-5">
         <motion.div
           {...fadeInUp}
           className="mx-auto lg:w-8/12 text-center text-white"

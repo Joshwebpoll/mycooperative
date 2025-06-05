@@ -110,7 +110,7 @@ export default function TestimonialsCarousel() {
 
   return (
     <section className="bg-[#f3f5fa] py-16 mb-20 ">
-      <div className="relative max-w-10/12 mx-auto px-5">
+      <div className="relative lg:max-w-10/12 mx-auto px-5">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold  mb-8">What Our Members Say</h2>

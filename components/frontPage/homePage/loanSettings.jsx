@@ -7,10 +7,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 const LoanSettings = () => {
   return (
-    <section>
+    <section className="px-5">
       <motion.div
         {...fadeInUp}
-        className="mx-auto lg:max-w-10/12 py-20 px-10 rounded-xl shadow-xl mb-20"
+        className="mx-auto lg:max-w-10/12 py-20 px-5 border rounded-xl shadow-xl mb-20 "
       >
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 items-center ">
           <div className="">

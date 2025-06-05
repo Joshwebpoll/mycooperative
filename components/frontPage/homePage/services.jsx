@@ -67,23 +67,33 @@ const Services = () => {
                 <Hand className="w-6 h-6 text-[#206bc4]" />
               </div>
             </div>
-            <h3 className="text-[18px] font-semibold mb-4">Business Support</h3>
+            <h3 className="text-base  md:text-lg font-semibold mb-4">
+              Business Support
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Small business loans and microfinance</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Small business loans and microfinance
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Business development training and mentorship</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Business development training and mentorship
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Group purchasing programs for better rates</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Group purchasing programs for better rates
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Marketing and networking opportunities</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Marketing and networking opportunities
+                </span>
               </div>
             </div>
           </motion.div>
@@ -96,23 +106,33 @@ const Services = () => {
                 <Users className="w-6 h-6 text-[#206bc4]" />
               </div>
             </div>
-            <h3 className="text-[18px] font-semibold mb-4">Member Benefits</h3>
+            <h3 className="text-base  md:text-lg font-semibold mb-4">
+              Member Benefits
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Dividend sharing from cooperative profits</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Dividend sharing from cooperative profits
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Lower fees and better rates than traditional banks</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Lower fees and better rates than traditional banks
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Democratic participation in all major decisions</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Democratic participation in all major decisions
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Access to exclusive member-only services and events</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Access to exclusive member-only services and events
+                </span>
               </div>
             </div>
           </motion.div>
@@ -126,28 +146,35 @@ const Services = () => {
                 <Wallet className="w-6 h-6 text-[#206bc4]" />
               </div>
             </div>
-            <h3 className="text-[18px] font-semibold mb-4">
+            <h3 className="text-base  md:text-lg font-semibold mb-4">
               {" "}
               Financial Services
             </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span> Savings accounts with competitive interest rates</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  {" "}
+                  Savings accounts with competitive interest rates
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>
+                <span className="text-sm md:text-base text-gray-600">
                   Affordable loans for personal, business, and emergency needs
                 </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Investment opportunities and financial planning</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Investment opportunities and financial planning
+                </span>
               </div>
               <div className="flex items-start gap-2 text-gray-700">
                 <CheckCircle className="text-green-500 w-5 h-5 mt-1" />
-                <span>Money transfer and payment services</span>
+                <span className="text-sm md:text-base text-gray-600">
+                  Money transfer and payment services
+                </span>
               </div>
             </div>
           </motion.div>

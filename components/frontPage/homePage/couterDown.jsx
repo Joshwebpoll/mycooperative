@@ -66,7 +66,7 @@ const CountDown = () => {
             data-aos="flip-left"
             data-aos-duration="1000"
           >
-            <div className="text-4xl font-bold text-blue-600 mb-2">
+            <div className="text-lg md:text-4xl font-bold text-blue-600 mb-2">
               {counters.members}+
             </div>
             <div className="text-gray-600 text-base md:text-lg">
@@ -79,7 +79,7 @@ const CountDown = () => {
             data-aos-duration="1000"
             data-aos-delay="200"
           >
-            <div className="text-4xl font-bold text-green-600 mb-2">
+            <div className=" text-lg md:text-4xl font-bold text-green-600 mb-2">
               ₦{counters.savings}M+
             </div>
             <div className="text-gray-600 text-base md:text-lg">
@@ -92,7 +92,7 @@ const CountDown = () => {
             data-aos-duration="1000"
             data-aos-delay="400"
           >
-            <div className="text-4xl font-bold text-purple-600 mb-2">
+            <div className="text-lg md:text-4xl font-bold text-purple-600 mb-2">
               {counters.satisfaction}%
             </div>
             <div className="text-gray-600 text-base md:text-lg">
@@ -105,7 +105,7 @@ const CountDown = () => {
             data-aos-duration="1000"
             data-aos-delay="400"
           >
-            <div className="text-4xl font-bold text-amber-600 mb-2">
+            <div className="text-lg md:text-4xl font-bold text-amber-600 mb-2">
               {counters.disbursed}
             </div>
             <div className="text-gray-600 text-base md:text-lg">

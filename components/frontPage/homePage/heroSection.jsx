@@ -1,3 +1,4 @@
+"use client";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -10,15 +11,15 @@ const HeroSection = ({
   buttons = {
     primary: {
       text: "Join Now",
-      url: "https://www.shadcnblocks.com",
+      url: "https://araromi.netlify.app/",
     },
     secondary: {
       text: "Learn More",
-      url: "https://www.shadcnblocks.com",
+      url: "https://araromi.netlify.app/",
     },
   },
   image = {
-    src: "https://www.shadcnblocks.com/images/block/placeholder-1.svg",
+    src: "https://araromi.netlify.app/images/block/placeholder-1.svg",
     alt: "Hero section demo image showing interface components",
   },
 }) => {

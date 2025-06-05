@@ -26,7 +26,7 @@ import Image from "next/image";
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
+    url: "https://araromi.netlify.app/",
     src: "/images/coop.png",
     alt: "logo",
     title: "Araromi Cooperative",
