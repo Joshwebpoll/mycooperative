@@ -73,7 +73,7 @@ export default function WhyChooseUs() {
                     height={40}
                     //   loader={imageLoader}
                     alt="Araromi cooperative"
-                    className=" rounded-sm "
+                    className=" rounded-sm animate-bounce"
                   />
                 </div>
                 <div>

@@ -47,23 +47,23 @@ const testimonials = [
       "Joining our co-op was one of the best decisions. I now save consistently and accessed a loan stress-free.",
   },
   {
-    image: "/images/nafisat.jpg",
+    image: "/images/chidi.png",
     name: "Chidi M.",
     role: "Small Business Owner",
     quote:
       "The cooperative helped me grow my shop with a quick and affordable loan. They truly support members!",
   },
   {
-    image: "/images/nafisat.jpg",
+    image: "/images/khat.png",
     name: "Aisha K.",
     role: "Fashion Designer",
     quote:
       "Transparent, reliable, and empowering. I’ve grown my finances and invested in a project I believe in.",
   },
   {
-    image: "/images/nafisat.jpg",
-    name: "Musa I.",
-    role: "Farmer",
+    image: "/images/businesswoman.png",
+    name: "Christiana B.",
+    role: "Business Woman",
     quote:
       "With support from the co-op, I secured funds for farming and paid back easily after harvest.",
   },
