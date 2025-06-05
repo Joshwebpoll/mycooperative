@@ -29,7 +29,7 @@ export default function HeroSections() {
             <span className="inline-flex mb-3 items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-[#206bc4] text-white dark:bg-white dark:text-neutral-800">
               Transforming lives and changing lives
             </span>
-            <h1 className="text-2xl md:text-[45px]  mb-4 text-shadow-black">
+            <h1 className="text-2xl md:text-[45px]  mb-4 text-shadow-black font-semibold">
               Welcome to {/* <span className="text-[#F9A825]"> */}
               Araromi Cooperative Society
               {/* </span> */}
